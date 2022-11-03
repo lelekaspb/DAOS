@@ -1,0 +1,23 @@
+.heading {
+  font-family: var(--heading-font);
+}
+
+.btn_primary {
+  background-color: var(--primary-font-color);
+  color: var(--white-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+}
+
+.btn_outline {
+  background-color: var(--white-color);
+  color: var(--primary-font-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+
+  box-shadow: 0 0 1px 1px #d9d9d9;
+}

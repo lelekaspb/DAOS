@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useState } from "react";
+import Header from "./components/Header/Header";
 
 function App() {
-
   return (
     <div className="App">
-      <h3>hello world</h3>
+      <Header />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

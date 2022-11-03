@@ -1,0 +1,57 @@
+.header {
+  min-height: 60px;
+  border-bottom: solid var(--greyish-bg-color) 1px;
+  padding: 10px 30px;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_left {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--red-color);
+  font-size: calc(1.5rem + 0.3vw);
+  font-weight: 500;
+}
+
+.description {
+  color: var(--primary-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+  font-weight: 400;
+}
+
+.nav_right ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav_link a,
+.nav_btn_signup a,
+.nav_btn_login a {
+  text-decoration: none;
+}
+
+.nav_link a {
+  color: var(--primary-font-color);
+  font-weight: 600;
+}
+
+.nav_btn_signup {
+  composes: btn_primary from "./../../styleUtils.css";
+  text-decoration: none;
+}
+
+.nav_btn_login {
+  composes: btn_outline from "./../../styleUtils.css";
+  text-decoration: none;
+}
