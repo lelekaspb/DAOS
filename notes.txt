@@ -1,0 +1,16 @@
+front page (slide 25) step 1 / Zashan
+slide 26 (without opret opslag) step 2
+slide 5 part of step 2 (login)
+slide 27 step 3
+slide 28 step 3 in detail
+slide 29 step 4 (display all posts)
+slide 15 step 4 (particular post in detail - for the one who created the post)
+slide 16 step 4 (particular post in detail - for someone who did not create the post, but looking at it)
+slide 19 step 5 (contact ensemble)
+
+// side note: we will only implement filter by instrument
+
+sprint 1
+do all the front end
+create ERD
+
