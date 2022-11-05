@@ -1,0 +1,96 @@
+.main {
+  background-color: var(--greyish-bg-color);
+  flex-grow: 1;
+}
+
+.content {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page_heading {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: var(--title-font-size);
+  font-weight: 500;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.label {
+  color: var(--primary-font-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.input {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  padding: 0.7rem 0.5rem;
+  margin-bottom: 10px;
+}
+
+.input.error {
+  box-shadow: 0 0 1px 1px var(--red-color);
+}
+
+.input::placeholder {
+  font-family: var(--primary-font);
+  font-size: var(--body-font-size);
+  color: var(--bodytext-font-color);
+}
+
+.input {
+  font-family: var(--primary-font);
+  font-size: var(--body-font-size);
+  color: var(--primary-font-color);
+}
+
+.input:focus,
+.input:active {
+  outline: 1px solid var(--primary-font-color);
+}
+
+.first_name_field,
+.last_name_field,
+.email_field,
+.password_field {
+  composes: form-field;
+}
+
+.first_name_input,
+.last_name_input,
+.email_input,
+.password_input {
+  composes: input;
+}
+
+.help_block {
+  color: var(--red-color);
+  font-size: calc(0.6rem + 0.3vw);
+  height: 20px;
+}
+
+.submit_btn {
+  composes: btn_primary from "./../../styleUtils.css";
+  font-size: calc(0.8rem + 0.3vw);
+  width: 100%;
+  cursor: pointer;
+}
+
+.name_fields {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name_fields > * {
+  width: 45%;
+}
