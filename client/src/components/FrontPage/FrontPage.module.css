@@ -16,6 +16,10 @@
     font-size: 40px;
    
 }
+.imageWrapper img{
+    width: 317px;
+    height: 317px;
+}
 .main_dropdown{
     display: flex;
 }
