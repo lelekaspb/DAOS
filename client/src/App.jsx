@@ -5,6 +5,7 @@ import WelcomeUser from "./components/WelcomeUser/WelcomeUser";
 import UserSettings from "./components/UserSettings/UserSettings";
 import EditUserProfile from "./components/EditUserProfile/EditUserProfile";
 import Login from "./components/Login/Login";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       {/* <WelcomeUser /> */}
       {/* <UserSettings /> */}
       {/* <EditUserProfile /> */}
-      <Login />
+      {/* <Login /> */}
+      <UserProfile />
       <Footer />
     </div>
   );
