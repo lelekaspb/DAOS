@@ -10,11 +10,11 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <CreateUserProfile />
+      {/* <CreateUserProfile /> */}
       {/* <WelcomeUser /> */}
       {/* <UserSettings /> */}
       {/* <EditUserProfile /> */}
-      {/* <Login /> */}
+      <Login />
       <Footer />
     </div>
   );
