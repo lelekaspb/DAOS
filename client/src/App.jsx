@@ -3,6 +3,7 @@ import Footer from "./components/Footer/Footer";
 import CreateUserProfile from "./components/CreateUserProfile/CreateUserProfile";
 import WelcomeUser from "./components/WelcomeUser/WelcomeUser";
 import UserSettings from "./components/UserSettings/UserSettings";
+import EditUserProfile from "./components/EditUserProfile/EditUserProfile";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Header />
       {/* <CreateUserProfile /> */}
       {/* <WelcomeUser /> */}
-      <UserSettings />
+      {/* <UserSettings /> */}
+      <EditUserProfile />
       <Footer />
     </div>
   );

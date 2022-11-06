@@ -1,3 +1,4 @@
+import FormField from "../FormField/FormField";
 import styles from "./CreateUserProfile.module.css";
 
 const CreateUserProfile = () => {
@@ -7,61 +8,13 @@ const CreateUserProfile = () => {
         <h2 className={styles.page_heading}>Opret profil</h2>
         <form className={styles.form} autoComplete="off">
           <div className={styles.name_fields}>
-            <div className={styles.first_name_field}>
-              <label className={styles.label} htmlFor="first_name">
-                Fornavn
-              </label>
-              <input
-                type="text"
-                className={`${styles.first_name_input} ${styles.error}`}
-                name="first_name"
-                id="first_name"
-                placeholder="Fornavn"
-              />
-              <span className={styles.help_block}>
-                This field cannot be empty
-              </span>
-            </div>
-            <div className={styles.last_name_field}>
-              <label className={styles.label} htmlFor="last_name">
-                Efternavn
-              </label>
-              <input
-                type="text"
-                className={styles.last_name_input}
-                name="last_name"
-                id="last_name"
-                placeholder="Efternavn"
-              />
-              <span className={styles.help_block}></span>
-            </div>
+            <FormField name="first_name" text="Fornavn" type="text" />
+            <FormField name="last_name" type="text" text="Efternavn" />
           </div>
-          <div className={styles.email_field}>
-            <label className={styles.label} htmlFor="email">
-              E-mail
-            </label>
-            <input
-              type="email"
-              className={styles.email_input}
-              name="email"
-              id="email"
-              placeholder="E-mail"
-            />
-            <span className={styles.help_block}></span>
-          </div>
-          <div className={styles.password_field}>
-            <label className={styles.label} htmlFor="password">
-              Adgangskode
-            </label>
-            <input
-              type="password"
-              className={styles.password_input}
-              name="password"
-              id="password"
-              placeholder="Adgangskode"
-            />
-            <span className={styles.help_block}></span>
-          </div>
+          <FormField name="email" type="email" text="E-mail" />
+
+          <FormField name="password" type="password" text="Adgangskode" />
+
           <div className={styles.submit_field}>
             <button className={styles.submit_btn}>Opret profil</button>
           </div>

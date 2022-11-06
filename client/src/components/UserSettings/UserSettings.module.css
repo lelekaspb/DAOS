@@ -10,13 +10,6 @@
   margin-bottom: 50px;
 }
 
-.back_link {
-  composes: btn_outline from "./../../styleUtils.css";
-  cursor: pointer;
-  padding: 7px 15px;
-  border-radius: 6px;
-}
-
 .page_heading {
   composes: heading from "./../../styleUtils.css";
   color: var(--primary-font-color);
@@ -27,63 +20,6 @@
 .page_subheading {
   color: var(--primary-font-color);
   font-size: calc(1rem + 0.3vw);
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.label {
-  color: var(--primary-font-color);
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.current_password_field,
-.new_password_field {
-  composes: form-field;
-}
-
-.input {
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 1px 1px #d9d9d9;
-  padding: 0.7rem 0.5rem;
-  margin-bottom: 10px;
-}
-
-.input.error {
-  box-shadow: 0 0 1px 1px var(--red-color);
-}
-
-.input::placeholder {
-  font-family: var(--primary-font);
-  font-size: var(--body-font-size);
-  color: var(--bodytext-font-color);
-}
-
-.input {
-  font-family: var(--primary-font);
-  font-size: var(--body-font-size);
-  color: var(--primary-font-color);
-}
-
-.input:focus,
-.input:active {
-  outline: 1px solid var(--primary-font-color);
-}
-
-.current_password_input,
-.new_password_input {
-  composes: input;
-}
-
-.help_block {
-  color: var(--red-color);
-  font-size: calc(0.6rem + 0.3vw);
-  height: 20px;
 }
 
 .change_password_submit_btn {
