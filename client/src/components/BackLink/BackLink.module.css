@@ -1,0 +1,6 @@
+.back_link {
+  composes: btn_outline from "./../../styleUtils.css";
+  cursor: pointer;
+  padding: 7px 15px;
+  border-radius: 6px;
+}

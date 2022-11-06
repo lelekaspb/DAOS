@@ -1,0 +1,44 @@
+.main {
+  flex-grow: 1;
+  background-color: var(--greyish-bg-color);
+}
+
+.content {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+}
+
+.page_heading {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: var(--title-font-size);
+  font-weight: 500;
+}
+
+.explain_text {
+  color: var(--bodytext-font-color);
+  font-size: var(--body-font-size);
+}
+
+.finish_profile_btn {
+  composes: btn_primary from "./../../styleUtils.css";
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin: 50px 0 30px 0;
+}
+
+.search_links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.seach_btn {
+  composes: btn_outline from "./../../styleUtils.css";
+  text-decoration: none;
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+}

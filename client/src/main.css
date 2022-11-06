@@ -3,16 +3,17 @@
 :root {
   --primary-font-color: #35395c;
   --bodytext-font-color: #9f9f9f;
+  /* --input-font-color: #737373; */
   --red-color: #bf1e2e;
-  --greyish-bg-color: #e6e6e6;
+  --greyish-bg-color: #f2f2f2;
   --light-blue-bg-color: #e9eaee;
   --white-color: #ffffff;
 
   --primary-font: "Montserrat", sans-serif;
   --heading-font: "Oswald", sans-serif;
 
-  /* --body-font-size: calc(0.7rem + 0.3vw);
-  --title-font-size: calc(1.8rem + 0.3vw); */
+  --body-font-size: calc(0.8rem + 0.3vw);
+  --title-font-size: calc(2.5rem + 0.3vw);
 }
 
 body {
