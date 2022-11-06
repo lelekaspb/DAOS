@@ -1,0 +1,27 @@
+.mainWrapper{
+    display: flex;
+    justify-content: space-between;
+    min-height: calc(100vh - 260px);    
+    padding: 50px 50px 50px 50px ;
+    display: grid;
+    grid-template-columns: 0.6fr 0.4fr;
+    align-items: center;
+
+}
+.contentWrapper{
+    padding: 0 100px;
+}
+.pageTitle h1 {
+    color: #bf1e2e;
+    font-size: 40px;
+   
+}
+.main_dropdown{
+    display: flex;
+}
+.seOpslag_btn{
+    composes: btn_primary from "./../../styleUtils.css";
+    text-decoration: none;
+    padding: 10px 50px;
+    margin-left: 30px;
+}

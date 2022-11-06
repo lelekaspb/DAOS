@@ -19,7 +19,7 @@
 }
 
 .footer_heading {
-  composes: heading from "./../../styleUtils.css";
+  /* composes: heading from "./../../styleUtils.css"; */
   color: var(--white-color);
   font-weight: 500;
   font-size: calc(1rem + 0.3vw);
