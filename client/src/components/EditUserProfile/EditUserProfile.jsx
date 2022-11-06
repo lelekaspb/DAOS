@@ -29,8 +29,7 @@ const EditUserProfile = () => {
             </label>
             <textarea
               className={styles.description_input}
-              placeholder="Skriv eventuelt kort om din musikalske erfaring eller hvad du
-              søger..."
+              placeholder="Skriv eventuelt kort om din musikalske erfaring eller hvad du søger..."
             ></textarea>
             <span className={styles.help_block}></span>
           </div>

@@ -4,7 +4,7 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 70px;
@@ -30,7 +30,7 @@
 }
 
 .name_fields > * {
-  width: 45%;
+  width: 48%;
 }
 
 .picture_field {
@@ -68,7 +68,7 @@
   box-shadow: 0 0 1px 1px #d9d9d9;
   padding: 0.7rem 0.5rem;
   margin-bottom: 20px;
-  height: 50px;
+  height: 80px;
 
   font-family: var(--primary-font);
   font-size: var(--body-font-size);
@@ -97,7 +97,7 @@
 }
 
 .location_field > *:nth-child(2) {
-  width: 65%;
+  width: 66%;
 }
 
 .explanation_heading {
@@ -117,7 +117,7 @@
 }
 
 .contact_field > * {
-  width: 45%;
+  width: 48%;
 }
 
 .search_switch {
@@ -130,7 +130,11 @@
 
 .searching,
 .not_searching {
-  composes: btn_outline from "./../../styleUtils.css";
+  background-color: var(--white-color);
+  color: var(--primary-font-color);
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  box-shadow: 0 0 1px 1px #d9d9d9;
   border: none;
   font-size: var(--body-font-size);
   font-weight: 600;
@@ -138,13 +142,13 @@
 }
 
 .searching {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .not_searching {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .submit_btn {
