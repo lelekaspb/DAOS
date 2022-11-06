@@ -1,3 +1,4 @@
+import EmptyUserProfileSection from "../EmptyUserProfileSection/EmptyUserProfileSection";
 import styles from "./UserProfile.module.css";
 
 const UserProfile = () => {
@@ -46,42 +47,34 @@ const UserProfile = () => {
             <h2 className={styles.info_heading}>Mine instrumenter</h2>
             <button className={styles.info_btn}>Opret</button>
           </div>
-          <div className={styles.bottom_row}>
-            <h5 className={styles.label}>Du har ingen instrumenter endnu</h5>
-            <p className={styles.membership_explanation}>
-              Opret en opslag så du kan finde, eller blive fundet af andre
-              musikere
-            </p>
-            <button className={styles.info_cta_btn}>Opret instrument</button>
-          </div>
+          <EmptyUserProfileSection
+            heading="Du har ingen instrumenter endnu"
+            text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
+            type="instrument"
+          />
         </article>
         <article className={styles.orchestras_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine ensembler</h2>
             <button className={styles.info_btn}>Opret</button>
           </div>
-          <div className={styles.bottom_row}>
-            <h5 className={styles.label}>Du har ingen ensembler endnu</h5>
-            <p className={styles.membership_explanation}>
-              Opret en opslag så du kan finde, eller blive fundet af andre
-              musikere
-            </p>
-            <button className={styles.info_cta_btn}>Opret ensemble</button>
-          </div>
+          <EmptyUserProfileSection
+            heading="Du har ingen ensembler endnu"
+            text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
+            type="ensemble"
+          />
         </article>
         <article className={styles.posts_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine opslag</h2>
             <button className={styles.info_btn}>Opret</button>
           </div>
-          <div className={styles.bottom_row}>
-            <h5 className={styles.label}>Du har ingen opslag endnu</h5>
-            <p className={styles.membership_explanation}>
-              Opret en opslag så du kan finde, eller blive fundet af andre
-              musikere
-            </p>
-            <button className={styles.info_cta_btn}>Opret opslag</button>
-          </div>
+          <EmptyUserProfileSection
+            heading="Du har ingen opslag endnu"
+            text="Opret en opslag så du kan finde, eller blive fundet af andre
+              musikere"
+            type="opslag"
+          />
         </article>
       </section>
     </main>
