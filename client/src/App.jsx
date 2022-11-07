@@ -7,6 +7,7 @@ import EditUserProfile from "./components/EditUserProfile/EditUserProfile";
 import Login from "./components/Login/Login";
 import UserProfile from "./components/UserProfile/UserProfile";
 import FrontPage from "./components/FrontPage/FrontPage";
+import AddInstrument from "./components/AddInstrument/AddInstrument";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       {/* <Login /> */}
       {/* <FrontPage /> */}
       <UserProfile />
+      {/* <AddInstrument /> */}
       <Footer />
     </div>
   );

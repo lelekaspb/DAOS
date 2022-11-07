@@ -23,3 +23,8 @@
   width: 100%;
   cursor: pointer;
 }
+
+.explanation {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+}

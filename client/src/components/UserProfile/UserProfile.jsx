@@ -1,4 +1,5 @@
 import EmptyUserProfileSection from "../EmptyUserProfileSection/EmptyUserProfileSection";
+import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
 
 const UserProfile = () => {
@@ -45,13 +46,21 @@ const UserProfile = () => {
         <article className={styles.instruments_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine instrumenter</h2>
-            <button className={styles.info_btn}>Opret</button>
+            <button className={styles.info_btn}>Tilføj</button>
           </div>
-          <EmptyUserProfileSection
+          {/* <EmptyUserProfileSection
             heading="Du har ingen instrumenter endnu"
             text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
-            type="instrument"
-          />
+            cta="Tilføj instrument"
+          /> */}
+
+          <section className={styles.added_instruments}>
+            <Instrument
+              title="Klarinet"
+              genres={["Kammermusik", "Symfonik", "Folkemusik", "Barok"]}
+            />
+            <Instrument title="Violin" genres={["Kammermusik", "Barok"]} />
+          </section>
         </article>
         <article className={styles.orchestras_info}>
           <div className={styles.top_row}>
@@ -61,7 +70,7 @@ const UserProfile = () => {
           <EmptyUserProfileSection
             heading="Du har ingen ensembler endnu"
             text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
-            type="ensemble"
+            cta="Opret ensemble"
           />
         </article>
         <article className={styles.posts_info}>
@@ -73,7 +82,7 @@ const UserProfile = () => {
             heading="Du har ingen opslag endnu"
             text="Opret en opslag så du kan finde, eller blive fundet af andre
               musikere"
-            type="opslag"
+            cta="Opret opslag"
           />
         </article>
       </section>

@@ -131,7 +131,8 @@
   margin-top: 50px;
   margin-bottom: 50px;
   padding-bottom: 50px;
-  border-bottom: 1px solid var(--greyish-bg-color);
+  border-bottom: 1px solid var(--border-bottom-color);
+  max-width: 1000px;
 }
 
 .top_row {
