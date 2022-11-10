@@ -8,6 +8,7 @@ import Login from "./components/Login/Login";
 import UserProfile from "./components/UserProfile/UserProfile";
 import FrontPage from "./components/FrontPage/FrontPage";
 import AddInstrument from "./components/AddInstrument/AddInstrument";
+import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       {/* <FrontPage /> */}
       <UserProfile />
       {/* <AddInstrument /> */}
+      {/* <CreateOrchestra /> */}
       <Footer />
     </div>
   );
