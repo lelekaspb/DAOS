@@ -5,7 +5,9 @@ import WelcomeUser from "./components/WelcomeUser/WelcomeUser";
 import UserSettings from "./components/UserSettings/UserSettings";
 import EditUserProfile from "./components/EditUserProfile/EditUserProfile";
 import Login from "./components/Login/Login";
+import UserProfile from "./components/UserProfile/UserProfile";
 import FrontPage from "./components/FrontPage/FrontPage";
+import AddInstrument from "./components/AddInstrument/AddInstrument";
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
       {/* <UserSettings /> */}
       {/* <EditUserProfile /> */}
       {/* <Login /> */}
-      <FrontPage />
+      {/* <FrontPage /> */}
+      <UserProfile />
+      {/* <AddInstrument /> */}
       <Footer />
     </div>
   );
