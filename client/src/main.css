@@ -3,7 +3,6 @@
 :root {
   --primary-font-color: #35395c;
   --bodytext-font-color: #9f9f9f;
-  /* --input-font-color: #737373; */
   --red-color: #bf1e2e;
   --greyish-bg-color: #f2f2f2;
   --light-blue-bg-color: #e9eaee;
@@ -19,7 +18,6 @@
 
 body {
   font-family: var(--primary-font);
-  /* font-family: 'Oswald', sans-serif; */
   margin: 0;
   padding: 0;
   min-height: 100vh;
