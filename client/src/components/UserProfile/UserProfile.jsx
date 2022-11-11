@@ -67,11 +67,37 @@ const UserProfile = () => {
             <h2 className={styles.info_heading}>Mine ensembler</h2>
             <button className={styles.info_btn}>Opret</button>
           </div>
-          <EmptyUserProfileSection
+          {/* <EmptyUserProfileSection
             heading="Du har ingen ensembler endnu"
             text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
             cta="Opret ensemble"
-          />
+          /> */}
+          <section className={styles.added_orchestras}>
+            <article className={styles.orchestra}>
+              <img
+                className={styles.orchestra_picture}
+                src="./assets/placeholder-rectangle.png"
+                alt="cover picture"
+              />
+              <div className={styles.orchestra_title}>
+                <h4 className={styles.orchestra_title_heading}>
+                  Århus Klassiske Ensemble
+                </h4>
+              </div>
+            </article>
+            <article className={styles.orchestra}>
+              <img
+                className={styles.orchestra_picture}
+                src="./assets/placeholder-rectangle.png"
+                alt="cover picture"
+              />
+              <div className={styles.orchestra_title}>
+                <h4 className={styles.orchestra_title_heading}>
+                  Århus Klassiske Ensemble
+                </h4>
+              </div>
+            </article>
+          </section>
         </article>
         <article className={styles.posts_info}>
           <div className={styles.top_row}>
