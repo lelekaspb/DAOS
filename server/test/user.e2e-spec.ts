@@ -110,6 +110,58 @@ describe('User Controller (e2e)', () => {
       const res = result.body;
       expect(res).toStrictEqual({});
     });
+
+    it('should return error when firstName field is empty', async () => {
+      // Arrange
+      const user = new UserDto('', 'Creene', 'hello123', 'vera@creene.com');
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .post('/user')
+        .send(user)
+        .expect(400);
+
+      // Assert
+      const res = result.body;
+      expect(res.message[0]).toEqual('firstName should not be empty');
+    });
+  });
+
+  describe('Delete User Controller', () => {
+    it('should delete user by id', async () => {
+      // Arrange
+      const userQuery = new UserDto(
+        'Vera',
+        'Creene',
+        'hello123',
+        'vera@creene.com',
+      );
+      const user = await userService.createUser(userQuery);
+      console.log(user);
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .delete(`/user/${user._id}`)
+        .expect(200);
+
+      // Assert
+      const res = result.body;
+      expect(res.acknowledged).toEqual(true);
+    });
+
+    it('should return error when id is empty on delete', async () => {
+      // Arrange
+      const id = '';
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .delete(`/user/${id}`)
+        .expect(404);
+
+      // Assert
+      const res = result.body;
+      expect(res.error).toEqual('Not Found');
+    });
   });
 
   //Closing app after all tests => not hanging.
