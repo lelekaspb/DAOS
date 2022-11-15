@@ -15,14 +15,14 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {/* <CreateUserProfile /> */}
-      {/* <WelcomeUser /> */}
-      {/* <UserSettings /> */}
-      {/* <EditUserProfile /> */}
-      {/* <Login /> */}
-      {/* <FrontPage /> */}
+      <CreateUserProfile />
+      <WelcomeUser />
+      <UserSettings />
+      <EditUserProfile />
+      <Login />
+      <FrontPage />
       <UserProfile />
-      {/* <AddInstrument /> */}
+      <AddInstrument />
       <CreateOrchestra />
       <EditOrchestra />
       <Footer />
