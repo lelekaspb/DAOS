@@ -1,4 +1,14 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
+import { InstrumentDto } from './instrument.dto';
+import { Instrument } from './instrument.interface';
 
 export class UserDto {
   @IsNotEmpty()
@@ -10,29 +20,40 @@ export class UserDto {
   @IsNotEmpty()
   password: string;
 
-  // phoneNumber: string;
-
   @IsEmail()
   email: string;
 
-  // picture: string;
+  @IsOptional()
+  phoneNumber: string;
 
-  // description: string;
+  @IsOptional()
+  picture: string;
 
-  // zipcode: string;
+  @IsOptional()
+  description: string;
 
-  // city: string;
+  @IsOptional()
+  zipcode: string;
 
-  // instruments: [];
+  @IsOptional()
+  city: string;
 
-  // searching: boolean;
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => InstrumentDto)
+  instruments: InstrumentDto[];
+
+  @IsOptional()
+  searching: boolean;
 
   constructor(
     firstName: string,
     lastName: string,
     password: string,
-    // phoneNumber: string,
     email: string,
+    // phoneNumber: string,
     // picture: string,
     // description: string,
     // zipcode: string,
@@ -43,8 +64,8 @@ export class UserDto {
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
-    // this.phoneNumber = phoneNumber;
     this.email = email;
+    // this.phoneNumber = phoneNumber;
     // this.picture = picture;
     // this.description = description;
     // this.zipcode = zipcode;

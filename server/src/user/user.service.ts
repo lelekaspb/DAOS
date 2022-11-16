@@ -21,8 +21,8 @@ export class UserService {
     return savedUser.save();
   }
 
-  updateUser(id: string, user: any) {
-    // connect to db and update
+  updateUser(id: string, userDto: UserDto) {
+    return this.userModel.updateOne({ _id: id }, userDto).exec();
   }
 
   deleteUser(id: string) {
