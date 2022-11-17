@@ -9,6 +9,7 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   signUserIn(userInfo: any): Promise<User> {
+    console.log('signUserIn user.server');
     const user = this.userModel
       .findOne({ email: userInfo.email, password: userInfo.password })
       .exec();
