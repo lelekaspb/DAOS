@@ -6,7 +6,7 @@ export class UserDto {
   lastName: string;
 
   password: string;
-
+ 
   // phoneNumber: string;
 
   @IsEmail()

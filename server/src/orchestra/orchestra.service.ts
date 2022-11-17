@@ -13,12 +13,22 @@ export class OrchestraService {
         return this.orchModel.find().exec();
     }
 
-
     createNewOrchestra(orchDto: OrchestraDto) {
         const savedOrchestra = new this.orchModel(orchDto);
-
-
         return savedOrchestra.save();
+    }
+
+    
+    updateOrchestra(id: string, user: any) {
+    // connect to db and update
+    }
+
+    deleteOrchestra(id: string) {
+       // delete bc.
+    }
+
+    deleteMany(deleteCriteria: any) {
+    // return this.orchestraModel.deleteMany(deleteCriteria);
     }
 
 

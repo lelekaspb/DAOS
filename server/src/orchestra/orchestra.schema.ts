@@ -5,6 +5,7 @@ export type OrchestraDocument = Orchestra & Document;
 
 @Schema()
 export class Orchestra {
+
   @Prop({required: true})
   orchestra_name: string;
 
@@ -12,29 +13,28 @@ export class Orchestra {
   creator_id: string;
 
   @Prop()
+  Members: [];
+ 
+  @Prop()
   description: string;
 
-    //   @IsNotEmpty()
-    //   orchestra_name: string;
+  @Prop()
+  website: string;
+  
+  @Prop()
+  zip_code: number;
 
-    //   @IsNotEmpty()
-    //   creator_id: string;
+  @Prop()
+  city: string;
 
-  // Members: [];
+  @Prop()
+  musicians_amount: string;
+  
+  @Prop()
+  practice_frequency: number;
 
-  // description: string;
-
-  // website: string;
-
-  // zip_code: number;
-
-  // city: string;
-
-  // musicians_amount: string;
-
-  // practice_frequency: number;
-
-  // genres: [];
+  @Prop()
+  genres: [];
 
 }
 
