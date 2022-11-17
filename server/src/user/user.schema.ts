@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Instrument } from './instrument.interface';
 
 export type UserDocument = User & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true })
   firstName: string;
@@ -33,7 +34,7 @@ export class User {
   city: string;
 
   @Prop()
-  instruments: [];
+  instruments: Instrument[];
 
   // @Prop()
   // orchestraId: { type: Types.ObjectId; default: null };
@@ -45,8 +46,6 @@ export class User {
   @Prop()
   // searching: { type: boolean; default: false };
   searching: boolean;
-
-  timestamps: true;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
