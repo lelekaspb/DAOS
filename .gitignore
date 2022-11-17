@@ -1,3 +1,4 @@
 client/node_modules/
 Tutti_Case_presentation.pdf
 server/node_modules/
+server/.env

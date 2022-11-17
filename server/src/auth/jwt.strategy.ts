@@ -1,21 +1,30 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { jwtConstants } from './constants';
+
+import { UserService } from './../user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: jwtConstants.secret,
+      passReqToCallback: true,
     });
   }
 
-  async validate(payload: any) {
-    console.log('jwt.strategy payload', payload);
+  async validate(req: any, payload: any) {
+    console.log('jwt.strategy validate ', payload);
+    console.log('jwt.strategy validate, Request Param Id ', req.params.id);
 
-    return { userId: payload.sub, email: payload.email };
+    const canEditOrDelete = req.params.id === payload.sub;
+    if (canEditOrDelete) {
+      return { userId: payload.sub, email: payload.email };
+    }
+
+    throw new ForbiddenException();
   }
 }
