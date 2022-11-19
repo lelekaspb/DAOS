@@ -6,7 +6,7 @@ const UserSettings = () => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink />
+        <BackLink component="/UserProfile/:id" />
         <h2 className={styles.page_heading}>Indstillinger</h2>
         <form className={styles.change_password_form}>
           <h3 className={styles.page_subheading}>Adgangskode</h3>

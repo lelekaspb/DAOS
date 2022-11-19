@@ -25,6 +25,14 @@
   cursor: pointer;
 }
 
+.submit_btn a {
+  color: var(--white-color);
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .name_fields {
   display: flex;
   justify-content: space-between;

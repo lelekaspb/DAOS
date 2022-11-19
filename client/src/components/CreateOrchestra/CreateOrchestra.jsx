@@ -7,7 +7,7 @@ const CreateOrchestra = () => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink />
+        <BackLink component="/UserProfile/:id" />
         <h2 className={styles.page_heading}>Opret ensemble</h2>
         <form className={styles.create_orchestra_form}>
           {/* name field */}
@@ -17,7 +17,7 @@ const CreateOrchestra = () => {
           <div className={styles.picture_field}>
             <span className={styles.label}>Coverbillede</span>
             <img
-              src="./assets/placeholder-rectangle.png"
+              src="./../../assets/placeholder-rectangle.png"
               className={styles.picture}
               alt="cover picture"
             />
