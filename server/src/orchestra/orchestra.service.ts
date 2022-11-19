@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OrchestraDto } from './orchestra.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Orchestra, OrchestraDocument } from './orchestra.schema';
 
 
@@ -17,19 +17,20 @@ export class OrchestraService {
         const savedOrchestra = new this.orchModel(orchDto);
         return savedOrchestra.save();
     }
-
-    
-    updateOrchestra(id: string, user: any) {
-    // connect to db and update
-    }
-
+ 
     deleteOrchestra(id: string) {
-       // delete bc.
+        const query: any = { _id: new mongoose.Types.ObjectId(id) };
+        return this.orchModel.deleteOne(query).exec();
     }
 
     deleteMany(deleteCriteria: any) {
     // return this.orchestraModel.deleteMany(deleteCriteria);
     }
+
+    updateOrchestra(id: string, orchDto: OrchestraDto) {
+        return this.orchModel.updateOne({ _id: id }, orchDto).exec();
+      }
+    
 
 
 

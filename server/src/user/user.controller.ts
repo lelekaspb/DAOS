@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Put,
   Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -19,16 +20,24 @@ export class UserController {
 
   @Post()
   createUser(@Body() userDto: UserDto) {
-    console.log(userDto);
     return this.userService.createUser(userDto);
   }
 
   @Post('signin')
-  @HttpCode(200)
+  //   @HttpCode(200)
   async signUserIn(@Body() userInfo: any) {
-    console.log(userInfo);
     const response = await this.userService.signUserIn(userInfo);
-    console.log(response);
     return response;
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    const response = await this.userService.deleteUser(id);
+    return response;
+  }
+
+  @Put(':id')
+  updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
+    return this.userService.updateUser(id, userDto);
   }
 }
