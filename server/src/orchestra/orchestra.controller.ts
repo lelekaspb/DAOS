@@ -8,40 +8,30 @@ import { OrchestraService } from './orchestra.service';
 
 @Controller('orchestra')
 export class OrchestraController {
-    constructor(private orchService: OrchestraService){}
+  constructor(private orchService: OrchestraService) {}
 
-    // return this.orchestraService.fetchOrchestra();
+  // return this.orchestraService.fetchOrchestra();
 
+  @Get()
+  async getAllOrchestras(@Req() request: Request): Promise<Orchestra[]> {
+    // console.log(request);
+    const result: Orchestra[] = await this.orchService.getAllOrchestras();
+    console.log(result);
+    return result;
+  }
 
-    @Get()
-    async getAllOrchestras(@Req() request: Request) : Promise<Orchestra[]> {
-        // console.log(request);
-        const result: Orchestra[] = await this.orchService.getAllOrchestras();
-        console.log(result);
-        return result;
-    }
+  @Get(':id')
+  getOrchestraById(@Param('id') id: string) {
+    console.log(id);
+    return { id };
+  }
 
-
-
-
-    @Get(':id')
-    getOrchestraById(@Param('id') id:string){
-        console.log(id);
-        return { id };
-    }
-
-    @Post()
-    createOrchestra(@Body() new_data: OrchestraDto){
-
-        return this.orchService.createNewOrchestra(new_data);
+  @Post()
+  createOrchestra(@Body() new_data: OrchestraDto) {
+    return this.orchService.createNewOrchestra(new_data);
 
     // console.log(orchDto.orchestra_name, orchDto.creator_id);
     // this.orchestraService.createOrchestra(new_data);
     // return 1;
-    
-}
-
-
-
-
+  }
 }
