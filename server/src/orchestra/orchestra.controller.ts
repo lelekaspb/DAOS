@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { ClassTransformer } from 'class-transformer';
 import { Request, Response } from 'express';
@@ -29,9 +39,16 @@ export class OrchestraController {
   @Post()
   createOrchestra(@Body() new_data: OrchestraDto) {
     return this.orchService.createNewOrchestra(new_data);
+  }
 
-    // console.log(orchDto.orchestra_name, orchDto.creator_id);
-    // this.orchestraService.createOrchestra(new_data);
-    // return 1;
+  @Delete(':id')
+  async deleteOrchestra(@Param('id') id: string) {
+    const response = await this.orchService.deleteOrchestra(id);
+    return response;
+  }
+
+  @Put(':id')
+  updateOrchestra(@Param('id') id: string, @Body() OrchestraDto: OrchestraDto) {
+    return this.orchService.updateOrchestra(id, OrchestraDto);
   }
 }
