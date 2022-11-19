@@ -1,4 +1,5 @@
 import styles from "./Header.module.css";
+import { Link } from "react-router-dom";
  
 const Header = () => {
   return (
@@ -13,20 +14,20 @@ const Header = () => {
         <div className={styles.nav_right}>
           <ul>
             <li className={styles.nav_link}>
-              <a href="#">Opslag</a>
+              <Link to="#">Opslag</Link>
             </li>
             <li className={styles.nav_link}>
-              <a href="#">Profil</a>
+              <Link to="/UserProfile/:id">Profil</Link>
             </li>
             <li>
-              <a href="#" className={styles.nav_btn_signup}>
+              <Link to="/CreateUser" className={styles.nav_btn_signup}>
                 Opret bruger
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className={styles.nav_btn_login}>
+              <Link to="/Login" className={styles.nav_btn_login}>
                 Log ind
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
