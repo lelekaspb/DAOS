@@ -2,17 +2,16 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
-  HttpCode,
   Param,
   Post,
   Put,
-  Req,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Request } from 'express';
-import { User } from './user.schema';
 import { UserDto } from './user.dto';
+import { JwtAuthGuard } from './../auth/jwt-auth.guard';
+import { OnlySameUserByIdAllowed } from './../auth/user.interceptor';
 
 @Controller('user')
 export class UserController {
@@ -23,19 +22,16 @@ export class UserController {
     return this.userService.createUser(userDto);
   }
 
-  @Post('signin')
-  //   @HttpCode(200)
-  async signUserIn(@Body() userInfo: any) {
-    const response = await this.userService.signUserIn(userInfo);
-    return response;
-  }
-
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlySameUserByIdAllowed)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
     const response = await this.userService.deleteUser(id);
     return response;
   }
 
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlySameUserByIdAllowed)
   @Put(':id')
   updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
     return this.userService.updateUser(id, userDto);

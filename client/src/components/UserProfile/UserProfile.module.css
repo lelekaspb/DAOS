@@ -76,6 +76,11 @@
   font-size: calc(0.7rem + 0.3vw);
 }
 
+.user_details_btn a {
+  text-decoration: none;
+  color: var(--primary-font-color);
+}
+
 .membership {
   display: flex;
   justify-content: flex-end;
@@ -160,6 +165,11 @@
   margin-bottom: 15px;
 }
 
+.info_btn a {
+  text-decoration: none;
+  color: var(--primary-font-color);
+}
+
 .posts_info {
   border-bottom: none;
 }
@@ -171,6 +181,10 @@
   flex-wrap: wrap;
   gap: 50px;
   align-content: flex-start;
+}
+
+.orchestra_link {
+  text-decoration: none;
 }
 
 .orchestra {

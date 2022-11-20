@@ -5,7 +5,7 @@ const AddInstrument = () => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink />
+        <BackLink component="/UserProfile/:id" />
         <h2 className={styles.page_heading}>Tilføj instrument</h2>
         <form className={styles.add_instrument_form}>
           <div className={styles.select_instrument_field}>

@@ -1,5 +1,6 @@
 import FormField from "../FormField/FormField";
 import styles from "./CreateUserProfile.module.css";
+import { Link } from "react-router-dom";
 
 const CreateUserProfile = () => {
   return (
@@ -16,7 +17,9 @@ const CreateUserProfile = () => {
           <FormField name="password" type="password" text="Adgangskode" />
 
           <div className={styles.submit_field}>
-            <button className={styles.submit_btn}>Opret profil</button>
+            <button className={styles.submit_btn}>
+              <Link to="/welcomeUser/:id">Opret profil</Link>
+            </button>
           </div>
         </form>
       </section>

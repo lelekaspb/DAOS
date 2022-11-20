@@ -6,7 +6,7 @@ const EditUserProfile = () => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink />
+        <BackLink component="/UserProfile/:id" />
         <h2 className={styles.page_heading}>Rediger profil</h2>
         <form className={styles.edit_profile_form}>
           <div className={styles.name_fields}>
@@ -16,7 +16,7 @@ const EditUserProfile = () => {
           <div className={styles.picture_field}>
             <span className={styles.label}>Profilbillede</span>
             <img
-              src="./assets/portrait-placeholder.png"
+              src="./../../assets/portrait-placeholder.png"
               className={styles.picture}
               alt="profile picture"
             />
