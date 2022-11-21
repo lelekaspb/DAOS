@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cors());
 
-  await app.listen(3007, () => {
+  await app.listen(process.env.port, () => {
     console.log(`DAOS app listening on port 3007`);
   });
 }
