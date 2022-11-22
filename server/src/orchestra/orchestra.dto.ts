@@ -1,4 +1,4 @@
-import { isEmail, IsNotEmpty } from "class-validator";
+import { isEmail, IsNotEmpty, IsString } from "class-validator";
 
 
 export class OrchestraDto{
@@ -10,13 +10,24 @@ export class OrchestraDto{
     creator_id: string;
 
     // Members: [];
+    @IsString()
     description: string;
+    
+    @IsString()
     website: string;
-    zip_code: number;
+
+    @IsString()
+    zip_code: string;
+
+    @IsString()
     city: string;
-   // musicians_amount: string;
-    practice_frequency: number;
-    //genres: [];
+
+    @IsString()
+    musicians_amount: string;
+
+    @IsString()
+    practice_frequency: string;
+    // genres: [];
 
     constructor (
         orchestra_name: string, 
@@ -24,11 +35,11 @@ export class OrchestraDto{
         // Members: [],
         description: string,
         website: string,
-        zip_code: number,
+        zip_code: string,
         city: string,
-        // musicians_amount: string,
-        practice_frequency: number,
-        //genres: [],
+        musicians_amount: string,
+        practice_frequency: string,
+        // genres: [],
 
         ){
         this.orchestra_name = orchestra_name;
@@ -37,6 +48,7 @@ export class OrchestraDto{
         this.website = website;
         this.zip_code = zip_code;
         this.city = city;
+        this.musicians_amount = musicians_amount;
         this.practice_frequency = practice_frequency;
         
     }
