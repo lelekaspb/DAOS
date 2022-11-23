@@ -10,30 +10,76 @@ import FrontPage from "./components/FrontPage/FrontPage";
 import AddInstrument from "./components/AddInstrument/AddInstrument";
 import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const initialUserInfoState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    picture: "",
+    description: "",
+    zipcode: "",
+    city: "",
+    instruments: [],
+    orchestras: [],
+    searching: false,
+    id: "",
+    createdAt: "",
+    token: "",
+  };
+
+  const [userInfo, setUserInfo] = useState(initialUserInfoState);
+
+  const resetUserInfoState = () => {
+    setUserInfo(initialUserInfoState);
+  };
+
   return (
     <div className="App">
       <Header />
       <Routes>
         <Route path="/" element={<FrontPage />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/CreateUser" element={<CreateUserProfile />} />
-        <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
-        <Route path="/Settings/:id" element={<UserSettings />} />
-        <Route path="/EditProfile/:id" element={<EditUserProfile />} />
-        <Route path="/UserProfile/:id" element={<UserProfile />} />
-        <Route path="/addInstrument/:id" element={<AddInstrument />} />
-        <Route path="/CreateOrchestra/new" element={<CreateOrchestra />} />
-        <Route path="/EditOrchestra/:id" element={<EditOrchestra />} />
+        <Route
+          path="/login"
+          element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
+        />
+        <Route path="/create-profile" element={<CreateUserProfile />} />
+        <Route
+          path="/welcomeUser/:id"
+          element={<WelcomeUser firstName={userInfo.firstName} />}
+        />
+        <Route
+          path="/settings"
+          element={
+            <UserSettings
+              userInfo={userInfo}
+              resetUserInfoState={resetUserInfoState}
+            />
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <EditUserProfile userInfo={userInfo} setUserInfo={setUserInfo} />
+          }
+        />
+        <Route path="/profile" element={<UserProfile userInfo={userInfo} />} />
+        <Route
+          path="/add-instrument"
+          element={
+            <AddInstrument userInfo={userInfo} setUserInfo={setUserInfo} />
+          }
+        />
+        <Route path="/create-orchestra" element={<CreateOrchestra />} />
+        <Route path="/edit-orchestra" element={<EditOrchestra />} />
         <Route path="*" element={<FrontPage />} />
-
-
       </Routes>
       <Footer />
 
-        {/* <Header />
+      {/* <Header />
         <CreateUserProfile />
         <WelcomeUser />
         <UserSettings />

@@ -12,6 +12,7 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
+  // @Prop()
   @Prop({ required: true })
   password: string;
 
@@ -36,9 +37,9 @@ export class User {
   @Prop()
   instruments: Instrument[];
 
-  // @Prop()
+  @Prop()
   // orchestraId: { type: Types.ObjectId; default: null };
-  orchestraId: string;
+  orchestras: [];
 
   @Prop()
   posts: [];

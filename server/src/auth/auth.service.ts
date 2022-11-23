@@ -24,6 +24,7 @@ export class AuthService {
   }
 
   async login(user: any) {
+    // console.log(user);
     if (!user.email || !user.password) {
       throw new BadRequestException();
     }
@@ -39,8 +40,17 @@ export class AuthService {
         email: userObject.email,
         sub: userObject._id.toString(),
       };
+
+      const { password, ...result } = userObject.toObject();
+      // return {
+      //   firstName: userObject.firstName,
+      //   lastName: userObject.lastName,
+      //   id: userObject._id,
+      //   access_token: this.jwtService.sign(payload),
+      // };
       return {
-        access_token: this.jwtService.sign(payload),
+        ...result,
+        token: this.jwtService.sign(payload),
       };
     } catch (err) {
       throw new NotFoundException();
