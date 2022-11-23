@@ -16,7 +16,12 @@ const UserProfile = ({ userInfo }) => {
 
   const listOfOrchestras = userInfo.orchestras_created.map(
     (orchestra, index) => (
-      <Orchestra key={index} title={orchestra.title} linkTo="edit-orchestra" />
+      <Orchestra
+        key={index}
+        title={orchestra.title}
+        linkTo="/edit-orchestra"
+        orchestraId={orchestra.id}
+      />
     )
   );
 

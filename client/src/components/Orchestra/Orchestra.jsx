@@ -1,9 +1,9 @@
 import styles from "./Orchestra.module.css";
 import { Link } from "react-router-dom";
 
-const Orchestra = ({ linkTo, title }) => {
+const Orchestra = ({ linkTo, title, orchestraId }) => {
   return (
-    <Link className={styles.orchestra_link} to={linkTo}>
+    <Link className={styles.orchestra_link} to={linkTo} state={orchestraId}>
       <article className={styles.orchestra}>
         <img
           className={styles.orchestra_picture}

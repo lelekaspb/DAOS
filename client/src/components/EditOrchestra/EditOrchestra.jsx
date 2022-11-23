@@ -2,14 +2,18 @@ import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./EditOrchestra.module.css";
+import { useLocation } from "react-router-dom";
 
 const EditOrchestra = () => {
   // the component is essentially the same as CreateOtchestra,
   // but value of the inputs/selects will be based on state (fetched from backend)
+  const location = useLocation();
+  const orchestraId = location.state;
+  // TODO: fetch, initialize state with the fetched data, listen for changes in form and submit with put request
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/UserProfile/:id" />
+        <BackLink component="/profile" />
         <h2 className={styles.page_heading}>Rediger ensemble</h2>
         <form className={styles.edit_orchestra_form}>
           {/* name field */}
