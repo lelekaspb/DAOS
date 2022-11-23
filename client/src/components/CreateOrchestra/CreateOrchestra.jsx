@@ -7,7 +7,7 @@ const CreateOrchestra = () => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/UserProfile/:id" />
+        <BackLink component="/profile" />
         <h2 className={styles.page_heading}>Opret ensemble</h2>
         <form className={styles.create_orchestra_form}>
           {/* name field */}
