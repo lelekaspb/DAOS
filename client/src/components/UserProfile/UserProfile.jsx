@@ -84,13 +84,7 @@ const UserProfile = ({ userInfo }) => {
 
           {userInfo.instruments.length > 0 && (
             <section className={styles.added_instruments}>
-              {" "}
               {listOfInstruments}
-              {/* <Instrument
-                title="Klarinet"
-                genres={["Kammermusik", "Symfonik", "Folkemusik", "Barok"]}
-              />
-              <Instrument title="Violin" genres={["Kammermusik", "Barok"]} /> */}
             </section>
           )}
         </article>
