@@ -73,7 +73,12 @@ function App() {
             <AddInstrument userInfo={userInfo} setUserInfo={setUserInfo} />
           }
         />
-        <Route path="/create-orchestra" element={<CreateOrchestra />} />
+        <Route
+          path="/create-orchestra"
+          element={
+            <CreateOrchestra userInfo={userInfo} setUserInfo={setUserInfo} />
+          }
+        />
         <Route path="/edit-orchestra" element={<EditOrchestra />} />
         <Route path="*" element={<FrontPage />} />
       </Routes>

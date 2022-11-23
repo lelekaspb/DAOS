@@ -76,7 +76,6 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
   const deleteInstrumentGenre = (event) => {
     event.preventDefault();
     const genreToDelete = event.target.dataset.value;
-    console.log(genreToDelete);
     const indexOfgenreToDelete = instrumentData.genres.findIndex(
       (item) => item === genreToDelete
     );
@@ -99,7 +98,7 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
     <InstrumentGenre
       title={genre}
       key={genre}
-      deleteInstrumentGenre={deleteInstrumentGenre}
+      deleteGenre={deleteInstrumentGenre}
     />
   ));
 
