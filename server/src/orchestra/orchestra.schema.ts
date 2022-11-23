@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsString, isString } from 'class-validator';
 import { Document } from 'mongoose';
 
 export type OrchestraDocument = Orchestra & Document;
@@ -7,13 +8,15 @@ export type OrchestraDocument = Orchestra & Document;
 export class Orchestra {
 
   @Prop({required: true})
+  @IsString()
   orchestra_name: string;
 
   @Prop({ required: true })
+  @IsString()
   creator_id: string;
 
-  @Prop()
-  Members: [];
+  // @Prop()
+  // Members: [];
  
   @Prop()
   description: string;
@@ -22,7 +25,7 @@ export class Orchestra {
   website: string;
   
   @Prop()
-  zip_code: number;
+  zip_code: string;
 
   @Prop()
   city: string;
@@ -31,10 +34,10 @@ export class Orchestra {
   musicians_amount: string;
   
   @Prop()
-  practice_frequency: number;
+  practice_frequency: string;
 
-  @Prop()
-  genres: [];
+  // @Prop()
+  // genres: [];
 
 }
 

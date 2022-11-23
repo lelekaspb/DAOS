@@ -11,14 +11,14 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: () => ({
-        uri: process.env.connection_string,
+         uri: process.env.connection_string,
       }),
     }),
     OrchestraModule,
     UserModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
-  ],
+  ], 
 
   controllers: [AppController],
   providers: [AppService],
