@@ -2,6 +2,7 @@ import EmptyUserProfileSection from "../EmptyUserProfileSection/EmptyUserProfile
 import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
 import { Link } from "react-router-dom";
+import Orchestra from "../Orchestra/Orchestra";
 
 const UserProfile = ({ userInfo }) => {
   const listOfInstruments = userInfo.instruments.map((instrument) => (
@@ -12,6 +13,12 @@ const UserProfile = ({ userInfo }) => {
       genres={instrument.genres}
     />
   ));
+
+  const listOfOrchestras = userInfo.orchestras_created.map(
+    (orchestra, index) => (
+      <Orchestra key={index} title={orchestra.title} linkTo="edit-orchestra" />
+    )
+  );
 
   return (
     <main className={styles.main}>
@@ -99,7 +106,7 @@ const UserProfile = ({ userInfo }) => {
             </button>
           </div>
 
-          {userInfo.orchestras.length == 0 && (
+          {userInfo.orchestras_created.length == 0 && (
             <EmptyUserProfileSection
               heading="Du har ingen ensembler endnu"
               text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
@@ -108,36 +115,9 @@ const UserProfile = ({ userInfo }) => {
             />
           )}
 
-          {userInfo.orchestras.length > 0 && (
+          {userInfo.orchestras_created.length > 0 && (
             <section className={styles.added_orchestras}>
-              <Link className={styles.orchestra_link} to="edit-orchestra">
-                <article className={styles.orchestra}>
-                  <img
-                    className={styles.orchestra_picture}
-                    src="./../../assets/placeholder-rectangle.png"
-                    alt="cover picture"
-                  />
-                  <div className={styles.orchestra_title}>
-                    <h4 className={styles.orchestra_title_heading}>
-                      Århus Klassiske Ensemble
-                    </h4>
-                  </div>
-                </article>
-              </Link>
-              <Link className={styles.orchestra_link} to="edit-orchestra">
-                <article className={styles.orchestra}>
-                  <img
-                    className={styles.orchestra_picture}
-                    src="./../../assets/placeholder-rectangle.png"
-                    alt="cover picture"
-                  />
-                  <div className={styles.orchestra_title}>
-                    <h4 className={styles.orchestra_title_heading}>
-                      Århus Klassiske Ensemble
-                    </h4>
-                  </div>
-                </article>
-              </Link>
+              {listOfOrchestras}
             </section>
           )}
         </article>

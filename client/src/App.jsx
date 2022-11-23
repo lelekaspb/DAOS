@@ -24,7 +24,7 @@ function App() {
     zipcode: "",
     city: "",
     instruments: [],
-    orchestras: [],
+    orchestras_created: [],
     searching: false,
     id: "",
     createdAt: "",

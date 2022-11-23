@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Instrument } from './instrument.interface';
+import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 export type UserDocument = User & Document;
 
@@ -39,7 +40,7 @@ export class User {
 
   @Prop()
   // orchestraId: { type: Types.ObjectId; default: null };
-  orchestras: [];
+  orchestras_created: OrchestraPropertyDto[];
 
   @Prop()
   posts: [];

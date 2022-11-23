@@ -53,7 +53,7 @@ const Login = ({ userInfo, setUserInfo }) => {
           zipcode: data.zipcode || "",
           city: data.city || "",
           instruments: data.instruments,
-          orchestras: data.orchestras,
+          orchestras_created: data.orchestras_created,
           searching: data.searching || false,
           id: data._id,
           createdAt: data.createdAt,

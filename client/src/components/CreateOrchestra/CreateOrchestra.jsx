@@ -3,6 +3,7 @@ import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./CreateOrchestra.module.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateOrchestra = ({ userInfo, setUserInfo }) => {
   const initialOrchestraState = {
@@ -30,7 +31,6 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
   };
 
   const handleGenreInput = (event) => {
-    console.log(event.target.value);
     const select = event.target;
     // check if the genre is already in the array
     const genreExists = orchestraData.genres.find(
@@ -73,6 +73,35 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
     />
   ));
 
+  let navigate = useNavigate();
+  const redirectToProfile = () => {
+    navigate("/profile");
+  };
+
+  const addCreatedOrchestraToUser = async (orchestraId, orchestraTitle) => {
+    const payload = {
+      title: orchestraTitle,
+      id: orchestraId,
+    };
+    const url = `http://127.0.0.1:3007/user/${userInfo.id}/orchestra`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      const request = await fetch(url, options);
+      const data = await request.json();
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const postOrchestra = async () => {
     const url = `http://127.0.0.1:3007/orchestra`;
     const options = {
@@ -86,8 +115,24 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
 
     try {
       const request = await fetch(url, options);
-      const data = await request.json();
-      console.log(data);
+      const orchestra = await request.json();
+      if (orchestra._id) {
+        // add the created orchestra id to orhestras_created of the logged in user
+        const userWithOrchestra = await addCreatedOrchestraToUser(
+          orchestra._id,
+          orchestra.title
+        );
+        if (userWithOrchestra._id) {
+          // update userInfo state so it has the newly created orchestra
+          setUserInfo({
+            ...userInfo,
+            orchestras_created: userWithOrchestra.orchestras_created,
+          });
+
+          // redirect to profile page
+          redirectToProfile();
+        }
+      }
     } catch (err) {
       console.error(err);
     }

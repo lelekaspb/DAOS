@@ -26,7 +26,6 @@ export class AppController {
   login(@Request() req) {
     console.log('app.controller auth/login');
     const response = this.authService.login(req.body);
-    console.log(response);
     return response;
   }
 }

@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { InstrumentDto } from './instrument.dto';
 import { Instrument } from './instrument.interface';
+import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 export class UserDto {
   @IsNotEmpty()
@@ -58,7 +59,10 @@ export class UserDto {
 
   @IsOptional()
   @IsArray()
-  orchestras: [];
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @Type(() => OrchestraPropertyDto)
+  orchestras_created: OrchestraPropertyDto[];
 
   @IsOptional()
   @IsBoolean()

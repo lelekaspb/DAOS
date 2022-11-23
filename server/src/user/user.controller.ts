@@ -14,6 +14,7 @@ import { UserDto } from './user.dto';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import { OnlySameUserByIdAllowed } from './../auth/user.interceptor';
 import { InstrumentDto } from './instrument.dto';
+import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 @Controller('user')
 export class UserController {
@@ -61,5 +62,18 @@ export class UserController {
     console.log(id);
     console.log(instrument);
     return this.userService.addInstrumentToUser(id, instrument);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlySameUserByIdAllowed)
+  @Put(':id/orchestra')
+  addOrchestraToUser(
+    @Param('id') id: string,
+    @Body() orchestra: OrchestraPropertyDto,
+  ) {
+    console.log('addOrchestra user.controller');
+    console.log(id);
+    console.log(orchestra);
+    return this.userService.addOrchestraToUser(id, orchestra);
   }
 }
