@@ -1,4 +1,5 @@
 import styles from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -10,9 +11,12 @@ const Footer = () => {
             <a href="#" className={styles.footer_nav_link}>
               Se opslag
             </a>
-            <a href="#" className={styles.footer_nav_link}>
+            <Link to="/find-orchestra" className={styles.footer_nav_link}>
+              Finde ensemble
+            </Link>
+            <Link to="/profile" className={styles.footer_nav_link}>
               Profil
-            </a>
+            </Link>
           </div>
           <div className={styles.footer_some}>
             <div>is</div>

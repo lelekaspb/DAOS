@@ -17,7 +17,11 @@
 
 .orchestra_title,
 .orchestra_details,
-.membership {
+.membership,
+.orchestra_description,
+.orchestra_amount,
+.orchestra_frequency,
+.orchestra_genres {
   padding: 10px 15px;
 }
 
@@ -44,4 +48,11 @@
   cursor: pointer;
   font-weight: 600;
   font-size: calc(0.6rem + 0.3vw);
+}
+
+.orchestra_genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-content: flex-start;
 }

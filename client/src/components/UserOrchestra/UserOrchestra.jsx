@@ -1,6 +1,17 @@
-import styles from "./OrchestraItem.module.css";
+import OrchestraGenre from "../OrchestraGenre/OrchestraGenre";
+import styles from "./UserOrchestra.module.css";
 
-const OrchestraItem = ({ title, zipcode, city, website, isMember }) => {
+const OrchestraItem = ({
+  title,
+  zipcode,
+  city,
+  website,
+  isMember,
+  description = null,
+  musitiansAmount = null,
+  frequency = null,
+  genres = null,
+}) => {
   return (
     <article className={styles.orchestra}>
       <img
@@ -17,6 +28,22 @@ const OrchestraItem = ({ title, zipcode, city, website, isMember }) => {
         </span>
         <span className={styles.orchestra_website}>{website}</span>
       </div>
+      {description && (
+        <div className={styles.orchestra_description}>{description}</div>
+      )}
+      {musitiansAmount && (
+        <div className={styles.orchestra_amount}>{musitiansAmount}</div>
+      )}
+      {frequency && (
+        <div className={styles.orchestra_frequency}>{frequency}</div>
+      )}
+      {genres && (
+        <div className={styles.orchestra_genres}>
+          {genres.map((genre, index) => (
+            <OrchestraGenre key={index} title={genre} />
+          ))}
+        </div>
+      )}
       <div className={styles.membership}>
         {isMember && (
           <button className={styles.leave_orchestra}>Forlade ensemblet</button>

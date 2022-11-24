@@ -10,7 +10,8 @@ import FrontPage from "./components/FrontPage/FrontPage";
 import AddInstrument from "./components/AddInstrument/AddInstrument";
 import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
-import OrchestraList from "./components/OrchestraList/OrchestraList";
+import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
+import FindOrchestra from "./components/FindOrchestra/FindOrchestra";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
@@ -43,7 +44,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<FrontPage />} />
-        <Route path="/orchestras" element={<OrchestraList />} />
+        <Route path="/orchestras" element={<UserOrchestras />} />
         <Route
           path="/login"
           element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
@@ -82,6 +83,7 @@ function App() {
           }
         />
         <Route path="/edit-orchestra" element={<EditOrchestra />} />
+        <Route path="/find-orchestra" element={<FindOrchestra />} />
         <Route path="*" element={<FrontPage />} />
       </Routes>
       <Footer />

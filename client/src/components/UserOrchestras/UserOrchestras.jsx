@@ -1,10 +1,10 @@
 import { useState } from "react";
-import styles from "./OrchestraList.module.css";
-import OrchestraItem from "../OrchestraItem/OrchestraItem";
+import styles from "./UserOrchestras.module.css";
+import UserOrchestra from "../UserOrchestra/UserOrchestra";
 import { useEffect } from "react";
 
-const OrchestraList = () => {
-  const [orchestras, setOrchestras] = useState(["1", "2"]);
+const UserOrchestras = () => {
+  const [orchestras, setOrchestras] = useState([]);
 
   useEffect(() => {
     const fetchAllOrchestras = async () => {
@@ -29,19 +29,18 @@ const OrchestraList = () => {
   }, []);
 
   const listOfAllOrchestras = orchestras.map((orchestra, index) => (
-    <OrchestraItem
+    <UserOrchestra
       key={index}
       title={orchestra.title}
       zipcode={orchestra.zipcode}
       city={orchestra.city}
       website={orchestra.website}
-      isMember={false}
+      isMember={true}
     />
   ));
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        orchestras here
         <article className={styles.orchestra_list}>
           {listOfAllOrchestras}
         </article>
@@ -50,4 +49,4 @@ const OrchestraList = () => {
   );
 };
 
-export default OrchestraList;
+export default UserOrchestras;

@@ -4,6 +4,7 @@ const InstrumentGenre = ({ title, deleteGenre }) => {
   return (
     <div className={styles.instrument_genre}>
       <span>{title}</span>
+
       <button
         type="button"
         className={styles.delete_genre}
