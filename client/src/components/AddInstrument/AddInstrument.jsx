@@ -38,7 +38,6 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target);
     // TODO: add select validation - do not send fetch request unless both selects are filled in
     postInstrument();
   };
@@ -57,7 +56,6 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log(data);
       if (data._id == userInfo.id) {
         // add the instrument to instrument array in userInfo state
         setUserInfo({

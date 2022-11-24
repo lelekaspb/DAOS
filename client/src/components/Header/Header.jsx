@@ -6,15 +6,21 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.nav_left}>
-          <span className={styles.logo}>Musik Samspil</span>
+          <Link to="/" className={styles.logo_link}>
+            <span className={styles.logo}>Musik Samspil</span>{" "}
+          </Link>
           <span className={styles.description}>
             Skabt af DAOS - Dansk Amatørorkester Samvirke
           </span>
         </div>
+
         <div className={styles.nav_right}>
           <ul>
             <li className={styles.nav_link}>
-              <Link to="#">Opslag</Link>
+              <Link to="/orchestras">Ensembler</Link>
+            </li>
+            <li className={styles.nav_link}>
+              <Link to="/">Opslag</Link>
             </li>
             <li className={styles.nav_link}>
               <Link to="/profile">Profil</Link>

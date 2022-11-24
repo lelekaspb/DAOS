@@ -10,6 +10,7 @@ import FrontPage from "./components/FrontPage/FrontPage";
 import AddInstrument from "./components/AddInstrument/AddInstrument";
 import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
+import OrchestraList from "./components/OrchestraList/OrchestraList";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
@@ -42,6 +43,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<FrontPage />} />
+        <Route path="/orchestras" element={<OrchestraList />} />
         <Route
           path="/login"
           element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
