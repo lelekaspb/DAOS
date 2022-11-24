@@ -1,61 +1,54 @@
-import { isEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, isEmail, IsNotEmpty, IsString } from 'class-validator';
 
+export class OrchestraDto {
+  @IsNotEmpty()
+  title: string;
 
-export class OrchestraDto{
+  @IsNotEmpty()
+  creator_id: string;
 
-    @IsNotEmpty()
-    orchestra_name: string;
+  // Members: [];
+  @IsString()
+  description: string;
 
-    @IsNotEmpty()
-    creator_id: string;
+  @IsString()
+  website: string;
 
-    // Members: [];
-    @IsString()
-    description: string;
-    
-    @IsString()
-    website: string;
+  @IsString()
+  zipcode: string;
 
-    @IsString()
-    zip_code: string;
+  @IsString()
+  city: string;
 
-    @IsString()
-    city: string;
+  @IsString()
+  musicians_amount: string;
 
-    @IsString()
-    musicians_amount: string;
+  @IsString()
+  practice_frequency: string;
 
-    @IsString()
-    practice_frequency: string;
-    // genres: [];
+  @IsArray()
+  genres: [];
 
-    constructor (
-        orchestra_name: string, 
-        creator_id: string,
-        // Members: [],
-        description: string,
-        website: string,
-        zip_code: string,
-        city: string,
-        musicians_amount: string,
-        practice_frequency: string,
-        // genres: [],
-
-        ){
-        this.orchestra_name = orchestra_name;
-        this.creator_id = creator_id;
-        this.description = description;
-        this.website = website;
-        this.zip_code = zip_code;
-        this.city = city;
-        this.musicians_amount = musicians_amount;
-        this.practice_frequency = practice_frequency;
-        
-    }
-
-
-        
-    
-
-
+  constructor(
+    title: string,
+    creator_id: string,
+    // Members: [],
+    description: string,
+    website: string,
+    zipcode: string,
+    city: string,
+    musicians_amount: string,
+    practice_frequency: string,
+    genres: [],
+  ) {
+    this.title = title;
+    this.creator_id = creator_id;
+    this.description = description;
+    this.website = website;
+    this.zipcode = zipcode;
+    this.city = city;
+    this.musicians_amount = musicians_amount;
+    this.practice_frequency = practice_frequency;
+    this.genres = genres;
+  }
 }

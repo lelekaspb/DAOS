@@ -182,36 +182,3 @@
   gap: 50px;
   align-content: flex-start;
 }
-
-.orchestra_link {
-  text-decoration: none;
-}
-
-.orchestra {
-  max-width: 475px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 1px 1px #d9d9d9;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.orchestra_picture {
-  max-width: 100%;
-  height: auto;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
-
-.orchestra_title {
-  padding: 10px 15px;
-}
-
-.orchestra_title_heading {
-  composes: heading from "./../../styleUtils.css";
-  color: var(--primary-font-color);
-  font-size: calc(0.9rem + 0.3vw);
-  font-weight: 500;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}

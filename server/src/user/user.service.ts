@@ -9,6 +9,8 @@ import mongoose, { Model } from 'mongoose';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
+import { InstrumentDto } from './instrument.dto';
+import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 @Injectable()
 export class UserService {
@@ -68,5 +70,36 @@ export class UserService {
 
   deleteMany(deleteCriteria: any) {
     return this.userModel.deleteMany(deleteCriteria);
+  }
+
+  async changePassword(id: string, passwords: any) {
+    const query: any = { _id: new mongoose.Types.ObjectId(id) };
+    const user = await this.userModel.findOne(query).exec();
+
+    const isMatch = await bcrypt.compare(passwords.current, user.password);
+    if (isMatch) {
+      const hashedPassword = await bcrypt.hash(passwords.new, 12);
+      user.password = hashedPassword;
+      user.save();
+      return user;
+    }
+
+    return null;
+  }
+
+  async addInstrumentToUser(id: string, instrument: InstrumentDto) {
+    const query: any = { _id: new mongoose.Types.ObjectId(id) };
+    const user = await this.userModel.findOne(query).exec();
+    user.instruments.push(instrument);
+    user.save();
+    return user;
+  }
+
+  async addOrchestraToUser(userId: string, orchestra: OrchestraPropertyDto) {
+    const query: any = { _id: new mongoose.Types.ObjectId(userId) };
+    const user = await this.userModel.findOne(query).exec();
+    user.orchestras_created.push(orchestra);
+    user.save();
+    return user;
   }
 }

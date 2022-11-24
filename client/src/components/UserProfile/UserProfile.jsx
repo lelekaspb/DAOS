@@ -2,8 +2,29 @@ import EmptyUserProfileSection from "../EmptyUserProfileSection/EmptyUserProfile
 import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
 import { Link } from "react-router-dom";
+import Orchestra from "../Orchestra/Orchestra";
 
-const UserProfile = () => {
+const UserProfile = ({ userInfo }) => {
+  const listOfInstruments = userInfo.instruments.map((instrument) => (
+    <Instrument
+      key={instrument.title}
+      // deleteInstrument={deleteInstrument}
+      title={instrument.title}
+      genres={instrument.genres}
+    />
+  ));
+
+  const listOfOrchestras = userInfo.orchestras_created.map(
+    (orchestra, index) => (
+      <Orchestra
+        key={index}
+        title={orchestra.title}
+        linkTo="/edit-orchestra"
+        orchestraId={orchestra.id}
+      />
+    )
+  );
+
   return (
     <main className={styles.main}>
       <section className={styles.content}>
@@ -18,16 +39,24 @@ const UserProfile = () => {
                 />
               </div>
               <div className={styles.user_details_right}>
-                <h2 className={styles.page_heading}>Susanne Nielsen</h2>
-                <span className={styles.created_at}>Oprettet Maj 2020</span>
+                <h2 className={styles.page_heading}>
+                  {userInfo.firstName}&nbsp;{userInfo.lastName}
+                </h2>
+                <span className={styles.created_at}>
+                  Oprettet{" "}
+                  {new Date(userInfo.createdAt).toLocaleString("da-DK", {
+                    year: "numeric",
+                    month: "long",
+                  })}
+                </span>
               </div>
             </div>
             <div className={styles.buttons}>
               <button className={styles.user_details_btn}>
-                <Link to="/EditProfile/:id">Rediger profil</Link>
+                <Link to="/edit-profile">Rediger profil</Link>
               </button>
               <button className={styles.user_details_btn}>
-                <Link to="/Settings/:id">Indstillinger</Link>
+                <Link to="/settings">Indstillinger</Link>
               </button>
             </div>
           </div>
@@ -46,70 +75,59 @@ const UserProfile = () => {
             </div>
           </div>
         </article>
+
+        {/* instruments section */}
         <article className={styles.instruments_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine instrumenter</h2>
             <button className={styles.info_btn}>
-              <Link to="/addInstrument/:id">Tilføj</Link>
+              <Link to="/add-instrument">Tilføj</Link>
             </button>
           </div>
-          {/* <EmptyUserProfileSection
-            heading="Du har ingen instrumenter endnu"
-            text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
-            cta="Tilføj instrument"
-          /> */}
 
-          <section className={styles.added_instruments}>
-            <Instrument
-              title="Klarinet"
-              genres={["Kammermusik", "Symfonik", "Folkemusik", "Barok"]}
+          {userInfo.instruments.length == 0 && (
+            <EmptyUserProfileSection
+              heading="Du har ingen instrumenter endnu"
+              text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
+              cta="Tilføj instrument"
+              linkTo="/add-instrument"
             />
-            <Instrument title="Violin" genres={["Kammermusik", "Barok"]} />
-          </section>
+          )}
+
+          {userInfo.instruments.length > 0 && (
+            <section className={styles.added_instruments}>
+              {listOfInstruments}
+            </section>
+          )}
         </article>
+        {/* instruments section end */}
+
+        {/* orchestras section */}
         <article className={styles.orchestras_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine ensembler</h2>
             <button className={styles.info_btn}>
-              <Link to="/CreateOrchestra/new">Opret</Link>
+              <Link to="/create-orchestra">Opret</Link>
             </button>
           </div>
-          {/* <EmptyUserProfileSection
-            heading="Du har ingen ensembler endnu"
-            text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
-            cta="Opret ensemble"
-          /> */}
-          <section className={styles.added_orchestras}>
-            <Link className={styles.orchestra_link} to="/EditOrchestra/:id">
-              <article className={styles.orchestra}>
-                <img
-                  className={styles.orchestra_picture}
-                  src="./../../assets/placeholder-rectangle.png"
-                  alt="cover picture"
-                />
-                <div className={styles.orchestra_title}>
-                  <h4 className={styles.orchestra_title_heading}>
-                    Århus Klassiske Ensemble
-                  </h4>
-                </div>
-              </article>
-            </Link>
-            <Link className={styles.orchestra_link} to="/EditOrchestra/:id">
-              <article className={styles.orchestra}>
-                <img
-                  className={styles.orchestra_picture}
-                  src="./../../assets/placeholder-rectangle.png"
-                  alt="cover picture"
-                />
-                <div className={styles.orchestra_title}>
-                  <h4 className={styles.orchestra_title_heading}>
-                    Århus Klassiske Ensemble
-                  </h4>
-                </div>
-              </article>
-            </Link>
-          </section>
+
+          {userInfo.orchestras_created.length == 0 && (
+            <EmptyUserProfileSection
+              heading="Du har ingen ensembler endnu"
+              text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
+              cta="Opret ensemble"
+              linkTo="/create-orchestra"
+            />
+          )}
+
+          {userInfo.orchestras_created.length > 0 && (
+            <section className={styles.added_orchestras}>
+              {listOfOrchestras}
+            </section>
+          )}
         </article>
+        {/* orchestras section end */}
+
         <article className={styles.posts_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine opslag</h2>

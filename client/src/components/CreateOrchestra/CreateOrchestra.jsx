@@ -1,17 +1,162 @@
+import { useState } from "react";
 import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./CreateOrchestra.module.css";
+import { useNavigate } from "react-router-dom";
 
-const CreateOrchestra = () => {
+const CreateOrchestra = ({ userInfo, setUserInfo }) => {
+  const initialOrchestraState = {
+    title: "",
+    creator_id: userInfo.id,
+    description: "",
+    website: "",
+    zipcode: "",
+    city: "",
+    musicians_amount: "",
+    practice_frequency: "",
+    genres: [],
+  };
+
+  const [orchestraData, setOrchestraData] = useState(initialOrchestraState);
+
+  const handleInput = (event) => {
+    const property = event.target.name;
+    const propertyValue = event.target.value;
+
+    setOrchestraData({
+      ...orchestraData,
+      [property]: propertyValue,
+    });
+  };
+
+  const handleGenreInput = (event) => {
+    const select = event.target;
+    // check if the genre is already in the array
+    const genreExists = orchestraData.genres.find(
+      (genre) => genre === select.value
+    );
+    if (!genreExists) {
+      setOrchestraData({
+        ...orchestraData,
+        genres: orchestraData.genres.concat(select.value),
+      });
+    }
+  };
+
+  const deleteOrchestraGenre = (event) => {
+    event.preventDefault();
+    const genreToDelete = event.target.dataset.value;
+    const indexOfgenreToDelete = orchestraData.genres.findIndex(
+      (item) => item === genreToDelete
+    );
+    if (indexOfgenreToDelete > -1) {
+      const firstPart = orchestraData.genres.slice(0, indexOfgenreToDelete);
+      const lastPart = orchestraData.genres.slice(
+        indexOfgenreToDelete + 1,
+        orchestraData.genres.length
+      );
+
+      setOrchestraData({
+        ...orchestraData,
+        ...orchestraData.genres,
+        genres: [...firstPart, ...lastPart],
+      });
+    }
+  };
+
+  const listOfGenres = orchestraData.genres.map((genre) => (
+    <InstrumentGenre
+      title={genre}
+      key={genre}
+      deleteGenre={deleteOrchestraGenre}
+    />
+  ));
+
+  let navigate = useNavigate();
+  const redirectToProfile = () => {
+    navigate("/profile");
+  };
+
+  const addCreatedOrchestraToUser = async (orchestraId, orchestraTitle) => {
+    const payload = {
+      title: orchestraTitle,
+      id: orchestraId,
+    };
+    const url = `http://127.0.0.1:3007/user/${userInfo.id}/orchestra`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      body: JSON.stringify(payload),
+    };
+
+    try {
+      const request = await fetch(url, options);
+      const data = await request.json();
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const postOrchestra = async () => {
+    const url = `http://127.0.0.1:3007/orchestra`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        // Authorization: `Bearer ${userInfo.token}`,
+      },
+      body: JSON.stringify(orchestraData),
+    };
+
+    try {
+      const request = await fetch(url, options);
+      const orchestra = await request.json();
+      if (orchestra._id) {
+        // add the created orchestra id to orhestras_created of the logged in user
+        const userWithOrchestra = await addCreatedOrchestraToUser(
+          orchestra._id,
+          orchestra.title
+        );
+        if (userWithOrchestra._id) {
+          // update userInfo state so it has the newly created orchestra
+          setUserInfo({
+            ...userInfo,
+            orchestras_created: userWithOrchestra.orchestras_created,
+          });
+
+          // redirect to profile page
+          redirectToProfile();
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    postOrchestra();
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/UserProfile/:id" />
+        <BackLink component="/profile" />
         <h2 className={styles.page_heading}>Opret ensemble</h2>
-        <form className={styles.create_orchestra_form}>
+        <form className={styles.create_orchestra_form} onSubmit={handleSubmit}>
           {/* name field */}
-          <FormField name="name" type="text" text="Ensemblets navn" />
+          <FormField
+            name="title"
+            type="text"
+            text="Ensemblets navn"
+            handleInput={handleInput}
+            value={orchestraData.title}
+          />
 
           {/* picture field */}
           <div className={styles.picture_field}>
@@ -33,29 +178,52 @@ const CreateOrchestra = () => {
             <textarea
               className={styles.description_input}
               placeholder="Skriv en kort beskrivelse af jeres emsemble eller orkester..."
-            ></textarea>
+              name="description"
+              id="description"
+              onChange={handleInput}
+              value={orchestraData.description}
+            />
             <span className={styles.help_block}></span>
           </div>
 
           {/* website field */}
-          <FormField name="website" type="text" text="Hjemmeside" />
+          <FormField
+            name="website"
+            type="text"
+            text="Hjemmeside"
+            handleInput={handleInput}
+            value={orchestraData.website}
+          />
 
           {/* location fields */}
           <div className={styles.location_field}>
-            <FormField name="zip_code" text="Postnummer" type="text" />
-            <FormField name="city" text="By" type="text" />
+            <FormField
+              name="zipcode"
+              text="Postnummer"
+              type="text"
+              handleInput={handleInput}
+              value={orchestraData.zipcode}
+            />
+            <FormField
+              name="city"
+              text="By"
+              type="text"
+              handleInput={handleInput}
+              value={orchestraData.city}
+            />
           </div>
 
           {/* amount of musitians field */}
           <div className={styles.musitians_amount_form_field}>
-            <label className={styles.label} htmlFor="select_musitians_amount">
+            <label className={styles.label} htmlFor="musicians_amount">
               Antal aktive musikere
             </label>
             <select
-              id="select_musitians_amount"
-              name="select_musitians_amount"
-              defaultValue="vælg"
+              id="musicians_amount"
+              name="musicians_amount"
               className={styles.select}
+              onChange={handleInput}
+              value={orchestraData.musicians_amount}
             >
               <option value="vælg">Vælg antal</option>
               <option value="1-4">1 - 4 musikere</option>
@@ -69,14 +237,15 @@ const CreateOrchestra = () => {
 
           {/* frequency of practice field */}
           <div className={styles.frequency_form_field}>
-            <label className={styles.label} htmlFor="select_frequency">
+            <label className={styles.label} htmlFor="practice_frequency">
               Øvefrekvens
             </label>
             <select
-              id="select_frequency"
-              name="select_frequency"
-              defaultValue="vælg"
+              id="practice_frequency"
+              name="practice_frequency"
               className={styles.select}
+              onChange={handleInput}
+              value={orchestraData.practice_frequency}
             >
               <option value="vælg">Vælg frekvens</option>
               <option value="few_times_a_week">Flere gange om ugen</option>
@@ -90,14 +259,15 @@ const CreateOrchestra = () => {
 
           {/* genres field */}
           <div className={styles.genres_form_field}>
-            <label className={styles.label} htmlFor="select_genre">
+            <label className={styles.label} htmlFor="genre">
               Genrer
             </label>
             <select
-              id="select_genre"
-              name="select_genre"
+              id="genre"
+              name="genre"
               defaultValue="vælg"
               className={styles.select}
+              onChange={handleGenreInput}
             >
               <option value="vælg">Genrer</option>
               <option value="Kammermusik">Kammermusik</option>
@@ -108,11 +278,13 @@ const CreateOrchestra = () => {
               <option value="Senmoderne">Senmoderne</option>
               <option value="Senromantisk">Senromantisk</option>
             </select>
+            {/* <span className={styles.help_block}></span> */}
             <div className={styles.selected_genres}>
-              <InstrumentGenre title="Kammermusik" />
-              <InstrumentGenre title="Barok" />
+              {" "}
+              {listOfGenres}
+              {/* <InstrumentGenre title="Kammermusik" />
+              <InstrumentGenre title="Barok" /> */}
             </div>
-            <span className={styles.help_block}></span>
           </div>
 
           {/* submit field */}

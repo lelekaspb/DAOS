@@ -1,16 +1,18 @@
 import styles from "./WelcomeUser.module.css";
 import { Link } from "react-router-dom";
 
-const WelcomeUser = () => {
+const WelcomeUser = ({ firstName }) => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <h2 className={styles.page_heading}>Velkommen Susanne!</h2>
+        <h2 className={styles.page_heading}>
+          Velkommen <span>{firstName}</span>
+        </h2>
         <p className={styles.explain_text}>
           Tilføj de instrumenter du kan spille på for at fædiggøre din profil.
         </p>
 
-        <Link className={styles.finish_profile_btn} to="/EditProfile/:id">
+        <Link className={styles.finish_profile_btn} to="/edit-profile">
           Fædiggøre profil
         </Link>
 

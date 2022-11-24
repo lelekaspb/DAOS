@@ -9,7 +9,7 @@ async function bootstrap() {
   app.use(cors());
 
   await app.listen(process.env.port, () => {
-    console.log(`DAOS app listening on port 3007`);
+    console.log(`DAOS app listening on port ${process.env.port}`);
   });
 }
 bootstrap();

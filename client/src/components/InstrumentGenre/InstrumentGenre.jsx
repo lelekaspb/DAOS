@@ -1,10 +1,17 @@
 import styles from "./InstrumentGenre.module.css";
 
-const InstrumentGenre = ({ title }) => {
+const InstrumentGenre = ({ title, deleteGenre }) => {
   return (
     <div className={styles.instrument_genre}>
       <span>{title}</span>
-      <button className={styles.delete_genre}>&#10006;</button>
+      <button
+        type="button"
+        className={styles.delete_genre}
+        onClick={deleteGenre}
+        data-value={title}
+      >
+        &#10006;
+      </button>
     </div>
   );
 };

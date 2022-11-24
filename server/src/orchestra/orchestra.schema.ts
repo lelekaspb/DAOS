@@ -6,10 +6,9 @@ export type OrchestraDocument = Orchestra & Document;
 
 @Schema()
 export class Orchestra {
-
-  @Prop({required: true})
+  @Prop({ required: true })
   @IsString()
-  orchestra_name: string;
+  title: string;
 
   @Prop({ required: true })
   @IsString()
@@ -17,28 +16,27 @@ export class Orchestra {
 
   // @Prop()
   // Members: [];
- 
+
   @Prop()
   description: string;
 
   @Prop()
   website: string;
-  
+
   @Prop()
-  zip_code: string;
+  zipcode: string;
 
   @Prop()
   city: string;
 
   @Prop()
   musicians_amount: string;
-  
+
   @Prop()
   practice_frequency: string;
 
-  // @Prop()
-  // genres: [];
-
+  @Prop()
+  genres: [];
 }
 
 export const OrchestraSchema = SchemaFactory.createForClass(Orchestra);
