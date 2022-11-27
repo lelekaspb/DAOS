@@ -1,16 +1,22 @@
 import OrchestraGenre from "../OrchestraGenre/OrchestraGenre";
 import styles from "./UserOrchestra.module.css";
 
-const OrchestraItem = ({
+const UserOrchestra = ({
   title,
   zipcode,
   city,
   website,
   isMember,
-  description = null,
-  musitiansAmount = null,
-  frequency = null,
-  genres = null,
+  members,
+  orchestraId,
+  userId,
+  // description = null,
+  // musitiansAmount = null,
+  // frequency = null,
+  // genres = null,
+  addMember = null,
+  deleteMember = null,
+  leaveOrchestra = null,
 }) => {
   return (
     <article className={styles.orchestra}>
@@ -28,32 +34,71 @@ const OrchestraItem = ({
         </span>
         <span className={styles.orchestra_website}>{website}</span>
       </div>
-      {description && (
-        <div className={styles.orchestra_description}>{description}</div>
-      )}
-      {musitiansAmount && (
-        <div className={styles.orchestra_amount}>{musitiansAmount}</div>
-      )}
-      {frequency && (
-        <div className={styles.orchestra_frequency}>{frequency}</div>
-      )}
-      {genres && (
-        <div className={styles.orchestra_genres}>
-          {genres.map((genre, index) => (
-            <OrchestraGenre key={index} title={genre} />
-          ))}
+      {members.length > 0 && (
+        <div className={styles.members}>
+          <h4 className={styles.label}>Medlemmer</h4>
+          <div className={styles.members_list}>{members}</div>
         </div>
       )}
+
+      {members.length == 0 && (
+        <div className={styles.members}>
+          <h4 className={styles.label}>Ingen medlemmer</h4>
+        </div>
+      )}
+
+      {/* {description && (
+        <div className={styles.orchestra_description}>
+          <h4 className={styles.label}>Beskrivelse</h4>
+          <span className={styles.text}>{description}</span>
+        </div>
+      )} */}
+      {/* {musitiansAmount && (
+        <div className={styles.orchestra_amount}>
+          <h4 className={styles.label}>Antal aktive musikere</h4>
+          <span className={styles.text}>{musitiansAmount}</span>
+        </div>
+      )}
+      {frequency && (
+        <div className={styles.orchestra_frequency}>
+          <h4 className={styles.label}>Øvefrekvens</h4>
+          <span className={styles.text}>{frequency}</span>
+        </div>
+      )} */}
+      {/* {genres && (
+        <div className={styles.orchestra_genres}>
+          <h4 className={styles.label}>Genrer</h4>
+          <div className={styles.genres_container}>
+            {genres.map((genre, index) => (
+              <OrchestraGenre key={index} title={genre} />
+            ))}
+          </div>
+        </div>
+      )} */}
       <div className={styles.membership}>
         {isMember && (
-          <button className={styles.leave_orchestra}>Forlade ensemblet</button>
+          <button
+            className={styles.leave_orchestra}
+            onClick={deleteMember}
+            data-orchestra={orchestraId}
+            data-user={userId}
+          >
+            Forlade ensemblet
+          </button>
         )}
         {!isMember && (
-          <button className={styles.become_member}>Bliv medlem</button>
+          <button
+            className={styles.become_member}
+            onClick={addMember}
+            data-orchestra={orchestraId}
+            data-user={userId}
+          >
+            Bliv medlem
+          </button>
         )}
       </div>
     </article>
   );
 };
 
-export default OrchestraItem;
+export default UserOrchestra;

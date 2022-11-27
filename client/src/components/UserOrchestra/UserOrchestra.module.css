@@ -21,7 +21,8 @@
 .orchestra_description,
 .orchestra_amount,
 .orchestra_frequency,
-.orchestra_genres {
+.orchestra_genres,
+.members {
   padding: 10px 15px;
 }
 
@@ -50,9 +51,30 @@
   font-size: calc(0.6rem + 0.3vw);
 }
 
-.orchestra_genres {
+.genres_container {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
   align-content: flex-start;
+}
+
+.label {
+  color: var(--primary-font-color);
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.text,
+.members_list {
+  color: var(--primary-font-color);
+  font-size: 12px;
+}
+
+.members_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.membership {
+  margin-top: auto;
 }

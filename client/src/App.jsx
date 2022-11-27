@@ -44,7 +44,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<FrontPage />} />
-        <Route path="/orchestras" element={<UserOrchestras />} />
+        <Route
+          path="/orchestras"
+          element={<UserOrchestras userInfo={userInfo} />}
+        />
         <Route
           path="/login"
           element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}

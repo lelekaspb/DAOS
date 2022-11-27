@@ -27,6 +27,10 @@ const FindOrchestra = () => {
     fetchAllOrchestras();
   }, []);
 
+  const becomeMember = () => {
+    // get id from key, made fetch request
+  };
+
   const listOfAllOrchestras = orchestras.map((orchestra) => (
     <UserOrchestra
       key={orchestra._id}
@@ -39,6 +43,7 @@ const FindOrchestra = () => {
       musitiansAmount={orchestra.musicians_amount}
       frequency={orchestra.practice_frequency}
       genres={orchestra.genres}
+      becomeMember={becomeMember}
     />
   ));
   return (
