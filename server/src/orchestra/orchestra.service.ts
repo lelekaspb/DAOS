@@ -23,8 +23,7 @@ export class OrchestraService {
   }
 
   deleteOrchestra(id: string) {
-    const query: any = { _id: new mongoose.Types.ObjectId(id) };
-    return this.orchModel.deleteOne(query).exec();
+    return this.orchModel.deleteOne({ _id: id }).exec();
   }
 
   deleteMany(deleteCriteria: any) {

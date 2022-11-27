@@ -49,6 +49,7 @@ const UserOrchestras = ({ userInfo }) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({ id: userId }),
     };
@@ -69,6 +70,7 @@ const UserOrchestras = ({ userInfo }) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     try {

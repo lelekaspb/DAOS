@@ -10,13 +10,8 @@ const UserOrchestra = ({
   members,
   orchestraId,
   userId,
-  // description = null,
-  // musitiansAmount = null,
-  // frequency = null,
-  // genres = null,
   addMember = null,
   deleteMember = null,
-  leaveOrchestra = null,
 }) => {
   return (
     <article className={styles.orchestra}>
