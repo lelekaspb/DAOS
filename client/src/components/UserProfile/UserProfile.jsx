@@ -3,8 +3,11 @@ import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
 import { Link } from "react-router-dom";
 import Orchestra from "../Orchestra/Orchestra";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const UserProfile = ({ userInfo }) => {
+const UserProfile = () => {
+  const { userInfo } = useGlobalContext();
+
   const listOfInstruments = userInfo.instruments.map((instrument) => (
     <Instrument
       key={instrument.title}

@@ -1,12 +1,14 @@
 import styles from "./WelcomeUser.module.css";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const WelcomeUser = ({ firstName }) => {
+const WelcomeUser = () => {
+  const { userInfo } = useGlobalContext();
   return (
     <main className={styles.main}>
       <section className={styles.content}>
         <h2 className={styles.page_heading}>
-          Velkommen <span>{firstName}</span>
+          Velkommen <span>{userInfo.firstName}</span>
         </h2>
         <p className={styles.explain_text}>
           Tilføj de instrumenter du kan spille på for at fædiggøre din profil.

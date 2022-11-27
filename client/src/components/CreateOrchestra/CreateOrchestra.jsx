@@ -4,8 +4,11 @@ import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./CreateOrchestra.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const CreateOrchestra = ({ userInfo, setUserInfo }) => {
+const CreateOrchestra = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const initialOrchestraState = {
     title: "",
     creator_id: userInfo.id,
@@ -108,7 +111,7 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        // Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify(orchestraData),
     };

@@ -3,8 +3,11 @@ import BackLink from "../BackLink/BackLink";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const AddInstrument = ({ userInfo, setUserInfo }) => {
+const AddInstrument = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const [instrumentData, setInstrumentData] = useState({
     title: "",
     genres: [],

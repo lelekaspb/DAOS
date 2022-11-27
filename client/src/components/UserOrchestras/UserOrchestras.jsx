@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./UserOrchestras.module.css";
 import UserOrchestra from "../UserOrchestra/UserOrchestra";
-import { useEffect } from "react";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const UserOrchestras = ({ userInfo }) => {
+const UserOrchestras = () => {
+  const { userInfo } = useGlobalContext();
+
   const [orchestras, setOrchestras] = useState([]);
 
   useEffect(() => {

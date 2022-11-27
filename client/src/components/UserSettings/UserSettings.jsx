@@ -3,8 +3,11 @@ import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import styles from "./UserSettings.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const UserSettings = ({ userInfo, resetUserInfoState }) => {
+const UserSettings = () => {
+  const { userInfo, resetUserInfoState } = useGlobalContext();
+
   const [passwordData, setPasswordData] = useState({
     current: "",
     new: "",
@@ -47,7 +50,6 @@ const UserSettings = ({ userInfo, resetUserInfoState }) => {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${userInfo.token}`,
       },
-      //body: JSON.stringify(passwordData),
     };
 
     try {

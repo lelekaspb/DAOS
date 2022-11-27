@@ -41,10 +41,8 @@ const CreateUserProfile = () => {
       console.log("created user:");
       console.log(data);
       redirectToConfirmation();
-      // return data;
     } catch (err) {
       console.log("Caught error " + err);
-      // return undefined;
     }
   };
 

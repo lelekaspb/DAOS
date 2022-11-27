@@ -12,95 +12,30 @@ import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
 import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
+import GlobalContext from "./context/GlobalContext";
 
 function App() {
-  const initialUserInfoState = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phoneNumber: "",
-    picture: "",
-    description: "",
-    zipcode: "",
-    city: "",
-    instruments: [],
-    orchestras_created: [],
-    searching: false,
-    id: "",
-    createdAt: "",
-    token: "",
-  };
-
-  const [userInfo, setUserInfo] = useState(initialUserInfoState);
-
-  const resetUserInfoState = () => {
-    setUserInfo(initialUserInfoState);
-  };
-
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<FrontPage />} />
-        <Route
-          path="/orchestras"
-          element={<UserOrchestras userInfo={userInfo} />}
-        />
-        <Route
-          path="/login"
-          element={<Login userInfo={userInfo} setUserInfo={setUserInfo} />}
-        />
-        <Route path="/create-profile" element={<CreateUserProfile />} />
-        <Route
-          path="/welcomeUser/:id"
-          element={<WelcomeUser firstName={userInfo.firstName} />}
-        />
-        <Route
-          path="/settings"
-          element={
-            <UserSettings
-              userInfo={userInfo}
-              resetUserInfoState={resetUserInfoState}
-            />
-          }
-        />
-        <Route
-          path="/edit-profile"
-          element={
-            <EditUserProfile userInfo={userInfo} setUserInfo={setUserInfo} />
-          }
-        />
-        <Route path="/profile" element={<UserProfile userInfo={userInfo} />} />
-        <Route
-          path="/add-instrument"
-          element={
-            <AddInstrument userInfo={userInfo} setUserInfo={setUserInfo} />
-          }
-        />
-        <Route
-          path="/create-orchestra"
-          element={
-            <CreateOrchestra userInfo={userInfo} setUserInfo={setUserInfo} />
-          }
-        />
-        <Route path="/edit-orchestra" element={<EditOrchestra />} />
-        <Route path="*" element={<FrontPage />} />
-      </Routes>
+      <GlobalContext>
+        <Routes>
+          <Route path="/" element={<FrontPage />} />
+          <Route path="/orchestras" element={<UserOrchestras />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-profile" element={<CreateUserProfile />} />
+          <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
+          <Route path="/settings" element={<UserSettings />} />
+          <Route path="/edit-profile" element={<EditUserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/add-instrument" element={<AddInstrument />} />
+          <Route path="/create-orchestra" element={<CreateOrchestra />} />
+          <Route path="/edit-orchestra" element={<EditOrchestra />} />
+          <Route path="*" element={<FrontPage />} />
+        </Routes>
+      </GlobalContext>
       <Footer />
-
-      {/* <Header />
-        <CreateUserProfile />
-        <WelcomeUser />
-        <UserSettings />
-        <EditUserProfile />
-        <Login />
-        <FrontPage />
-        <UserProfile />
-        <AddInstrument />
-        <CreateOrchestra />
-        <EditOrchestra />
-        <Footer /> */}
     </div>
   );
 }
