@@ -104,6 +104,7 @@ const UserOrchestras = ({ userInfo }) => {
   return (
     <main className={styles.main}>
       <section className={styles.content}>
+        <h2 className={styles.page_heading}>Ensembler</h2>
         <article className={styles.orchestra_list}>
           {listOfAllOrchestras}
         </article>

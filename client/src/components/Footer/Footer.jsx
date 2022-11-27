@@ -11,7 +11,7 @@ const Footer = () => {
             <a href="#" className={styles.footer_nav_link}>
               Se opslag
             </a>
-            <Link to="/find-orchestra" className={styles.footer_nav_link}>
+            <Link to="/orchestras" className={styles.footer_nav_link}>
               Finde ensemble
             </Link>
             <Link to="/profile" className={styles.footer_nav_link}>

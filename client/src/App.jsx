@@ -11,7 +11,6 @@ import AddInstrument from "./components/AddInstrument/AddInstrument";
 import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
 import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
-import FindOrchestra from "./components/FindOrchestra/FindOrchestra";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
@@ -86,7 +85,6 @@ function App() {
           }
         />
         <Route path="/edit-orchestra" element={<EditOrchestra />} />
-        <Route path="/find-orchestra" element={<FindOrchestra />} />
         <Route path="*" element={<FrontPage />} />
       </Routes>
       <Footer />
