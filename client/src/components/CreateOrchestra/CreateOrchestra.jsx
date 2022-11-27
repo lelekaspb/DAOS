@@ -4,8 +4,11 @@ import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./CreateOrchestra.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const CreateOrchestra = ({ userInfo, setUserInfo }) => {
+const CreateOrchestra = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const initialOrchestraState = {
     title: "",
     creator_id: userInfo.id,
@@ -108,7 +111,7 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        // Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify(orchestraData),
     };
@@ -226,11 +229,11 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
               value={orchestraData.musicians_amount}
             >
               <option value="vælg">Vælg antal</option>
-              <option value="1-4">1 - 4 musikere</option>
-              <option value="5-9">5 - 9 musikere</option>
-              <option value="10-24">10 - 24 musikere</option>
-              <option value="25-49">25 - 49 musikere</option>
-              <option value="50">Mere end 50 musikere</option>
+              <option value="1 - 4 musikere">1 - 4 musikere</option>
+              <option value="5 - 9 musikere">5 - 9 musikere</option>
+              <option value="10 - 24 musikere">10 - 24 musikere</option>
+              <option value="25 - 49 musikere">25 - 49 musikere</option>
+              <option value="Mere end 50 musikere">Mere end 50 musikere</option>
             </select>
             <span className={styles.help_block}></span>
           </div>
@@ -248,11 +251,15 @@ const CreateOrchestra = ({ userInfo, setUserInfo }) => {
               value={orchestraData.practice_frequency}
             >
               <option value="vælg">Vælg frekvens</option>
-              <option value="few_times_a_week">Flere gange om ugen</option>
-              <option value="once_a_week">1 gang om ugen</option>
-              <option value="once_two_weeks">1 gang hver anden uge</option>
-              <option value="once_a_month">1 gang om måneden</option>
-              <option value="once_two_months">1 gang hver anden måned</option>
+              <option value="Flere gange om ugen">Flere gange om ugen</option>
+              <option value="1 gang om ugen">1 gang om ugen</option>
+              <option value="1 gang hver anden uge">
+                1 gang hver anden uge
+              </option>
+              <option value="1 gang om måneden">1 gang om måneden</option>
+              <option value="1 gang hver anden måned">
+                1 gang hver anden måned
+              </option>
             </select>
             <span className={styles.help_block}></span>
           </div>

@@ -2,8 +2,11 @@ import { useState } from "react";
 import FormField from "../FormField/FormField";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const Login = ({ userInfo, setUserInfo }) => {
+const Login = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",

@@ -4,8 +4,11 @@ import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import styles from "./EditUserProfile.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const EditUserProfile = ({ userInfo, setUserInfo }) => {
+const EditUserProfile = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const userCopy = JSON.parse(JSON.stringify(userInfo));
   const [userFormData, setUserFormData] = useState({
     firstName: userCopy.firstName,

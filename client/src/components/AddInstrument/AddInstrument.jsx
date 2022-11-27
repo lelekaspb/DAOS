@@ -3,8 +3,11 @@ import BackLink from "../BackLink/BackLink";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
-const AddInstrument = ({ userInfo, setUserInfo }) => {
+const AddInstrument = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const [instrumentData, setInstrumentData] = useState({
     title: "",
     genres: [],
@@ -38,7 +41,6 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target);
     // TODO: add select validation - do not send fetch request unless both selects are filled in
     postInstrument();
   };
@@ -57,7 +59,6 @@ const AddInstrument = ({ userInfo, setUserInfo }) => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log(data);
       if (data._id == userInfo.id) {
         // add the instrument to instrument array in userInfo state
         setUserInfo({

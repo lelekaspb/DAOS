@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   Post,
   Put,
@@ -59,8 +58,6 @@ export class UserController {
     @Body() instrument: InstrumentDto,
   ) {
     console.log('addInstrumentToUser user.controller');
-    console.log(id);
-    console.log(instrument);
     return this.userService.addInstrumentToUser(id, instrument);
   }
 
@@ -72,8 +69,6 @@ export class UserController {
     @Body() orchestra: OrchestraPropertyDto,
   ) {
     console.log('addOrchestra user.controller');
-    console.log(id);
-    console.log(orchestra);
     return this.userService.addOrchestraToUser(id, orchestra);
   }
 }

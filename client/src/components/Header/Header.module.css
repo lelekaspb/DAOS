@@ -15,6 +15,10 @@
   flex-direction: column;
 }
 
+.logo_link {
+  text-decoration: none;
+}
+
 .logo {
   composes: heading from "./../../styleUtils.css";
   color: var(--red-color);

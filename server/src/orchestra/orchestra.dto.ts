@@ -1,4 +1,5 @@
-import { IsArray, isEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import * as mongoose from 'mongoose';
 
 export class OrchestraDto {
   @IsNotEmpty()
@@ -7,7 +8,10 @@ export class OrchestraDto {
   @IsNotEmpty()
   creator_id: string;
 
-  // Members: [];
+  @IsOptional()
+  @IsArray()
+  members: string[];
+
   @IsString()
   description: string;
 
@@ -32,7 +36,6 @@ export class OrchestraDto {
   constructor(
     title: string,
     creator_id: string,
-    // Members: [],
     description: string,
     website: string,
     zipcode: string,

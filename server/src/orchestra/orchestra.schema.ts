@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsString, isString } from 'class-validator';
 import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { User } from './../user/user.schema';
 
 export type OrchestraDocument = Orchestra & Document;
 
@@ -14,8 +16,8 @@ export class Orchestra {
   @IsString()
   creator_id: string;
 
-  // @Prop()
-  // Members: [];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  members: any[];
 
   @Prop()
   description: string;
