@@ -1,10 +1,5 @@
-- decide on flow for registering user in orchestra
+
 - adjust router for nested routes and active page
 - show/hide menu elements depending on whether user is logged in or not
-- implement epic 4 (see tasks in Trello)
-- revise frontend based on yesterday's lecture (from Mathias) -  add context and memo hooks??
+- add memo hook??
 
-- get feedback on: 
-  - relations between documents foreign / primaty key
-  - dto for instrument and orchestraProperty
-  - not having implemented registering user in orchestra
