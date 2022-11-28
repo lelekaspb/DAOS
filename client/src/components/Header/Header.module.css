@@ -36,6 +36,7 @@
   padding: 0;
   list-style: none;
   display: flex;
+  align-items: center;
   gap: 30px;
 }
 
@@ -58,4 +59,17 @@
 .nav_btn_login {
   composes: btn_outline from "./../../styleUtils.css";
   text-decoration: none;
+}
+
+.nav_btn_logout {
+  background-color: var(--white-color);
+  color: var(--primary-font-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 500;
+  font-size: calc(0.8rem + 0.2vw);
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  border: none;
+  cursor: pointer;
 }

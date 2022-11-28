@@ -1,7 +1,9 @@
 import styles from "./Footer.module.css";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const Footer = () => {
+  const { userInfo } = useGlobalContext();
   return (
     <footer className={styles.footer}>
       <div className={styles.content}>
@@ -14,9 +16,11 @@ const Footer = () => {
             <Link to="/orchestras" className={styles.footer_nav_link}>
               Finde ensemble
             </Link>
-            <Link to="/profile" className={styles.footer_nav_link}>
-              Profil
-            </Link>
+            {userInfo.token.length > 0 && (
+              <Link to="/profile" className={styles.footer_nav_link}>
+                Profil
+              </Link>
+            )}
           </div>
           <div className={styles.footer_some}>
             <div>is</div>

@@ -1,5 +1,6 @@
 import OrchestraGenre from "../OrchestraGenre/OrchestraGenre";
 import styles from "./UserOrchestra.module.css";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserOrchestra = ({
   title,
@@ -13,6 +14,8 @@ const UserOrchestra = ({
   addMember = null,
   deleteMember = null,
 }) => {
+  const { userInfo } = useGlobalContext();
+
   return (
     <article className={styles.orchestra}>
       <img
@@ -70,28 +73,31 @@ const UserOrchestra = ({
           </div>
         </div>
       )} */}
-      <div className={styles.membership}>
-        {isMember && (
-          <button
-            className={styles.leave_orchestra}
-            onClick={deleteMember}
-            data-orchestra={orchestraId}
-            data-user={userId}
-          >
-            Forlade ensemblet
-          </button>
-        )}
-        {!isMember && (
-          <button
-            className={styles.become_member}
-            onClick={addMember}
-            data-orchestra={orchestraId}
-            data-user={userId}
-          >
-            Bliv medlem
-          </button>
-        )}
-      </div>
+
+      {userInfo.token.length > 0 && (
+        <div className={styles.membership}>
+          {isMember && (
+            <button
+              className={styles.leave_orchestra}
+              onClick={deleteMember}
+              data-orchestra={orchestraId}
+              data-user={userId}
+            >
+              Forlade ensemblet
+            </button>
+          )}
+          {!isMember && (
+            <button
+              className={styles.become_member}
+              onClick={addMember}
+              data-orchestra={orchestraId}
+              data-user={userId}
+            >
+              Bliv medlem
+            </button>
+          )}
+        </div>
+      )}
     </article>
   );
 };

@@ -38,7 +38,7 @@ export class Orchestra {
   practice_frequency: string;
 
   @Prop()
-  genres: [];
+  genres: string[];
 }
 
 export const OrchestraSchema = SchemaFactory.createForClass(Orchestra);

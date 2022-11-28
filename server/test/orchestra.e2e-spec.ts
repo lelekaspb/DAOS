@@ -29,14 +29,15 @@ describe('Orchestra Controller (e2e)', () => {
     it('should create new valid orchestra', async () => {
       // Arrange
       const orchestra = new OrchestraDto(
-        "string",
-        '22kf',
-        'its oldest',
-         'www.google.com',
-          3050, 
-          'London',
-          5
-       
+        'Roskilde Ensemble',
+        'creator_id',
+        'description',
+        'www.google.com',
+        '3050',
+        'London',
+        '10 - 24',
+        'once a week',
+        [],
       );
 
       // Act
@@ -55,14 +56,16 @@ describe('Orchestra Controller (e2e)', () => {
     it('should return error when invalid data is passed on create', async () => {
       // Arrange
       const orchestra = new OrchestraDto(
-        "",
-        '22kf',
-        'its oldest',
-         'www.google.com',
-          3050, 
-          'London',
-          5
-        );
+        'Roskilde Ensemble',
+        'creator_id',
+        'description',
+        'www.google.com',
+        '3050',
+        'London',
+        '10 - 24',
+        'once a week',
+        [],
+      );
 
       // Act
       const result = await request(app.getHttpServer())
@@ -78,14 +81,16 @@ describe('Orchestra Controller (e2e)', () => {
     it('should find and return user by email and password', async () => {
       // Arrange
       const orchestraToBeCreated = new OrchestraDto(
-        "string",
-        '22kf',
-        'its oldest',
-         'www.google.com',
-          3050, 
-          'London',
-          5
-          );
+        'Roskilde Ensemble',
+        'creator_id',
+        'description',
+        'www.google.com',
+        '3050',
+        'London',
+        '10 - 24',
+        'once a week',
+        [],
+      );
       await orchestraService.createNewOrchestra(orchestraToBeCreated);
 
       // Act
