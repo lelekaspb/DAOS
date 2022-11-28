@@ -31,7 +31,7 @@ export class OrchestraDto {
   practice_frequency: string;
 
   @IsArray()
-  genres: [];
+  genres: string[];
 
   constructor(
     title: string,

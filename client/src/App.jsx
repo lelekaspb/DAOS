@@ -12,14 +12,13 @@ import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
 import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
 import { Routes, Route } from "react-router-dom";
-// import { useState } from "react";
 import GlobalContext from "./context/GlobalContext";
 
 function App() {
   return (
     <div className="App">
-      <Header />
       <GlobalContext>
+        <Header />
         <Routes>
           <Route path="/" element={<FrontPage />} />
           <Route path="/orchestras" element={<UserOrchestras />} />
@@ -34,8 +33,8 @@ function App() {
           <Route path="/edit-orchestra" element={<EditOrchestra />} />
           <Route path="*" element={<FrontPage />} />
         </Routes>
+        <Footer />
       </GlobalContext>
-      <Footer />
     </div>
   );
 }
