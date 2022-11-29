@@ -1,3 +1,4 @@
+import { Prop } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
@@ -9,9 +10,8 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
+import mongoose from 'mongoose';
 import { InstrumentDto } from './instrument.dto';
-import { Instrument } from './instrument.interface';
-import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 export class UserDto {
   @IsNotEmpty()
@@ -22,7 +22,6 @@ export class UserDto {
   @IsString()
   lastName: string;
 
-  // @IsNotEmpty()
   @IsOptional()
   @IsString()
   password: string;
@@ -57,12 +56,9 @@ export class UserDto {
   @Type(() => InstrumentDto)
   instruments: InstrumentDto[];
 
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @ArrayMinSize(1)
-  @Type(() => OrchestraPropertyDto)
-  orchestras_created: OrchestraPropertyDto[];
+  orchestras_created: any[];
 
   @IsOptional()
   @IsBoolean()
@@ -73,24 +69,24 @@ export class UserDto {
     lastName: string,
     password: string,
     email: string,
-    // phoneNumber: string,
-    // picture: string,
-    // description: string,
-    // zipcode: string,
-    // city: string,
-    // instruments: [],
-    // searching: boolean,
+    phoneNumber: string,
+    picture: string,
+    description: string,
+    zipcode: string,
+    city: string,
+    instruments: [],
+    searching: boolean,
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
     this.email = email;
-    // this.phoneNumber = phoneNumber;
-    // this.picture = picture;
-    // this.description = description;
-    // this.zipcode = zipcode;
-    // this.city = city;
-    // this.instruments = instruments;
-    // this.searching = searching;
+    this.phoneNumber = phoneNumber;
+    this.picture = picture;
+    this.description = description;
+    this.zipcode = zipcode;
+    this.city = city;
+    this.instruments = instruments;
+    this.searching = searching;
   }
 }

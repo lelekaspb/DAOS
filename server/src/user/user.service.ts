@@ -10,7 +10,6 @@ import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { InstrumentDto } from './instrument.dto';
-import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 @Injectable()
 export class UserService {
@@ -26,7 +25,7 @@ export class UserService {
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
-        return user;
+        return await user.populate('orchestras_created', ['title']);
       }
 
       return null;
@@ -95,11 +94,12 @@ export class UserService {
     return user;
   }
 
-  async addOrchestraToUser(userId: string, orchestra: OrchestraPropertyDto) {
+  async addOrchestraToUser(userId: string, orchestraId: string) {
     const query: any = { _id: new mongoose.Types.ObjectId(userId) };
     const user = await this.userModel.findOne(query).exec();
-    user.orchestras_created.push(orchestra);
-    user.save();
-    return user;
+    const orchestraObjectId = new mongoose.Types.ObjectId(orchestraId);
+    user.orchestras_created.push(orchestraObjectId);
+    await user.save();
+    return await user.populate('orchestras_created', ['title']);
   }
 }

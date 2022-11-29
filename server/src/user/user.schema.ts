@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { Instrument } from './instrument.interface';
-import { OrchestraPropertyDto } from './orchestraProperty.dto';
 
 export type UserDocument = User & Document;
 
@@ -13,7 +12,6 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
-  // @Prop()
   @Prop({ required: true })
   password: string;
 
@@ -38,15 +36,13 @@ export class User {
   @Prop()
   instruments: Instrument[];
 
-  @Prop()
-  // orchestraId: { type: Types.ObjectId; default: null };
-  orchestras_created: OrchestraPropertyDto[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orchestra' }] })
+  orchestras_created: any[];
 
   @Prop()
   posts: [];
 
   @Prop()
-  // searching: { type: boolean; default: false };
   searching: boolean;
 }
 
