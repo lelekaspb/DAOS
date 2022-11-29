@@ -25,9 +25,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/create-profile" element={<CreateUserProfile />} />
           <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
-          <Route path="/settings" element={<UserSettings />} />
-          <Route path="/edit-profile" element={<EditUserProfile />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile">
+            <Route index element={<UserProfile />} /> 
+            <Route path="edit" element={<EditUserProfile />} />
+            <Route path="settings" element={<UserSettings />} />
+            
+          </Route>
           <Route path="/add-instrument" element={<AddInstrument />} />
           <Route path="/create-orchestra" element={<CreateOrchestra />} />
           <Route path="/edit-orchestra" element={<EditOrchestra />} />
