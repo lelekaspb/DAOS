@@ -56,10 +56,10 @@ const UserProfile = () => {
             </div>
             <div className={styles.buttons}>
               <button className={styles.user_details_btn}>
-                <Link to="/edit-profile">Rediger profil</Link>
+                <Link to="edit">Rediger profil</Link>
               </button>
               <button className={styles.user_details_btn}>
-                <Link to="/settings">Indstillinger</Link>
+                <Link to="settings">Indstillinger</Link>
               </button>
             </div>
           </div>

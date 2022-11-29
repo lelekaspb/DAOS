@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const Header = () => {
@@ -30,23 +30,33 @@ const Header = () => {
         <div className={styles.nav_right}>
           <ul>
             <li className={styles.nav_link}>
-              <Link to="/orchestras">Ensembler</Link>
+              <NavLink to="/orchestras"
+               className={({ isActive }) =>
+               ` ${styles.link} ${isActive ? styles.underline : ""}`
+             }
+              >Ensembler</NavLink>
             </li>
             <li className={styles.nav_link}>
-              <Link to="/">Opslag</Link>
+              <NavLink to="#">Opslag</NavLink>
             </li>
 
             {userInfo.token.length > 0 && (
               <li className={styles.nav_link}>
-                <Link to="/profile">Profil</Link>
+                <NavLink to="/profile"
+                 className={({ isActive }) =>
+                 ` ${styles.link} ${isActive ? styles.underline : ""}`
+               }
+                >Profil</NavLink>
               </li>
             )}
 
             {userInfo.token.length == 0 && (
               <li>
-                <Link to="/create-profile" className={styles.nav_btn_signup}>
+                <NavLink to="/create-profile" className={styles.nav_btn_signup}
+                
+                >
                   Opret bruger
-                </Link>
+                </NavLink>
               </li>
             )}
 
