@@ -29,7 +29,6 @@ function App() {
             <Route index element={<UserProfile />} /> 
             <Route path="edit" element={<EditUserProfile />} />
             <Route path="settings" element={<UserSettings />} />
-            
           </Route>
           <Route path="/add-instrument" element={<AddInstrument />} />
           <Route path="/create-orchestra" element={<CreateOrchestra />} />
