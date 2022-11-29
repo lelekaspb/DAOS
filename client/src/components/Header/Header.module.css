@@ -86,6 +86,7 @@
   background-size: 0% 1px;
   background-repeat: no-repeat;
   transition: all 0.4s;
+  padding-bottom: 0.4rem;
 }
 
 .underline {

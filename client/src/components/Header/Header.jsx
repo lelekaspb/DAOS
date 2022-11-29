@@ -30,11 +30,14 @@ const Header = () => {
         <div className={styles.nav_right}>
           <ul>
             <li className={styles.nav_link}>
-              <NavLink to="/orchestras"
-               className={({ isActive }) =>
-               ` ${styles.link} ${isActive ? styles.underline : ""}`
-             }
-              >Ensembler</NavLink>
+              <NavLink
+                to="/orchestras"
+                className={({ isActive }) =>
+                  ` ${styles.link} ${isActive ? styles.underline : ""}`
+                }
+              >
+                Ensembler
+              </NavLink>
             </li>
             <li className={styles.nav_link}>
               <NavLink to="#">Opslag</NavLink>
@@ -42,19 +45,20 @@ const Header = () => {
 
             {userInfo.token.length > 0 && (
               <li className={styles.nav_link}>
-                <NavLink to="/profile"
-                 className={({ isActive }) =>
-                 ` ${styles.link} ${isActive ? styles.underline : ""}`
-               }
-                >Profil</NavLink>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    ` ${styles.link} ${isActive ? styles.underline : ""}`
+                  }
+                >
+                  Profil
+                </NavLink>
               </li>
             )}
 
             {userInfo.token.length == 0 && (
               <li>
-                <NavLink to="/create-profile" className={styles.nav_btn_signup}
-                
-                >
+                <NavLink to="/create-profile" className={styles.nav_btn_signup}>
                   Opret bruger
                 </NavLink>
               </li>

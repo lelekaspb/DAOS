@@ -1,5 +1,2 @@
-
-- adjust router for nested routes and active page
-- show/hide menu elements depending on whether user is logged in or not
 - add memo hook??
 
