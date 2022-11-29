@@ -10,6 +10,7 @@ import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { InstrumentDto } from './instrument.dto';
+import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -34,7 +35,7 @@ export class UserService {
     }
   }
 
-  async createUser(user: UserDto) {
+  async createUser(user: CreateUserDto) {
     if (!user) {
       throw new BadRequestException();
     }

@@ -13,7 +13,7 @@ const CreateUserProfile = () => {
   });
 
   let navigate = useNavigate();
-  const redirectToConfirmation = () => {
+  const redirectToLogin = () => {
     navigate("/login");
   };
 
@@ -38,9 +38,11 @@ const CreateUserProfile = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log("created user:");
+      console.log("creating user response:");
       console.log(data);
-      redirectToConfirmation();
+      if (data._id) {
+        redirectToLogin();
+      }
     } catch (err) {
       console.log("Caught error " + err);
     }

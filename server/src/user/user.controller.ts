@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
+import { CreateUserDto } from './create-user.dto';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import { OnlySameUserByIdAllowed } from './../auth/user.interceptor';
 import { InstrumentDto } from './instrument.dto';
@@ -19,9 +20,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  createUser(@Body() userDto: UserDto) {
+  createUser(@Body() createUserDto: CreateUserDto) {
     console.log('createUser user.controller');
-    return this.userService.createUser(userDto);
+    return this.userService.createUser(createUserDto);
   }
 
   @UseGuards(JwtAuthGuard)

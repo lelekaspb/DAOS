@@ -8,9 +8,9 @@ import { useGlobalContext } from "../../context/GlobalContext";
 const UserProfile = () => {
   const { userInfo } = useGlobalContext();
 
-  const listOfInstruments = userInfo.instruments.map((instrument) => (
+  const listOfInstruments = userInfo.instruments.map((instrument, index) => (
     <Instrument
-      key={instrument.title}
+      key={`${instrument.title}_${index}`}
       // deleteInstrument={deleteInstrument}
       title={instrument.title}
       genres={instrument.genres}
