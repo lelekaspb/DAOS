@@ -81,30 +81,6 @@ const CreateOrchestra = () => {
     navigate("/profile");
   };
 
-  const addCreatedOrchestraToUser = async (orchestraId, orchestraTitle) => {
-    const payload = {
-      title: orchestraTitle,
-      id: orchestraId,
-    };
-    const url = `http://127.0.0.1:3007/user/${userInfo.id}/orchestra`;
-    const options = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-      body: JSON.stringify(payload),
-    };
-
-    try {
-      const request = await fetch(url, options);
-      const data = await request.json();
-      return data;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const postOrchestra = async () => {
     const url = `http://127.0.0.1:3007/orchestra`;
     const options = {
@@ -118,24 +94,15 @@ const CreateOrchestra = () => {
 
     try {
       const request = await fetch(url, options);
-      const orchestra = await request.json();
-      if (orchestra._id) {
-        // add the created orchestra id to orhestras_created of the logged in user
-        const userWithOrchestra = await addCreatedOrchestraToUser(
-          orchestra._id,
-          orchestra.title
-        );
-        if (userWithOrchestra._id) {
-          // update userInfo state so it has the newly created orchestra
-          setUserInfo({
-            ...userInfo,
-            orchestras_created: userWithOrchestra.orchestras_created,
-          });
-
-          // redirect to profile page
-          redirectToProfile();
-        }
-      }
+      const userWithNewOrchestra = await request.json();
+      console.log(userWithNewOrchestra);
+      // update userInfo state so it has the newly created orchestra
+      setUserInfo({
+        ...userInfo,
+        orchestras_created: userWithNewOrchestra.orchestras_created,
+      });
+      // redirect to profile page
+      redirectToProfile();
     } catch (err) {
       console.error(err);
     }

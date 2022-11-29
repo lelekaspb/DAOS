@@ -3,11 +3,13 @@ import { OrchestraDto } from './orchestra.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { Orchestra, OrchestraDocument } from './orchestra.schema';
+import { UserService } from './../user/user.service';
 
 @Injectable()
 export class OrchestraService {
   constructor(
     @InjectModel(Orchestra.name) private orchModel: Model<OrchestraDocument>,
+    private readonly userService: UserService,
   ) {}
 
   getAllOrchestras(): Promise<Orchestra[]> {
@@ -17,9 +19,15 @@ export class OrchestraService {
       .exec();
   }
 
-  createNewOrchestra(orchDto: OrchestraDto) {
+  async createNewOrchestra(orchDto: OrchestraDto) {
     const savedOrchestra = new this.orchModel(orchDto);
-    return savedOrchestra.save();
+    //return savedOrchestra.save();
+    await savedOrchestra.save();
+    const creator = await this.userService.addOrchestraToUser(
+      savedOrchestra.creator_id,
+      savedOrchestra._id,
+    );
+    return creator;
   }
 
   deleteOrchestra(id: string) {
@@ -53,4 +61,7 @@ export class OrchestraService {
     await orchestra.save();
     return await orchestra.populate('members', ['firstName', 'lastName']);
   }
+}
+function addOrchestraToUser(creator_id: string, _id: any) {
+  throw new Error('Function not implemented.');
 }
