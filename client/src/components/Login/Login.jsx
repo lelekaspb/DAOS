@@ -12,6 +12,11 @@ const Login = () => {
     password: "",
   });
 
+  const [error, setError] = useState({
+    haserror: false,
+    message: "",
+  });
+
   let navigate = useNavigate();
   const redirectToProfile = () => {
     navigate("/profile");
@@ -42,25 +47,27 @@ const Login = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      if (data.statusCode) {
-        console.log("did not login");
+      if (!data.success) {
+        console.log(data.message);
+        // display error message received from the server
+        setError({ ...error, haserror: true, message: data.message });
       } else {
         setUserInfo({
           ...userInfo,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phoneNumber: data.phoneNumber || "",
-          picture: data.picture || "",
-          description: data.description || "",
-          zipcode: data.zipcode || "",
-          city: data.city || "",
-          instruments: data.instruments,
-          orchestras_created: data.orchestras_created,
-          searching: data.searching || false,
-          id: data._id,
-          createdAt: data.createdAt,
-          token: data.token,
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          email: data.user.email,
+          phoneNumber: data.user.phoneNumber || "",
+          picture: data.user.picture || "",
+          description: data.user.description || "",
+          zipcode: data.user.zipcode || "",
+          city: data.user.city || "",
+          instruments: data.user.instruments,
+          orchestras_created: data.user.orchestras_created,
+          searching: data.user.searching || false,
+          id: data.user._id,
+          createdAt: data.user.createdAt,
+          token: data.user.token,
         });
 
         setUserData({
@@ -103,6 +110,10 @@ const Login = () => {
               isRequired={true}
             />
           </div>
+          {error.haserror && (
+            <div className={styles.help_block}>{error.message}</div>
+          )}
+
           <div className={styles.submit_field}>
             <button className={styles.submit_btn}>Log Ind</button>
           </div>

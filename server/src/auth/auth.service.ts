@@ -1,11 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from './../user/user.service';
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { LoginDto } from './login.dto';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +11,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
+    console.log('validateUser from auth.service');
     const user = await this.userService.signUserIn(email, password);
 
     if (user) {
@@ -23,18 +20,12 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    // console.log(user);
-    if (!user.email || !user.password) {
-      throw new BadRequestException();
-    }
-
+  async login(loginDto: LoginDto) {
     try {
-      const userObject = await this.validateUser(user.email, user.password);
-
-      if (!userObject) {
-        throw new UnauthorizedException();
-      }
+      const userObject = await this.validateUser(
+        loginDto.email,
+        loginDto.password,
+      );
 
       const payload = {
         email: userObject.email,
@@ -42,15 +33,15 @@ export class AuthService {
       };
 
       const { password, ...result } = userObject.toObject();
-      // return {
-      //   firstName: userObject.firstName,
-      //   lastName: userObject.lastName,
-      //   id: userObject._id,
-      //   access_token: this.jwtService.sign(payload),
-      // };
-      return {
+      const userToReturn = {
         ...result,
         token: this.jwtService.sign(payload),
+      };
+
+      return {
+        success: true,
+        status: HttpStatus.OK,
+        user: userToReturn,
       };
     } catch (err) {
       throw new NotFoundException();

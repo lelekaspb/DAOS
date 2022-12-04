@@ -33,6 +33,13 @@
   margin-bottom: 10px;
 }
 
+.help_block {
+  color: var(--red-color);
+  font-size: calc(0.8rem + 0.3vw);
+  height: auto;
+  margin-bottom: 20px;
+}
+
 .submit_btn {
   composes: btn_primary from "./../../styleUtils.css";
   font-size: calc(0.8rem + 0.3vw);

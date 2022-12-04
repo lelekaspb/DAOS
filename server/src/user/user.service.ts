@@ -17,12 +17,9 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async signUserIn(email: string, password: string): Promise<User> {
+    console.log('signUserIn from user.service');
     try {
       const user = await this.userModel.findOne({ email: email }).exec();
-
-      if (!user) {
-        throw new NotFoundException();
-      }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
