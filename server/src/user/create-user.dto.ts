@@ -4,24 +4,24 @@ import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreateUserDto {
   @Prop()
-  @IsNotEmpty({ message: 'First name must not be empty' })
-  @IsString({ message: 'First name field must be a string' })
+  @IsNotEmpty({ message: 'Fornavn må ikke være tomt' })
+  @IsString({ message: 'Fornavn skal være en streng' })
   firstName: string;
 
   @Prop()
-  @IsNotEmpty({ message: 'Last name must not be empty' })
-  @IsString({ message: 'Last name field must be a string' })
+  @IsNotEmpty({ message: 'Efternavn må ikke være tomt' })
+  @IsString({ message: 'Efternavn skal være en streng' })
   lastName: string;
 
   @Prop()
   @Length(3, 10, {
-    message: 'Password must containt at least 3 and max 10 characters',
+    message: 'Adgangskoden skal indeholde mindst 3 og maks. 10 tegn',
   })
-  @IsString({ message: 'Password must be a string' })
+  @IsString({ message: 'Adgangskoden skal være en streng' })
   password: string;
 
   @Prop()
-  @IsEmail({}, { message: 'Email must be a valid email address' })
+  @IsEmail({}, { message: 'E-mail skal være en gyldig e-mailadresse' })
   email: string;
 
   constructor(
