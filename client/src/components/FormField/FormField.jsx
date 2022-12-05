@@ -7,6 +7,8 @@ const FormField = ({
   handleInput,
   value,
   isRequired = false,
+  hasError = false,
+  errorMessage = "",
 }) => {
   return (
     <div className={styles.form_field}>
@@ -23,7 +25,9 @@ const FormField = ({
         value={value}
         required={isRequired}
       />
-      <span className={styles.help_block}>This field cannot be empty</span>
+      <span className={`${styles.help_block} ${hasError ? "shown" : "hidden"}`}>
+        {errorMessage}
+      </span>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  HttpStatus,
   Injectable,
   NotFoundException,
   ServiceUnavailableException,
@@ -33,16 +34,19 @@ export class UserService {
   }
 
   async createUser(user: CreateUserDto) {
-    if (!user) {
-      throw new BadRequestException();
-    }
-
     const hashedPassword = await bcrypt.hash(user.password, 12);
     let userHashed = { ...user, password: hashedPassword };
     const savedUser = new this.userModel(userHashed);
 
     try {
-      return await savedUser.save();
+      await savedUser.save();
+      const { password, ...result } = savedUser.toObject();
+
+      return {
+        success: true,
+        status: HttpStatus.CREATED,
+        user: result,
+      };
     } catch (err) {
       throw new ServiceUnavailableException();
     }

@@ -1,6 +1,5 @@
 import FormField from "../FormField/FormField";
 import styles from "./CreateUserProfile.module.css";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +9,25 @@ const CreateUserProfile = () => {
     lastName: "",
     email: "",
     password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    firstName: {
+      haserror: false,
+      message: "",
+    },
+    lastName: {
+      haserror: false,
+      message: "",
+    },
+    email: {
+      haserror: false,
+      message: "",
+    },
+    password: {
+      haserror: false,
+      message: "",
+    },
   });
 
   let navigate = useNavigate();
@@ -38,9 +56,24 @@ const CreateUserProfile = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log("creating user response:");
-      console.log(data);
-      if (data._id) {
+      if (data.error) {
+        // change errors state so that the errors in DOM are displayed
+        data.message.forEach((msg) => {
+          const property = msg.property;
+          const message = msg.constraints[Object.keys(msg.constraints)[0]];
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              [property]: {
+                ...prevState[property],
+                haserror: true,
+                message: message,
+              },
+            };
+          });
+        });
+      } else if (data.success) {
+        // else check if data.success is true and redirect to login
         redirectToLogin();
       }
     } catch (err) {
@@ -60,6 +93,8 @@ const CreateUserProfile = () => {
               type="text"
               handleInput={handleInput}
               value={userData.firstName}
+              hasError={errors.firstName.haserror}
+              errorMessage={errors.firstName.message}
             />
             <FormField
               name="lastName"
@@ -67,6 +102,8 @@ const CreateUserProfile = () => {
               text="Efternavn"
               handleInput={handleInput}
               value={userData.lastName}
+              hasError={errors.lastName.haserror}
+              errorMessage={errors.lastName.message}
             />
           </div>
           <FormField
@@ -75,6 +112,8 @@ const CreateUserProfile = () => {
             text="E-mail"
             handleInput={handleInput}
             value={userData.email}
+            hasError={errors.email.haserror}
+            errorMessage={errors.email.message}
           />
 
           <FormField
@@ -83,6 +122,8 @@ const CreateUserProfile = () => {
             text="Adgangskode"
             handleInput={handleInput}
             value={userData.password}
+            hasError={errors.password.haserror}
+            errorMessage={errors.password.message}
           />
 
           <div className={styles.submit_field}>
