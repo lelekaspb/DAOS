@@ -13,6 +13,8 @@ const UserSettings = () => {
     new: "",
   });
 
+  const [error, setError] = useState({ haserror: false, message: "" });
+
   const handleInput = (event) => {
     setPasswordData({
       ...passwordData,
@@ -35,7 +37,17 @@ const UserSettings = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log(data);
+      if (!data.success) {
+        setError((prevState) => {
+          return {
+            ...prevState,
+            haserror: true,
+            message: data.message,
+          };
+        });
+      } else {
+        redirectToProfilePage();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -70,6 +82,9 @@ const UserSettings = () => {
   const redirectToFrontPage = () => {
     navigate("/");
   };
+  const redirectToProfilePage = () => {
+    navigate("/profile");
+  };
 
   return (
     <main className={styles.main}>
@@ -88,6 +103,8 @@ const UserSettings = () => {
             value={passwordData.current}
             isRequired={true}
             handleInput={handleInput}
+            hasError={error.haserror}
+            errorMessage={error.message}
           />
 
           <FormField

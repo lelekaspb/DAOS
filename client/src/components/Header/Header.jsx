@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { useEffect } from "react";
 
 const Header = () => {
   const { userInfo, resetUserInfoState } = useGlobalContext();
@@ -14,6 +15,14 @@ const Header = () => {
     resetUserInfoState();
     redirectToLogin();
   };
+
+  useEffect(() => {
+    const reloadSpa = () => {
+      navigate("/");
+    };
+    window.addEventListener("load", reloadSpa);
+    return () => window.removeEventListener("load", reloadSpa);
+  }, []);
 
   return (
     <header className={styles.header}>

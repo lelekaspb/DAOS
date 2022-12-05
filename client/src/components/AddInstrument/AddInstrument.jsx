@@ -13,6 +13,11 @@ const AddInstrument = () => {
     genres: [],
   });
 
+  const [errors, setErrors] = useState({
+    title: { haserror: false, message: "" },
+    genres: { haserror: false, message: "" },
+  });
+
   const handleSelect = (event) => {
     const select = event.target;
     if (select.name == "instrument") {
@@ -59,15 +64,47 @@ const AddInstrument = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      if (data._id == userInfo.id) {
+      if (data.success) {
         // add the instrument to instrument array in userInfo state
         setUserInfo({
           ...userInfo,
-          instruments: data.instruments,
+          instruments: data.user.instruments,
         });
 
         // redirect to profile page
         redirectToProfile();
+      } else {
+        // check status code
+
+        // if 403 - instrument exists
+        if (data.status == 403) {
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              title: {
+                haserror: true,
+                message: data.message,
+              },
+            };
+          });
+        } // if 422 - dto validation failed
+        else if (data.statusCode == 422) {
+          // change errors state so that the errors in DOM are displayed
+          data.message.forEach((msg) => {
+            const property = msg.property;
+            const message = msg.constraints[Object.keys(msg.constraints)[0]];
+            setErrors((prevState) => {
+              return {
+                ...prevState,
+                [property]: {
+                  ...prevState[property],
+                  haserror: true,
+                  message: message,
+                },
+              };
+            });
+          });
+        }
       }
     } catch (err) {
       console.error(err);
@@ -126,7 +163,13 @@ const AddInstrument = () => {
               <option value="Drums">Drums</option>
               <option value="Guitar">Guitar</option>
             </select>
-            <span className={styles.help_block}></span>
+            <span
+              className={`${styles.help_block} ${
+                errors.title.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.title.message}
+            </span>
           </div>
           <div className={styles.genre_form_field}>
             <label className={styles.label} htmlFor="genres">
@@ -149,7 +192,13 @@ const AddInstrument = () => {
               <option value="Senmoderne">Senmoderne</option>
               <option value="Senromantisk">Senromantisk</option>
             </select>
-            <span className={styles.help_block}></span>
+            <span
+              className={`${styles.help_block} ${
+                errors.genres.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.genres.message}
+            </span>
             <div className={styles.instrument_genres}>{listOfGenres}</div>
           </div>
           <div className={styles.submit_field}>

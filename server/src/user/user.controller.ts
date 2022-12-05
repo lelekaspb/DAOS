@@ -63,9 +63,9 @@ export class UserController {
 
   // @UseGuards(JwtAuthGuard)
   // @UseInterceptors(OnlySameUserByIdAllowed)
-  // @Put(':id/orchestra')
-  // addOrchestraToUser(@Param('id') id: string, @Body() orchestraId: string) {
-  //   console.log('addOrchestra user.controller');
-  //   return this.userService.addOrchestraToUser(id, orchestraId);
+  // @Delete(':id/instrument-genre')
+  // deleteInstrumnetGenre(@Param('id') id: string, @Body() genre: string) {
+  //   console.log("user id " + id);
+  //   console.log("genre " + genre);
   // }
 }

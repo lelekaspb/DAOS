@@ -1,9 +1,13 @@
 import styles from "./Instrument.module.css";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 
-const Instrument = ({ title, genres }) => {
+const Instrument = ({ title, genres, deleteGenre = null }) => {
   const listOfGenres = genres.map((genre) => (
-    <InstrumentGenre title={genre} key={genre} />
+    <InstrumentGenre
+      title={genre}
+      key={genre}
+      // deleteGenre={deleteGenre}
+    />
   ));
 
   return (
