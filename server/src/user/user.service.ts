@@ -52,13 +52,20 @@ export class UserService {
     }
   }
 
-  updateUser(id: string, userDto: UserDto) {
+  async updateUser(id: string, userDto: UserDto) {
     if (!id || !userDto) {
       throw new BadRequestException();
     }
 
     try {
-      return this.userModel.updateOne({ _id: id }, userDto).exec();
+      const response = await this.userModel
+        .updateOne({ _id: id }, userDto)
+        .exec();
+      return {
+        success: true,
+        status: HttpStatus.OK,
+        ...response,
+      };
     } catch (err) {
       throw new ServiceUnavailableException();
     }
