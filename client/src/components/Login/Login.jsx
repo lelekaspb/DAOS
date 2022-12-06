@@ -99,7 +99,7 @@ const Login = () => {
               type="email"
               handleInput={handleInput}
               value={userData.email}
-              isRequired={true}
+              // isRequired={true}
             />
             <FormField
               name="password"
@@ -107,7 +107,7 @@ const Login = () => {
               type="password"
               handleInput={handleInput}
               value={userData.password}
-              isRequired={true}
+              // isRequired={true}
             />
           </div>
           {error.haserror && (

@@ -20,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
           success: false,
           status: HttpStatus.UNAUTHORIZED,
           message:
-            'Could not find user with these credentials. Check if email and password are correct.',
+            'Kunne ikke finde bruger med disse legitimationsoplysninger. Tjek om e-mail og adgangskode er korrekte.',
         },
         HttpStatus.UNAUTHORIZED,
       );
