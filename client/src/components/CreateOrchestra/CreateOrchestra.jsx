@@ -23,6 +23,43 @@ const CreateOrchestra = () => {
 
   const [orchestraData, setOrchestraData] = useState(initialOrchestraState);
 
+  const initialErrorsState = {
+    title: {
+      haserror: false,
+      message: "",
+    },
+    description: {
+      haserror: false,
+      message: "",
+    },
+    website: {
+      haserror: false,
+      message: "",
+    },
+    zipcode: {
+      haserror: false,
+      message: "",
+    },
+    city: {
+      haserror: false,
+      message: "",
+    },
+    musicians_amount: {
+      haserror: false,
+      message: "",
+    },
+    practice_frequency: {
+      haserror: false,
+      message: "",
+    },
+    genres: {
+      haserror: false,
+      message: "",
+    },
+  };
+
+  const [errors, setErrors] = useState(initialErrorsState);
+
   const handleInput = (event) => {
     const property = event.target.name;
     const propertyValue = event.target.value;
@@ -39,11 +76,12 @@ const CreateOrchestra = () => {
     const genreExists = orchestraData.genres.find(
       (genre) => genre === select.value
     );
-    if (!genreExists) {
+    if (!genreExists && select.value.length > 0) {
       setOrchestraData({
         ...orchestraData,
         genres: orchestraData.genres.concat(select.value),
       });
+      select.value = "";
     }
   };
 
@@ -94,15 +132,35 @@ const CreateOrchestra = () => {
 
     try {
       const request = await fetch(url, options);
-      const userWithNewOrchestra = await request.json();
-      console.log(userWithNewOrchestra);
-      // update userInfo state so it has the newly created orchestra
-      setUserInfo({
-        ...userInfo,
-        orchestras_created: userWithNewOrchestra.orchestras_created,
-      });
-      // redirect to profile page
-      redirectToProfile();
+      const data = await request.json();
+      if (data.success) {
+        // update userInfo state so it has the newly created orchestra
+        setUserInfo({
+          ...userInfo,
+          orchestras_created: data.user.orchestras_created,
+        });
+        // redirect to profile page
+        redirectToProfile();
+      } else if (data.error) {
+        // reset errors atate in order to hide errors from previous query that might have been fixed in this one
+        setErrors(initialErrorsState);
+
+        // change errors state so that the errors in DOM are displayed
+        data.message.forEach((msg) => {
+          const property = msg.property;
+          const message = msg.constraints[Object.keys(msg.constraints)[0]];
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              [property]: {
+                ...prevState[property],
+                haserror: true,
+                message: message,
+              },
+            };
+          });
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -126,6 +184,8 @@ const CreateOrchestra = () => {
             text="Ensemblets navn"
             handleInput={handleInput}
             value={orchestraData.title}
+            hasError={errors.title.haserror}
+            errorMessage={errors.title.message}
           />
 
           {/* picture field */}
@@ -153,7 +213,13 @@ const CreateOrchestra = () => {
               onChange={handleInput}
               value={orchestraData.description}
             />
-            <span className={styles.help_block}></span>
+            <span
+              className={`${styles.help_block} ${
+                errors.description.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.description.message}
+            </span>
           </div>
 
           {/* website field */}
@@ -163,6 +229,8 @@ const CreateOrchestra = () => {
             text="Hjemmeside"
             handleInput={handleInput}
             value={orchestraData.website}
+            hasError={errors.website.haserror}
+            errorMessage={errors.website.message}
           />
 
           {/* location fields */}
@@ -173,6 +241,8 @@ const CreateOrchestra = () => {
               type="text"
               handleInput={handleInput}
               value={orchestraData.zipcode}
+              hasError={errors.zipcode.haserror}
+              errorMessage={errors.zipcode.message}
             />
             <FormField
               name="city"
@@ -180,6 +250,8 @@ const CreateOrchestra = () => {
               type="text"
               handleInput={handleInput}
               value={orchestraData.city}
+              hasError={errors.city.haserror}
+              errorMessage={errors.city.message}
             />
           </div>
 
@@ -195,14 +267,20 @@ const CreateOrchestra = () => {
               onChange={handleInput}
               value={orchestraData.musicians_amount}
             >
-              <option value="vælg">Vælg antal</option>
+              <option value="">Vælg antal</option>
               <option value="1 - 4 musikere">1 - 4 musikere</option>
               <option value="5 - 9 musikere">5 - 9 musikere</option>
               <option value="10 - 24 musikere">10 - 24 musikere</option>
               <option value="25 - 49 musikere">25 - 49 musikere</option>
               <option value="Mere end 50 musikere">Mere end 50 musikere</option>
             </select>
-            <span className={styles.help_block}></span>
+            <span
+              className={`${styles.help_block} ${
+                errors.musicians_amount.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.musicians_amount.message}
+            </span>
           </div>
 
           {/* frequency of practice field */}
@@ -217,7 +295,7 @@ const CreateOrchestra = () => {
               onChange={handleInput}
               value={orchestraData.practice_frequency}
             >
-              <option value="vælg">Vælg frekvens</option>
+              <option value="">Vælg frekvens</option>
               <option value="Flere gange om ugen">Flere gange om ugen</option>
               <option value="1 gang om ugen">1 gang om ugen</option>
               <option value="1 gang hver anden uge">
@@ -228,7 +306,13 @@ const CreateOrchestra = () => {
                 1 gang hver anden måned
               </option>
             </select>
-            <span className={styles.help_block}></span>
+            <span
+              className={`${styles.help_block} ${
+                errors.practice_frequency.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.practice_frequency.message}
+            </span>
           </div>
 
           {/* genres field */}
@@ -243,7 +327,7 @@ const CreateOrchestra = () => {
               className={styles.select}
               onChange={handleGenreInput}
             >
-              <option value="vælg">Genrer</option>
+              <option value="">Genrer</option>
               <option value="Kammermusik">Kammermusik</option>
               <option value="Symfonik">Symfonik</option>
               <option value="Romantisk">Romantisk</option>
@@ -252,7 +336,13 @@ const CreateOrchestra = () => {
               <option value="Senmoderne">Senmoderne</option>
               <option value="Senromantisk">Senromantisk</option>
             </select>
-            {/* <span className={styles.help_block}></span> */}
+            <span
+              className={`${styles.help_block} ${
+                errors.genres.haserror ? "shown" : "hidden"
+              }`}
+            >
+              {errors.genres.message}
+            </span>
             <div className={styles.selected_genres}>
               {" "}
               {listOfGenres}

@@ -16,14 +16,6 @@ const Header = () => {
     redirectToLogin();
   };
 
-  useEffect(() => {
-    const reloadSpa = () => {
-      navigate("/");
-    };
-    window.addEventListener("load", reloadSpa);
-    return () => window.removeEventListener("load", reloadSpa);
-  }, []);
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
