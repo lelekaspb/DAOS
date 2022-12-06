@@ -133,6 +133,16 @@ export class UserService {
   }
 
   async addInstrumentToUser(id: string, instrument: InstrumentDto) {
+    if (instrument.title == 'vælg') {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          message: 'Instrumentet må ikke være tomt',
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
     const query: any = { _id: new mongoose.Types.ObjectId(id) };
     const user = await this.userModel.findOne(query).exec();
     // check if the user already has this instrument in the instruments array

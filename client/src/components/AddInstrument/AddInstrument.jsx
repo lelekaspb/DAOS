@@ -30,11 +30,12 @@ const AddInstrument = () => {
       const genreExists = instrumentData.genres.find(
         (genre) => genre === select.value
       );
-      if (!genreExists) {
+      if (!genreExists && select.value.length > 0) {
         setInstrumentData({
           ...instrumentData,
           genres: instrumentData.genres.concat(select.value),
         });
+        select.value = "";
       }
     }
   };
@@ -89,6 +90,21 @@ const AddInstrument = () => {
           });
         } // if 422 - dto validation failed
         else if (data.statusCode == 422) {
+          // reset state so that errors that were fixed after previous query are gone
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              title: {
+                haserror: false,
+                message: "",
+              },
+              genres: {
+                haserror: false,
+                message: "",
+              },
+            };
+          });
+
           // change errors state so that the errors in DOM are displayed
           data.message.forEach((msg) => {
             const property = msg.property;
@@ -152,10 +168,10 @@ const AddInstrument = () => {
               name="instrument"
               value={instrumentData.instrument}
               className={styles.select}
-              required={true}
+              // required={true}
               onChange={handleSelect}
             >
-              <option defaultValue value="vælg">
+              <option defaultValue value="">
                 Vælg instrument
               </option>
               <option value="Piano">Piano</option>
@@ -180,10 +196,10 @@ const AddInstrument = () => {
               name="genres"
               // value={instrumentData.genres[0]}
               className={styles.select}
-              required
+              // required
               onChange={handleSelect}
             >
-              <option value="vælg">Vælg genre</option>
+              <option value="">Vælg genre</option>
               <option value="Kammermusik">Kammermusik</option>
               <option value="Symfonik">Symfonik</option>
               <option value="Romantisk">Romantisk</option>
