@@ -23,7 +23,7 @@ const FrontPage = () => {
       </div>
 
       <div className={styles.imageWrapper}>
-        <FrontPageImage photo="./src/assets/music.png" />
+        <FrontPageImage photo="./src/assets/music_v2.png" />
       </div>
     </main>
   );
