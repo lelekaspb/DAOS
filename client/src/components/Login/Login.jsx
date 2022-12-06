@@ -48,7 +48,6 @@ const Login = () => {
       const request = await fetch(url, options);
       const data = await request.json();
       if (!data.success) {
-        console.log(data.message);
         // display error message received from the server
         setError({ ...error, haserror: true, message: data.message });
       } else {

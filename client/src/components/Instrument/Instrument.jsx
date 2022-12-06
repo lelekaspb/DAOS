@@ -2,11 +2,13 @@ import styles from "./Instrument.module.css";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 
 const Instrument = ({ title, genres, deleteGenre = null }) => {
-  const listOfGenres = genres.map((genre) => (
+  const listOfGenres = genres.map((genre, index) => (
     <InstrumentGenre
       title={genre}
-      key={genre}
-      // deleteGenre={deleteGenre}
+      key={`${genre}_${index}`}
+      data-value={genre}
+      instrument={title}
+      deleteGenre={deleteGenre}
     />
   ));
 

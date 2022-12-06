@@ -21,7 +21,6 @@ export class UserController {
 
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
-    console.log('createUser user.controller');
     return this.userService.createUser(createUserDto);
   }
 
@@ -29,7 +28,6 @@ export class UserController {
   @UseInterceptors(OnlySameUserByIdAllowed)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
-    console.log('deleteUser user.controller');
     const response = await this.userService.deleteUser(id);
     return response;
   }
@@ -38,7 +36,6 @@ export class UserController {
   @UseInterceptors(OnlySameUserByIdAllowed)
   @Put(':id')
   updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
-    console.log('updateUser user.controller');
     return this.userService.updateUser(id, userDto);
   }
 
@@ -46,7 +43,6 @@ export class UserController {
   @UseInterceptors(OnlySameUserByIdAllowed)
   @Put(':id/settings')
   changePassword(@Param('id') id: string, @Body() passwords: any) {
-    console.log('changePassword user.controller');
     return this.userService.changePassword(id, passwords);
   }
 
@@ -57,15 +53,13 @@ export class UserController {
     @Param('id') id: string,
     @Body() instrument: InstrumentDto,
   ) {
-    console.log('addInstrumentToUser user.controller');
     return this.userService.addInstrumentToUser(id, instrument);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @UseInterceptors(OnlySameUserByIdAllowed)
-  // @Delete(':id/instrument-genre')
-  // deleteInstrumnetGenre(@Param('id') id: string, @Body() genre: string) {
-  //   console.log("user id " + id);
-  //   console.log("genre " + genre);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlySameUserByIdAllowed)
+  @Put(':id/instrument')
+  deleteInstrumentGenre(@Param('id') id: string, @Body() instrument: any) {
+    return this.userService.deleteInstrumentGenre(id, instrument);
+  }
 }

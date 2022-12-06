@@ -6,16 +6,63 @@ import Orchestra from "../Orchestra/Orchestra";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserProfile = () => {
-  const { userInfo } = useGlobalContext();
+  const { userInfo, setUserInfo } = useGlobalContext();
 
-  // const deleteGenre = (event) => {
-  //   console.log(event.target);
-  // };
+  const deleteGenre = (event) => {
+    const instrumentTitle = event.target.dataset.instrument;
+    const genreToDelete = event.target.dataset.value;
+    const userInstrument = userInfo.instruments.find(
+      (elem) => elem.title === instrumentTitle
+    );
+    const indexOfgenreToDelete = userInstrument.genres.findIndex(
+      (elem) => elem === genreToDelete
+    );
+    const firstPart = userInstrument.genres.slice(0, indexOfgenreToDelete);
+    const lastPart = userInstrument.genres.slice(
+      indexOfgenreToDelete + 1,
+      userInstrument.genres.length
+    );
+    userInstrument.genres = [...firstPart, ...lastPart];
+
+    // change instrument id db via fetch request
+    deleteGenreInDb(userInstrument);
+  };
+
+  const deleteGenreInDb = async (instrumentObject) => {
+    const url = `http://127.0.0.1:3007/user/${userInfo.id}/instrument`;
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      body: JSON.stringify(instrumentObject),
+    };
+
+    try {
+      let response = await fetch(url, options);
+      response = await response.json();
+      if (response.success) {
+        const updatedInstruments = response.instruments;
+        setUserInfo((prevState) => {
+          return {
+            ...prevState,
+            instruments: updatedInstruments,
+          };
+        });
+      } else {
+        // TODO: handle error response
+        console.error(response.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const listOfInstruments = userInfo.instruments.map((instrument, index) => (
     <Instrument
       key={`${instrument.title}_${index}`}
-      // deleteGenre={deleteGenre}
+      deleteGenre={deleteGenre}
       title={instrument.title}
       genres={instrument.genres}
     />

@@ -19,7 +19,6 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async signUserIn(email: string, password: string): Promise<User> {
-    console.log('signUserIn from user.service');
     try {
       const user = await this.userModel.findOne({ email: email }).exec();
 
@@ -38,7 +37,7 @@ export class UserService {
     const userExists = await this.userModel
       .findOne({ email: user.email })
       .exec();
-    console.log(userExists);
+
     if (userExists) {
       throw new HttpException(
         {
@@ -182,6 +181,46 @@ export class UserService {
         HttpStatus.FORBIDDEN,
       );
     }
+  }
+
+  async deleteInstrumentGenre(id: string, instrument: any) {
+    // find user and update the instrument
+    const query: any = { _id: new mongoose.Types.ObjectId(id) };
+    const user = await this.userModel.findOne(query).exec();
+    const instrumentIndex = user.instruments.findIndex(
+      (elem) => elem.title === instrument.title,
+    );
+
+    if (instrumentIndex < 0) {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.NOT_FOUND,
+          message: 'Could not find the instrument',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    if (instrument.genres.length == 0) {
+      // delete the instrument if there are no genres left
+      const firstPart = user.instruments.slice(0, instrumentIndex);
+      const secondPart = user.instruments.slice(
+        instrumentIndex + 1,
+        user.instruments.length,
+      );
+      user.instruments = [...firstPart, ...secondPart];
+      await user.save();
+    } else {
+      user.instruments[instrumentIndex] = instrument;
+      await user.save();
+    }
+
+    return {
+      success: true,
+      status: HttpStatus.OK,
+      instruments: user.instruments,
+    };
   }
 
   async addOrchestraToUser(userId: string, orchestraId: string) {
