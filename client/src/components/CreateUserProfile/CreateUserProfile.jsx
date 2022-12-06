@@ -11,7 +11,7 @@ const CreateUserProfile = () => {
     password: "",
   });
 
-  const [errors, setErrors] = useState({
+  const initialErrorsState = {
     firstName: {
       haserror: false,
       message: "",
@@ -28,7 +28,9 @@ const CreateUserProfile = () => {
       haserror: false,
       message: "",
     },
-  });
+  };
+
+  const [errors, setErrors] = useState(initialErrorsState);
 
   let navigate = useNavigate();
   const redirectToLogin = () => {
@@ -56,6 +58,8 @@ const CreateUserProfile = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
+      // reset errors state
+      setErrors(initialErrorsState);
       if (data.error) {
         // change errors state so that the errors in DOM are displayed
         data.message.forEach((msg) => {
@@ -71,6 +75,17 @@ const CreateUserProfile = () => {
               },
             };
           });
+        });
+      } else if (data.status == 403) {
+        // display email error - user with this email exists already
+        setErrors((prevState) => {
+          return {
+            ...prevState,
+            email: {
+              haserror: true,
+              message: data.message,
+            },
+          };
         });
       } else if (data.success) {
         // else check if data.success is true and redirect to login

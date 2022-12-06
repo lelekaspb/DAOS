@@ -35,6 +35,20 @@ export class UserService {
   }
 
   async createUser(user: CreateUserDto) {
+    const userExists = await this.userModel
+      .findOne({ email: user.email })
+      .exec();
+    console.log(userExists);
+    if (userExists) {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.FORBIDDEN,
+          message: 'Bruger med denne e-mail findes allerede',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
     const hashedPassword = await bcrypt.hash(user.password, 12);
     let userHashed = { ...user, password: hashedPassword };
     const savedUser = new this.userModel(userHashed);
