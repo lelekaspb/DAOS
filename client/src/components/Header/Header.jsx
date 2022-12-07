@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { useEffect } from "react";
 
 const Header = () => {
   const { userInfo, resetUserInfoState } = useGlobalContext();

@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
   ServiceUnavailableException,
@@ -20,10 +22,6 @@ export class UserService {
     try {
       const user = await this.userModel.findOne({ email: email }).exec();
 
-      if (!user) {
-        throw new NotFoundException();
-      }
-
       const isMatch = await bcrypt.compare(password, user.password);
       if (isMatch) {
         return await user.populate('orchestras_created', ['title']);
@@ -36,36 +34,77 @@ export class UserService {
   }
 
   async createUser(user: CreateUserDto) {
-    if (!user) {
-      throw new BadRequestException();
-    }
+    const userExists = await this.userModel
+      .findOne({ email: user.email })
+      .exec();
 
+    if (userExists) {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.FORBIDDEN,
+          message: 'Bruger med denne e-mail findes allerede',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
     const hashedPassword = await bcrypt.hash(user.password, 12);
     let userHashed = { ...user, password: hashedPassword };
     const savedUser = new this.userModel(userHashed);
 
     try {
-      return await savedUser.save();
+      await savedUser.save();
+      const { password, ...result } = savedUser.toObject();
+
+      return {
+        success: true,
+        status: HttpStatus.CREATED,
+        user: result,
+      };
     } catch (err) {
       throw new ServiceUnavailableException();
     }
   }
 
-  updateUser(id: string, userDto: UserDto) {
+  async updateUser(id: string, userDto: UserDto) {
     if (!id || !userDto) {
       throw new BadRequestException();
     }
 
     try {
-      return this.userModel.updateOne({ _id: id }, userDto).exec();
+      const response = await this.userModel
+        .updateOne({ _id: id }, userDto)
+        .exec();
+      return {
+        success: true,
+        status: HttpStatus.OK,
+        ...response,
+      };
     } catch (err) {
       throw new ServiceUnavailableException();
     }
   }
 
-  deleteUser(id: string) {
+  async deleteUser(id: string) {
     const query: any = { _id: new mongoose.Types.ObjectId(id) };
-    return this.userModel.deleteOne(query).exec();
+    try {
+      const result = await this.userModel.deleteOne(query).exec();
+      return {
+        success: true,
+        status: HttpStatus.OK,
+        ...result,
+      };
+    } catch (err) {
+      console.log(err);
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.SERVICE_UNAVAILABLE,
+          message: 'Kunne ikke slette brugeren',
+        },
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
   }
 
   deleteMany(deleteCriteria: any) {
@@ -78,21 +117,110 @@ export class UserService {
 
     const isMatch = await bcrypt.compare(passwords.current, user.password);
     if (isMatch) {
-      const hashedPassword = await bcrypt.hash(passwords.new, 12);
-      user.password = hashedPassword;
-      user.save();
-      return user;
-    }
+      try {
+        const hashedPassword = await bcrypt.hash(passwords.new, 12);
+        user.password = hashedPassword;
+        const savedUser = await user.save();
+        const { password, ...result } = savedUser.toObject();
 
-    return null;
+        return {
+          success: true,
+          status: HttpStatus.OK,
+          user: result,
+        };
+        //  return user;
+      } catch (err) {
+        console.error(err);
+        throw new ServiceUnavailableException();
+      }
+    } else {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.UNAUTHORIZED,
+          message: 'Nuværende adgangskode er forket',
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
   }
 
   async addInstrumentToUser(id: string, instrument: InstrumentDto) {
+    if (instrument.title == 'vælg') {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.UNPROCESSABLE_ENTITY,
+          message: 'Instrumentet må ikke være tomt',
+        },
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
     const query: any = { _id: new mongoose.Types.ObjectId(id) };
     const user = await this.userModel.findOne(query).exec();
-    user.instruments.push(instrument);
-    user.save();
-    return user;
+    // check if the user already has this instrument in the instruments array
+    const instrumentExists = user.instruments.find(
+      (elem) => elem.title === instrument.title,
+    );
+    if (!instrumentExists) {
+      user.instruments.push(instrument);
+      const savedUser = await user.save();
+      const { password, ...result } = savedUser.toObject();
+      return {
+        success: true,
+        status: HttpStatus.OK,
+        user: result,
+      };
+    } else {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.FORBIDDEN,
+          message: 'Dette instrument findes allerede',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+  }
+
+  async deleteInstrumentGenre(id: string, instrument: any) {
+    // find user and update the instrument
+    const query: any = { _id: new mongoose.Types.ObjectId(id) };
+    const user = await this.userModel.findOne(query).exec();
+    const instrumentIndex = user.instruments.findIndex(
+      (elem) => elem.title === instrument.title,
+    );
+
+    if (instrumentIndex < 0) {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.NOT_FOUND,
+          message: 'Could not find the instrument',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    if (instrument.genres.length == 0) {
+      // delete the instrument if there are no genres left
+      const firstPart = user.instruments.slice(0, instrumentIndex);
+      const secondPart = user.instruments.slice(
+        instrumentIndex + 1,
+        user.instruments.length,
+      );
+      user.instruments = [...firstPart, ...secondPart];
+      await user.save();
+    } else {
+      user.instruments[instrumentIndex] = instrument;
+      await user.save();
+    }
+
+    return {
+      success: true,
+      status: HttpStatus.OK,
+      instruments: user.instruments,
+    };
   }
 
   async addOrchestraToUser(userId: string, orchestraId: string) {
