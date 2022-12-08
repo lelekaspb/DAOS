@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { OrchestraDto } from './orchestra.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
@@ -21,13 +25,23 @@ export class OrchestraService {
 
   async createNewOrchestra(orchDto: OrchestraDto) {
     const savedOrchestra = new this.orchModel(orchDto);
-    //return savedOrchestra.save();
-    await savedOrchestra.save();
-    const creator = await this.userService.addOrchestraToUser(
-      savedOrchestra.creator_id,
-      savedOrchestra._id,
-    );
-    return creator;
+    try {
+      await savedOrchestra.save();
+      const creator = await this.userService.addOrchestraToUser(
+        savedOrchestra.creator_id,
+        savedOrchestra._id,
+      );
+
+      const { password, ...result } = creator.toObject();
+      return {
+        success: true,
+        status: HttpStatus.CREATED,
+        user: result,
+      };
+    } catch (err) {
+      console.log(err);
+      throw new ServiceUnavailableException();
+    }
   }
 
   deleteOrchestra(id: string) {

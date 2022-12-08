@@ -81,12 +81,6 @@
   color: var(--bodytext-font-color);
 }
 
-.help_block {
-  color: var(--red-color);
-  font-size: calc(0.6rem + 0.3vw);
-  height: 20px;
-}
-
 .location_field {
   display: flex;
   justify-content: space-between;

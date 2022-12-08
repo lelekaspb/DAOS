@@ -15,9 +15,7 @@ export class OnlySameUserByIdAllowed implements NestInterceptor {
   ): Promise<Observable<any>> {
     const req = context.switchToHttp().getRequest();
     const requestUserId = req.params.id;
-    console.log('requestedUserId ' + requestUserId);
-    console.log('request.user');
-    console.log(req.user);
+
     try {
       if (req?.user.userId === requestUserId) {
         return next.handle();

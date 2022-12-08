@@ -22,6 +22,22 @@ const EditUserProfile = () => {
     searching: userCopy.searching,
   });
 
+  const initialErrorsState = {
+    firstName: {
+      haserror: false,
+      message: "",
+    },
+    lastName: {
+      haserror: false,
+      message: "",
+    },
+    email: {
+      haserror: false,
+      message: "",
+    },
+  };
+  const [errors, setErrors] = useState(initialErrorsState);
+
   const handleInput = (event) => {
     const property = event.target.name;
     const value = event.target.value;
@@ -63,7 +79,7 @@ const EditUserProfile = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      // update state in App
+      // update state in global context
       if (data.acknowledged) {
         setUserInfo({
           ...userInfo,
@@ -77,9 +93,24 @@ const EditUserProfile = () => {
           city: userFormData.city,
           searching: userFormData.searching,
         });
+        // redirect to profile page
+        redirectToProfile();
+      } else if (data.error) {
+        data.message.forEach((msg) => {
+          const property = msg.property;
+          const message = msg.constraints[Object.keys(msg.constraints)[0]];
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              [property]: {
+                ...prevState[property],
+                haserror: true,
+                message: message,
+              },
+            };
+          });
+        });
       }
-      // redirect to profile page
-      redirectToProfile();
     } catch (err) {
       console.error(err);
     }
@@ -101,16 +132,20 @@ const EditUserProfile = () => {
               text="Fornavn"
               type="text"
               value={userFormData.firstName}
-              isRequired={true}
+              // isRequired={true}
               handleInput={handleInput}
+              hasError={errors.firstName.haserror}
+              errorMessage={errors.firstName.message}
             />
             <FormField
               name="lastName"
               type="text"
               text="Efternavn"
               value={userFormData.lastName}
-              isRequired={true}
+              // isRequired={true}
               handleInput={handleInput}
+              hasError={errors.lastName.haserror}
+              errorMessage={errors.lastName.message}
             />
           </div>
           <div className={styles.picture_field}>
@@ -166,8 +201,11 @@ const EditUserProfile = () => {
                 name="email"
                 type="email"
                 text="E-mail"
+                // isRequired={true}
                 value={userFormData.email}
                 handleInput={handleInput}
+                hasError={errors.email.haserror}
+                errorMessage={errors.email.message}
               />
               <FormField
                 name="phoneNumber"

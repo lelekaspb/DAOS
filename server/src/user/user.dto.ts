@@ -15,13 +15,13 @@ import { InstrumentDto } from './instrument.dto';
 
 export class UserDto {
   @Prop()
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'First name must not be empty' })
+  @IsString({ message: 'First name field must be a string' })
   firstName: string;
 
   @Prop()
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'Last name must not be empty' })
+  @IsString({ message: 'Last name field must be a string' })
   lastName: string;
 
   @Prop()
@@ -30,7 +30,7 @@ export class UserDto {
   password: string;
 
   @Prop()
-  @IsEmail()
+  @IsEmail({}, { message: 'Email must be a valid email address' })
   email: string;
 
   @Prop()
