@@ -25,11 +25,11 @@ describe('Orchestra Controller (e2e)', () => {
     await app.init();
   });
 
-  describe('Post orchesta Controller', () => {
-    it('should create new valid orchestra', async () => {
+  describe('Post orchestra Controller', () => {
+    it('should not create new valid orchestra with out loggedIn user', async () => {
       // Arrange
       const orchestra = new OrchestraDto(
-        'Roskilde Ensemble',
+        'Copenhagen Ensemble',
         'creator_id',
         'description',
         'www.google.com',
@@ -37,18 +37,17 @@ describe('Orchestra Controller (e2e)', () => {
         'London',
         '10 - 24',
         'once a week',
-        [],
+        []
       );
 
       // Act
       const result = await request(app.getHttpServer())
         .post('/orchestra')
-        .send(orchestra);
-      console.log(result);
-      // .expect(201);
-
+        .send(orchestra)
+        .expect(401);
       // Assert
       const res = result.body;
+      console.log(res);
       expect(res._id).toBeDefined();
       expect(res.__v).toEqual(0);
     });
@@ -56,7 +55,7 @@ describe('Orchestra Controller (e2e)', () => {
     it('should return error when invalid data is passed on create', async () => {
       // Arrange
       const orchestra = new OrchestraDto(
-        'Roskilde Ensemble',
+        '1542',
         'creator_id',
         'description',
         'www.google.com',
@@ -71,23 +70,23 @@ describe('Orchestra Controller (e2e)', () => {
       const result = await request(app.getHttpServer())
         .post('/orchestra')
         .send(orchestra)
-        .expect(400);
+        .expect(401);
 
       // Assert
       const res = result.body;
-      expect(res.message[0]).toEqual('email must be an email');
+      expect(res.message[0]).toEqual('title can not be empty');
     });
 
-    it('should find and return user by email and password', async () => {
+    it('should find and return orchestra by creator_id and title', async () => {
       // Arrange
       const orchestraToBeCreated = new OrchestraDto(
-        'Roskilde Ensemble',
+        'London Ensemble',
         'creator_id',
         'description',
         'www.google.com',
         '3050',
         'London',
-        '10 - 24',
+        '10-20',
         'once a week',
         [],
       );
@@ -96,40 +95,137 @@ describe('Orchestra Controller (e2e)', () => {
       // Act
       const result = await request(app.getHttpServer())
         .post('/orchestra')
-        .send({ email: 'line@junsen.com', password: 'hello123' })
-        .expect(200);
+        .send({ title: 'London Ensemble', creator_id: 'creator_id' })
+        .expect(401);
 
       //Assert (expect)
       const res = result.body;
       console.log(res);
       expect.objectContaining({
-        firstName: 'Line',
-        lastName: 'Jensen',
-        password: 'hello123',
-        email: 'line@junsen.com',
+        title: 'London Ensemble',
+        creator_id: 'creator_id',
+        description: 'description',
+        website: 'www.google.com',
+        zipcode: '3050',
+        city: 'London',
+        musicians_amount: '10-20',
+        practice_frequency: 'once a week',
+        genres: [],
+
       });
     });
 
-    // it('should return error when email could not be found', async () => {
-    //   // Arrange
-    //   const userToBeCreated = new UserDto(
-    //     'Line',
-    //     'Jensen',
-    //     'hello123',
-    //     'line@jensen.com',
-    //   );
-    //   await userService.createUser(userToBeCreated);
+  });
 
-    //   // Act
-    //   const result = await request(app.getHttpServer())
-    //     .post('/user/signin')
-    //     .send({ email: 'line@stevenson.com', password: 'hello123' })
-    //     .expect(200);
+  describe('Delete Orchestra Controller', () => {
+    it('should delete orchestra by id', async () => {
+      // Arrange
+      const orchestraQuery = new OrchestraDto(
+        'London Ensemble',
+        'creator_id',
+        'description',
+        'www.google.com',
+        '3050',
+        'London',
+        '10-20',
+        'once a week',
+        [],
+      );
+      const orchestra = await orchestraService.createNewOrchestra(orchestraQuery);
+      console.log(orchestraQuery);
 
-    //   //Assert (expect)
-    //   const res = result.body;
-    //   expect(res).toStrictEqual({});
-    // });
+      // Act
+      const result = await request(app.getHttpServer())
+        .delete(`/orchestra/${orchestra._id}`)
+        .expect(200);
+
+      // Assert
+      const res = result.body;
+      expect(res.acknowledged).toEqual(true);
+    });
+
+    it('should return error when id is empty on delete', async () => {
+      // Arrange
+      const id = '';
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .delete(`/orchestra/${id}`)
+        .expect(404);
+
+      // Assert
+      const res = result.body;
+      expect(res.error).toEqual('Not Found');
+    });
+  });
+
+
+  describe('Put Orchestra Controller', () => {
+    it('should update orchestra with given id and orchestra dto', async () => {
+      // Arrange
+      const orchestraQuery = new OrchestraDto(
+        'London Ensemble',
+        'creator_id',
+        'description',
+        'www.google.com',
+        '3050',
+        'London',
+        '10-20',
+        'once a week',
+        [],
+      );
+      const orchestra = await orchestraService.createNewOrchestra(orchestraQuery);
+      console.log(orchestra);
+
+      const updatedOrchestra = {
+        title: 'NewYork Ensemble',
+        creator_id: 'creator_id',
+        description: 'updated_description',
+        website: 'business.dk',
+        zipcode: '5170',
+        city: 'New York',
+        musicians_amount: '5-15',
+        practice_frequency: 'twice a week',
+        genres: [],
+      };
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .put(`/orchestra/${updatedOrchestra.creator_id}`)
+        .send(updatedOrchestra)
+        .expect(200);
+
+      // Assert
+      const res = result.body;
+      expect(res.acknowledged).toEqual(true);
+    });
+
+    it('should return error if passed id is empty', async () => {
+      // Arrange
+      const updatedOrchestra = {
+        title: 'NewYork Ensemble',
+        creator_id: 'creator_id',
+        description: 'updated_description',
+        website: 'business.dk',
+        zipcode: '5170',
+        city: 'New York',
+        musicians_amount: '5-15',
+        practice_frequency: 'twice a week',
+        genres: [],
+      };
+
+      const id = '';
+
+      // Act
+      const result = await request(app.getHttpServer())
+        .put(`/orchestra/${id}`)
+        .send(updatedOrchestra)
+        .expect(404);
+
+      // Assert
+      const res = result.body;
+      expect(res.error).toEqual('Not Found');
+    });
   });
 
   //Closing app after all tests => not hanging.
