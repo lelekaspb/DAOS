@@ -11,7 +11,6 @@ export class AppController {
   @HttpCode(200)
   @Post('auth/login')
   login(@Body() loginDto: LoginDto) {
-    console.log('app.controller auth/login');
     const response = this.authService.login(loginDto);
     return response;
   }
