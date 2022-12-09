@@ -135,7 +135,7 @@ const UserProfile = () => {
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine instrumenter</h2>
             <button className={styles.info_btn}>
-              <Link to="/add-instrument">Tilføj</Link>
+              <Link to="add-instrument">Tilføj</Link>
             </button>
           </div>
 
@@ -144,7 +144,7 @@ const UserProfile = () => {
               heading="Du har ingen instrumenter endnu"
               text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
               cta="Tilføj instrument"
-              linkTo="/add-instrument"
+              linkTo="add-instrument"
             />
           )}
 
@@ -161,7 +161,7 @@ const UserProfile = () => {
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine ensembler</h2>
             <button className={styles.info_btn}>
-              <Link to="/create-orchestra">Opret</Link>
+              <Link to="create-orchestra">Opret</Link>
             </button>
           </div>
 
@@ -170,7 +170,7 @@ const UserProfile = () => {
               heading="Du har ingen ensembler endnu"
               text="Opret en opslag så du kan finde, eller blive fundet af andre musikere"
               cta="Opret ensemble"
-              linkTo="/create-orchestra"
+              linkTo="create-orchestra"
             />
           )}
 
@@ -182,18 +182,23 @@ const UserProfile = () => {
         </article>
         {/* orchestras section end */}
 
+        {/* posts section */}
         <article className={styles.posts_info}>
           <div className={styles.top_row}>
             <h2 className={styles.info_heading}>Mine opslag</h2>
-            <button className={styles.info_btn}>Opret</button>
+            <button className={styles.info_btn}>
+              <Link to="create-post">Opret</Link>
+            </button>
           </div>
           <EmptyUserProfileSection
             heading="Du har ingen opslag endnu"
             text="Opret en opslag så du kan finde, eller blive fundet af andre
               musikere"
             cta="Opret opslag"
+            linkTo="create-post"
           />
         </article>
+        {/* posts section end */}
       </section>
     </main>
   );
