@@ -6,19 +6,21 @@ import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 import { OrchestraModule } from './orchestra/orchestra.module';
 import { ConfigModule } from '@nestjs/config';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({
       useFactory: () => ({
-         uri: process.env.connection_string,
+        uri: process.env.connection_string,
       }),
     }),
     OrchestraModule,
     UserModule,
     AuthModule,
+    PostModule,
     ConfigModule.forRoot({ isGlobal: true }),
-  ], 
+  ],
 
   controllers: [AppController],
   providers: [AppService],

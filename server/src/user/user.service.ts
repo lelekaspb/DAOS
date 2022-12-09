@@ -3,7 +3,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  NotFoundException,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -25,7 +24,9 @@ export class UserService {
       if (user) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-          return await user.populate('orchestras_created', ['title']);
+          return await (
+            await user.populate('orchestras_created', ['title'])
+          ).populate('posts');
         }
       }
 

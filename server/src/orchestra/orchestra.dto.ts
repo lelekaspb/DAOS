@@ -69,6 +69,3 @@ export class OrchestraDto {
     this.genres = genres;
   }
 }
-function ApiProperty() {
-  throw new Error('Function not implemented.');
-}

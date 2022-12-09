@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
@@ -96,6 +95,9 @@ const EditUserProfile = () => {
         // redirect to profile page
         redirectToProfile();
       } else if (data.error) {
+        // reset errors atate in order to hide errors from previous query that might have been fixed in this one
+        setErrors(initialErrorsState);
+        // set new errors
         data.message.forEach((msg) => {
           const property = msg.property;
           const message = msg.constraints[Object.keys(msg.constraints)[0]];

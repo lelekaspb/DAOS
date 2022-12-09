@@ -9,6 +9,7 @@ const FormField = ({
   isRequired = false,
   hasError = false,
   errorMessage = "",
+  placeholderText = null,
 }) => {
   return (
     <div className={styles.form_field}>
@@ -20,7 +21,8 @@ const FormField = ({
         className={styles.input}
         name={name}
         id={name}
-        placeholder={text}
+        // placeholder={text}
+        placeholder={placeholderText ? placeholderText : text}
         onChange={handleInput}
         value={value}
         required={isRequired}

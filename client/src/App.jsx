@@ -11,6 +11,7 @@ import AddInstrument from "./components/AddInstrument/AddInstrument";
 import CreateOrchestra from "./components/CreateOrchestra/CreateOrchestra";
 import EditOrchestra from "./components/EditOrchestra/EditOrchestra";
 import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
+import CreatePost from "./components/CreatePost/CreatePost";
 import { Routes, Route } from "react-router-dom";
 import GlobalContext from "./context/GlobalContext";
 
@@ -26,12 +27,13 @@ function App() {
           <Route path="/create-profile" element={<CreateUserProfile />} />
           <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
           <Route path="/profile">
-            <Route index element={<UserProfile />} /> 
+            <Route index element={<UserProfile />} />
             <Route path="edit" element={<EditUserProfile />} />
             <Route path="settings" element={<UserSettings />} />
+            <Route path="add-instrument" element={<AddInstrument />} />
+            <Route path="create-orchestra" element={<CreateOrchestra />} />
+            <Route path="create-post" element={<CreatePost />} />
           </Route>
-          <Route path="/add-instrument" element={<AddInstrument />} />
-          <Route path="/create-orchestra" element={<CreateOrchestra />} />
           <Route path="/edit-orchestra" element={<EditOrchestra />} />
           <Route path="*" element={<FrontPage />} />
         </Routes>

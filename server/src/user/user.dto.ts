@@ -11,17 +11,18 @@ import {
   ValidateNested,
 } from 'class-validator';
 import mongoose from 'mongoose';
+import { PostDto } from 'src/post/post.dto';
 import { InstrumentDto } from './instrument.dto';
 
 export class UserDto {
   @Prop()
-  @IsNotEmpty({ message: 'First name must not be empty' })
-  @IsString({ message: 'First name field must be a string' })
+  @IsNotEmpty({ message: 'Fornavn må ikke være tomt' })
+  @IsString({ message: 'Fornavn skal være en streng' })
   firstName: string;
 
   @Prop()
-  @IsNotEmpty({ message: 'Last name must not be empty' })
-  @IsString({ message: 'Last name field must be a string' })
+  @IsNotEmpty({ message: 'Efternavn må ikke være tomt' })
+  @IsString({ message: 'Efternavn skal være en streng' })
   lastName: string;
 
   @Prop()
@@ -30,7 +31,7 @@ export class UserDto {
   password: string;
 
   @Prop()
-  @IsEmail({}, { message: 'Email must be a valid email address' })
+  @IsEmail({}, { message: 'E-mail skal være en gyldig e-mailadresse' })
   email: string;
 
   @Prop()
@@ -66,9 +67,13 @@ export class UserDto {
   @Type(() => InstrumentDto)
   instruments: InstrumentDto[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orchestra' }] })
   @IsOptional()
   orchestras_created: any[];
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  @IsOptional()
+  posts: mongoose.Schema.Types.ObjectId[];
 
   @Prop()
   @IsOptional()
@@ -87,6 +92,7 @@ export class UserDto {
     city: string,
     instruments: [],
     searching: boolean,
+    posts: [],
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -99,5 +105,6 @@ export class UserDto {
     this.city = city;
     this.instruments = instruments;
     this.searching = searching;
+    this.posts = posts;
   }
 }

@@ -81,6 +81,11 @@
   color: var(--bodytext-font-color);
 }
 
+.description_input:focus,
+.description_input:active {
+  outline: 1px solid var(--primary-font-color);
+}
+
 .location_field {
   display: flex;
   justify-content: space-between;

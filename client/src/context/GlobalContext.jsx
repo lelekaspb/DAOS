@@ -16,6 +16,7 @@ export default function GlobalContext({ children }) {
     city: "",
     instruments: [],
     orchestras_created: [],
+    posts: [],
     searching: false,
     id: "",
     createdAt: "",

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, Types } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Instrument } from './instrument.interface';
 
 export type UserDocument = User & Document;
@@ -39,8 +39,8 @@ export class User {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orchestra' }] })
   orchestras_created: any[];
 
-  @Prop()
-  posts: [];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  posts: mongoose.Schema.Types.ObjectId[];
 
   @Prop()
   searching: boolean;
