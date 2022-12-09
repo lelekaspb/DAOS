@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import * as mongoose from 'mongoose';
 
 export class OrchestraDto {
   @IsNotEmpty({ message: 'Ensemblets navn må ikke være tomt' })
@@ -57,7 +56,7 @@ export class OrchestraDto {
     city: string,
     musicians_amount: string,
     practice_frequency: string,
-    genres: [],
+    genres: string[],
   ) {
     this.title = title;
     this.creator_id = creator_id;
@@ -69,4 +68,7 @@ export class OrchestraDto {
     this.practice_frequency = practice_frequency;
     this.genres = genres;
   }
+}
+function ApiProperty() {
+  throw new Error('Function not implemented.');
 }

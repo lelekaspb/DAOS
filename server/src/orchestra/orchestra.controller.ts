@@ -36,7 +36,6 @@ export class OrchestraController {
   @UseGuards(JwtAuthGuard)
   @Post()
   createOrchestra(@Body() new_data: OrchestraDto) {
-    console.log('createOrchestra orchestra.controller');
     return this.orchService.createNewOrchestra(new_data);
   }
 
@@ -44,7 +43,6 @@ export class OrchestraController {
   // create another interceptor that will check whether  creator id is equal to id from token
   @Delete(':id')
   async deleteOrchestra(@Param('id') id: string) {
-    console.log('deleteOrchestra orchestra.controller');
     return await this.orchService.deleteOrchestra(id);
   }
 

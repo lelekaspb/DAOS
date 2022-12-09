@@ -49,7 +49,7 @@ export class OrchestraService {
   }
 
   deleteMany(deleteCriteria: any) {
-    // return this.orchestraModel.deleteMany(deleteCriteria);
+    return this.orchModel.deleteMany(deleteCriteria);
   }
 
   updateOrchestra(id: string, orchDto: OrchestraDto) {

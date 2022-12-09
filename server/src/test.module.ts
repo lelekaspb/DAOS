@@ -11,9 +11,11 @@ import { UserService } from './user/user.service';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/test'),
-    UserModule, OrchestraModule, AuthModule
+    UserModule,
+    OrchestraModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [UserModule, AppService, OrchestraModule, AuthModule],
+  providers: [AppService, OrchestraModule, AuthModule],
 })
 export class TestModule {}

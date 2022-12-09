@@ -22,9 +22,11 @@ export class UserService {
     try {
       const user = await this.userModel.findOne({ email: email }).exec();
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (isMatch) {
-        return await user.populate('orchestras_created', ['title']);
+      if (user) {
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+          return await user.populate('orchestras_created', ['title']);
+        }
       }
 
       return null;
