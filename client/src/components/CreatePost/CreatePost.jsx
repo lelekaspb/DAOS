@@ -3,16 +3,20 @@ import BackLink from "../BackLink/BackLink";
 import styles from "./CreatePost.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const CreatePost = () => {
+  const { userInfo, setUserInfo } = useGlobalContext();
+
   const [postData, setPostData] = useState({
     title: "",
     type: "looking",
     instrument: "",
     description: "",
-    region: "",
+    location: "",
     orchestraName: "",
     website: "",
+    creator_id: userInfo.id,
   });
 
   const initialErrorsState = {
@@ -32,7 +36,7 @@ const CreatePost = () => {
       haserror: false,
       message: "",
     },
-    region: {
+    location: {
       haserror: false,
       message: "",
     },
@@ -45,6 +49,7 @@ const CreatePost = () => {
       message: "",
     },
   };
+
   const [errors, setErrors] = useState(initialErrorsState);
 
   const handleInput = (event) => {
@@ -68,12 +73,77 @@ const CreatePost = () => {
     });
   };
 
+  let navigate = useNavigate();
+  const redirectToProfile = () => {
+    navigate("/profile");
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // TODO: add client-side validation
+    createPost();
+  };
+
+  const createPost = async () => {
+    const url = `http://127.0.0.1:3007/post`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      body: JSON.stringify(postData),
+    };
+
+    try {
+      const request = await fetch(url, options);
+      const data = await request.json();
+
+      // reset errors atate in order to hide errors from previous query that might have been fixed in this one
+      setErrors(initialErrorsState);
+
+      // check response
+      if (data.error) {
+        // if 422 - update errors state
+        data.message.forEach((msg) => {
+          const property = msg.property;
+          const message = msg.constraints[Object.keys(msg.constraints)[0]];
+          setErrors((prevState) => {
+            return {
+              ...prevState,
+              [property]: {
+                ...prevState[property],
+                haserror: true,
+                message: message,
+              },
+            };
+          });
+        });
+      } else if (data.success) {
+        // if post created, update userInfo state
+
+        // and redirect to profile page
+        redirectToProfile();
+      } else {
+        // if sth unforseen happens, console log it
+        console.log("sth went wrong");
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.content}>
         <BackLink component="/profile" />
         <h2 className={styles.page_heading}>Opret opslag</h2>
-        <form className={styles.form} autoComplete="off">
+        <form
+          className={styles.form}
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
           {/* title */}
           <FormField
             name="title"
@@ -183,18 +253,18 @@ const CreatePost = () => {
           </div>
           {/* description end */}
 
-          {/* region */}
+          {/* location */}
           <FormField
-            name="region"
+            name="location"
             type="text"
             text="Område"
             handleInput={handleInput}
             value={postData.region}
-            hasError={errors.region.haserror}
-            errorMessage={errors.region.message}
+            hasError={errors.location.haserror}
+            errorMessage={errors.location.message}
             placeholderText="By, postnr. eller adresse"
           />
-          {/* region end */}
+          {/* location end */}
 
           {/* orchestra name */}
           <FormField
