@@ -121,6 +121,12 @@ const CreatePost = () => {
         });
       } else if (data.success) {
         // if post created, update userInfo state
+        setUserInfo((prevState) => {
+          return {
+            ...prevState,
+            ["posts"]: [...prevState.posts, data.post],
+          };
+        });
 
         // and redirect to profile page
         redirectToProfile();

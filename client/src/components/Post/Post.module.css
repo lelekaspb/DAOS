@@ -3,7 +3,8 @@
 }
 
 .post {
-  max-width: 350px;
+  width: 320px;
+  min-height: 173px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -31,6 +32,7 @@
 .representative,
 .post_instrument,
 .post_footer {
+  margin-top: auto;
   color: var(--bodytext-font-color);
   font-size: calc(0.6rem + 0.2vw);
 }
@@ -52,4 +54,6 @@
 .post_footer {
   background-color: var(--greyish-bg-color);
   padding: 10px 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
