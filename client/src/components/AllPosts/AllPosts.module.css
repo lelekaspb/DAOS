@@ -1,0 +1,120 @@
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.posts {
+  background-color: var(--greyish-bg-color);
+  min-height: 300px;
+  flex-grow: 1;
+}
+
+.posts_content,
+.filter_content {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page_heading {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: var(--title-font-size);
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.posts_count {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+}
+
+.filter_form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 20px 0;
+}
+
+.post_types,
+.post_instrument {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--primary-font-color);
+  font-family: var(--heading-font);
+  font-size: calc(1rem + 0.3vw);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.filter_button_active {
+  border-radius: 25px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  font-size: calc(0.7rem + 0.2vw);
+  cursor: pointer;
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  margin-bottom: 10px;
+  background-color: var(--primary-font-color);
+  color: var(--white-color);
+  transition: 0.2s all;
+}
+
+.filter_button_inactive {
+  border-radius: 25px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  font-size: calc(0.7rem + 0.2vw);
+  cursor: pointer;
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  margin-bottom: 10px;
+  background-color: var(--light-blue-bg-color);
+  color: var(--primary-font-color);
+  transition: 0.2s all;
+}
+
+.select {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  padding: 9.5px 20px;
+  margin-bottom: 10px;
+  font-family: var(--primary-font);
+  font-size: calc(0.7rem + 0.2vw);
+  color: var(--primary-font-color);
+  min-width: 200px;
+}
+
+.select:focus,
+.select:active {
+  outline: 1px solid var(--primary-font-color);
+}
+
+.posts_content {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 20px;
+}
+
+.no_posts_msg {
+  color: var(--primary-font-color);
+  width: 100%;
+  text-align: center;
+}

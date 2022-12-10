@@ -52,4 +52,43 @@ export class PostService {
       );
     }
   }
+
+  async getPosts(filterObject: any) {
+    let posts: Post[] = [];
+    if (filterObject.posts === 'all' && filterObject.instrument === 'all') {
+      posts = await this.postModel
+        .find({})
+        .populate('creator_id', ['firstName', 'lastName'])
+        .exec();
+    } else if (
+      filterObject.posts === 'all' &&
+      filterObject.instrument !== 'all'
+    ) {
+      posts = await this.postModel
+        .find({ instrument: filterObject.instrument })
+        .populate('creator_id', ['firstName', 'lastName'])
+        .exec();
+    } else if (
+      filterObject.instrument === 'all' &&
+      filterObject.posts !== 'all'
+    ) {
+      const postsType = filterObject.posts === 'ensembles' ? 'looking' : 'play';
+      posts = await this.postModel
+        .find({ type: postsType })
+        .populate('creator_id', ['firstName', 'lastName'])
+        .exec();
+    } else {
+      const postsType = filterObject.posts === 'ensembles' ? 'looking' : 'play';
+      posts = await this.postModel
+        .find({ type: postsType, instrument: filterObject.instrument })
+        .populate('creator_id', ['firstName', 'lastName'])
+        .exec();
+    }
+
+    return {
+      success: true,
+      status: HttpStatus.OK,
+      posts: posts,
+    };
+  }
 }

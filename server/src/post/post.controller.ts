@@ -22,4 +22,9 @@ export class PostController {
   createPost(@Body() postDto: PostDto) {
     return this.postService.createPost(postDto);
   }
+
+  @Post('/find')
+  getPosts(@Body() filterObject: any) {
+    return this.postService.getPosts(filterObject);
+  }
 }

@@ -10,9 +10,9 @@ const Footer = () => {
         <div className={styles.info}>
           <div className={styles.footer_heading}>MUSIK SAMSPIL</div>
           <div className={styles.footer_nav}>
-            <a href="#" className={styles.footer_nav_link}>
+            <Link to="/posts" className={styles.footer_nav_link}>
               Se opslag
-            </a>
+            </Link>
             <Link to="/orchestras" className={styles.footer_nav_link}>
               Finde ensemble
             </Link>
