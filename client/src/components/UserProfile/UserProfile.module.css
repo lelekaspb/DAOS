@@ -177,8 +177,14 @@
 /* orchestras section*/
 .added_orchestras {
   display: flex;
-  /* flex-direction: column; */
   flex-wrap: wrap;
   gap: 50px;
+  align-content: flex-start;
+}
+
+.created_posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
   align-content: flex-start;
 }

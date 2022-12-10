@@ -3,6 +3,7 @@ import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
 import { Link } from "react-router-dom";
 import Orchestra from "../Orchestra/Orchestra";
+import Post from "../Post/Post";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserProfile = () => {
@@ -78,6 +79,20 @@ const UserProfile = () => {
       />
     )
   );
+
+  const listOfPosts = userInfo.posts.map((post, index) => (
+    <Post
+      title={post.title}
+      key={`${index}`}
+      instrument={post.instrument}
+      location={post.location}
+      postId={post._id}
+      type={post.type}
+      orchestraName={post.orchestraName}
+      userName={`${userInfo.firstName} ${userInfo.lastName}`}
+      createdAt={post.createdAt}
+    />
+  ));
 
   return (
     <main className={styles.main}>
@@ -190,13 +205,20 @@ const UserProfile = () => {
               <Link to="create-post">Opret</Link>
             </button>
           </div>
-          <EmptyUserProfileSection
-            heading="Du har ingen opslag endnu"
-            text="Opret en opslag så du kan finde, eller blive fundet af andre
+
+          {userInfo.posts.length == 0 && (
+            <EmptyUserProfileSection
+              heading="Du har ingen opslag endnu"
+              text="Opret en opslag så du kan finde, eller blive fundet af andre
               musikere"
-            cta="Opret opslag"
-            linkTo="create-post"
-          />
+              cta="Opret opslag"
+              linkTo="create-post"
+            />
+          )}
+
+          {userInfo.posts.length > 0 && (
+            <section className={styles.created_posts}>{listOfPosts}</section>
+          )}
         </article>
         {/* posts section end */}
       </section>

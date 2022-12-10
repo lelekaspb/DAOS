@@ -14,6 +14,7 @@ import UserOrchestras from "./components/UserOrchestras/UserOrchestras";
 import CreatePost from "./components/CreatePost/CreatePost";
 import { Routes, Route } from "react-router-dom";
 import GlobalContext from "./context/GlobalContext";
+import AllPosts from "./components/AllPosts/AllPosts";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/orchestras" element={<UserOrchestras />} />
           <Route path="/login" element={<Login />} />
           <Route path="/create-profile" element={<CreateUserProfile />} />
+          <Route path="/posts" element={<AllPosts />} />
           <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
           <Route path="/profile">
             <Route index element={<UserProfile />} />

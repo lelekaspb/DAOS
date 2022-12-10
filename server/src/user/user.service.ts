@@ -26,7 +26,14 @@ export class UserService {
         if (isMatch) {
           return await (
             await user.populate('orchestras_created', ['title'])
-          ).populate('posts');
+          ).populate('posts', [
+            'title',
+            'type',
+            'instrument',
+            'location',
+            'orchestraName',
+            'createdAt',
+          ]);
         }
       }
 
@@ -233,5 +240,21 @@ export class UserService {
     user.orchestras_created.push(orchestraObjectId);
     await user.save();
     return await user.populate('orchestras_created', ['title']);
+  }
+
+  async addPostToUser(
+    userId: mongoose.Schema.Types.ObjectId,
+    postId: mongoose.Schema.Types.ObjectId,
+  ) {
+    try {
+      const user = await this.userModel.findOne({ _id: userId }).exec();
+      user.posts.push(postId);
+      await user.save();
+      return {
+        success: true,
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

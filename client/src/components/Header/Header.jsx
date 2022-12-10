@@ -1,7 +1,6 @@
 import styles from "./Header.module.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { useEffect } from "react";
 
 const Header = () => {
   const { userInfo, resetUserInfoState } = useGlobalContext();
@@ -41,7 +40,14 @@ const Header = () => {
               </NavLink>
             </li>
             <li className={styles.nav_link}>
-              <NavLink to="#">Opslag</NavLink>
+              <NavLink
+                to="/posts"
+                className={({ isActive }) =>
+                  ` ${styles.link} ${isActive ? styles.underline : ""}`
+                }
+              >
+                Opslag
+              </NavLink>
             </li>
 
             {userInfo.token.length > 0 && (

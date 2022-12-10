@@ -47,7 +47,6 @@ const Login = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log(data);
       if (!data.success) {
         // display error message received from the server
         setError({ ...error, haserror: true, message: data.message });
@@ -64,6 +63,7 @@ const Login = () => {
           city: data.user.city || "",
           instruments: data.user.instruments,
           orchestras_created: data.user.orchestras_created,
+          posts: data.user.posts,
           searching: data.user.searching || false,
           id: data.user._id,
           createdAt: data.user.createdAt,
