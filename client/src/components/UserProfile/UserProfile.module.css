@@ -175,7 +175,8 @@
 }
 
 /* orchestras section*/
-.added_orchestras {
+.added_orchestras,
+.created_posts {
   display: flex;
   /* flex-direction: column; */
   flex-wrap: wrap;

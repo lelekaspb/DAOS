@@ -26,7 +26,14 @@ export class UserService {
         if (isMatch) {
           return await (
             await user.populate('orchestras_created', ['title'])
-          ).populate('posts');
+          ).populate('posts', [
+            'title',
+            'type',
+            'instrument',
+            'location',
+            'orchestraName',
+            'createdAt',
+          ]);
         }
       }
 

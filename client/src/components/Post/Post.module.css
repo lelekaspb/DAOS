@@ -1,0 +1,55 @@
+.post_link {
+  text-decoration: none;
+}
+
+.post {
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.post_body {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post_title {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: calc(0.8rem + 0.3vw);
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.representative,
+.post_instrument,
+.post_footer {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.6rem + 0.2vw);
+}
+
+.representative,
+.post_instrument {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+}
+
+.representative > span,
+.post_instrument > span {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.post_footer {
+  background-color: var(--greyish-bg-color);
+  padding: 10px 20px;
+}
