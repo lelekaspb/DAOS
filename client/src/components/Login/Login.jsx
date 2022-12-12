@@ -3,6 +3,8 @@ import FormField from "../FormField/FormField";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import FacebookLogin from 'react-facebook-login';
+import Facebook from "../FacebookLogin/Facebook";
 
 const Login = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
@@ -121,6 +123,7 @@ const Login = () => {
         <a href="#" className={styles.forgotten_password}>
           Glemt adgangskode?
         </a>
+        <Facebook />
       </section>
     </main>
   );
