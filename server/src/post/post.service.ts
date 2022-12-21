@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { PostDto } from './post.dto';
 import { Post, PostDocument } from './post.schema';
 import { UserService } from './../user/user.service';
@@ -90,5 +90,33 @@ export class PostService {
       status: HttpStatus.OK,
       posts: posts,
     };
+  }
+
+  async getPostById(id: string) {
+    const post = await this.postModel
+      .findOne({ _id: id })
+      .populate('creator_id', ['firstName', 'lastName', 'searching'])
+      .exec();
+
+    return {
+      success: true,
+      status: HttpStatus.OK,
+      post: post,
+    };
+  }
+
+  async deletePost(id: string) {
+    const query: any = { _id: new mongoose.Types.ObjectId(id) };
+    const postResponse = await this.getPostById(id);
+    const creatorId = postResponse.post.creator_id;
+    const result = await this.postModel.deleteOne(query).exec();
+    if (result.acknowledged) {
+      await this.userService.deleteUserPost(id, creatorId);
+
+      return {
+        success: true,
+        status: HttpStatus.OK,
+      };
+    }
   }
 }

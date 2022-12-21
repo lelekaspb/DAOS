@@ -257,4 +257,21 @@ export class UserService {
       console.log(err);
     }
   }
+
+  async deleteUserPost(postId: string, userId: mongoose.Schema.Types.ObjectId) {
+    const query: any = { _id: userId };
+    const user = await this.userModel.findOne(query).exec();
+    const postIndex = user.posts.findIndex(
+      (elem) => String(elem) === String(postId),
+    );
+
+    if (postIndex >= 0) {
+      const firstPart = user.posts.slice(0, postIndex);
+      const secondPart = user.posts.slice(postIndex + 1, user.posts.length);
+      user.posts = [...firstPart, ...secondPart];
+      await user.save();
+
+      return { success: true };
+    }
+  }
 }

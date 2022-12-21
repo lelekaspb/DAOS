@@ -1,0 +1,108 @@
+.main {
+  flex-grow: 1;
+  background-color: var(--greyish-bg-color);
+}
+
+.content {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page_heading {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: calc(2rem + 0.3vw);
+  font-weight: 500;
+}
+
+.created_at,
+.instrument_text,
+.description_text {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+}
+
+.rep,
+.location {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.8rem + 0.3vw);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.rep {
+  margin-top: 20px;
+}
+
+.location {
+  margin-top: 10px;
+}
+
+.rep_text,
+.location_text {
+  margin-bottom: 2px;
+}
+
+.buttons {
+  display: flex;
+  gap: 50px;
+  margin: 50px 0;
+}
+
+.edit_btn {
+  background-color: var(--white-color);
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: var(--body-font-size);
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  color: var(--primary-font-color);
+  cursor: pointer;
+  margin-top: 10px;
+  min-width: 170px;
+}
+
+.delete_btn {
+  background-color: var(--white-color);
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: var(--body-font-size);
+  box-shadow: 0 0 1px 1px #d9d9d9;
+  color: var(--red-color);
+  cursor: pointer;
+  margin-top: 10px;
+  min-width: 170px;
+}
+
+.label {
+  color: var(--primary-font-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.description,
+.website {
+  margin-top: 30px;
+}
+
+.website a {
+  display: block;
+  color: var(--bodytext-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+.website a:visited,
+.website a:active {
+  color: var(--primary-font-color);
+}

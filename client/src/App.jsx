@@ -15,6 +15,7 @@ import CreatePost from "./components/CreatePost/CreatePost";
 import { Routes, Route } from "react-router-dom";
 import GlobalContext from "./context/GlobalContext";
 import AllPosts from "./components/AllPosts/AllPosts";
+import UserPostPage from "./components/UserPostPage/UserPostPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="add-instrument" element={<AddInstrument />} />
             <Route path="create-orchestra" element={<CreateOrchestra />} />
             <Route path="create-post" element={<CreatePost />} />
+            <Route path="post" element={<UserPostPage />} />
           </Route>
           <Route path="/edit-orchestra" element={<EditOrchestra />} />
           <Route path="*" element={<FrontPage />} />
