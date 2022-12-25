@@ -39,4 +39,10 @@ export class PostController {
   deletePost(@Param('id') id: string) {
     return this.postService.deletePost(id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  updatePost(@Param('id') postId: string, @Body() postData: PostDto) {
+    return this.postService.updatePost(postId, postData);
+  }
 }

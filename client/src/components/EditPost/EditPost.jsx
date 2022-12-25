@@ -1,23 +1,20 @@
-import FormField from "../FormField/FormField";
+import styles from "./EditPost.module.css";
 import BackLink from "../BackLink/BackLink";
-import styles from "./CreatePost.module.css";
+import FormField from "../FormField/FormField";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
-const CreatePost = () => {
+const EditPost = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+  const location = useLocation();
+  const postId = location.state;
 
-  const [postData, setPostData] = useState({
-    title: "",
-    type: "looking",
-    instrument: "",
-    description: "",
-    location: "",
-    orchestraName: "",
-    website: "",
-    creator_id: userInfo.id,
-  });
+  const post = userInfo.posts.find((item) => item._id === postId);
+
+  const { createdAt, ...formData } = post;
+  formData.creator_id = userInfo.id;
+  const [postData, setPostData] = useState(formData);
 
   const initialErrorsState = {
     title: {
@@ -73,21 +70,17 @@ const CreatePost = () => {
     });
   };
 
-  let navigate = useNavigate();
-  const redirectToProfile = () => {
-    navigate("/profile");
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // TODO: add client-side validation
-    createPost();
+    editPost();
   };
 
-  const createPost = async () => {
-    const url = `http://127.0.0.1:3007/post`;
+  const editPost = async () => {
+    const url = `http://127.0.0.1:3007/post/${postId}`;
+
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${userInfo.token}`,
@@ -120,16 +113,24 @@ const CreatePost = () => {
           });
         });
       } else if (data.success) {
-        // if post created, update userInfo state
-        setUserInfo((prevState) => {
-          return {
-            ...prevState,
-            ["posts"]: [...prevState.posts, data.post],
-          };
-        });
+        const index = userInfo.posts.findIndex((item) => item._id === postId);
 
-        // and redirect to profile page
-        redirectToProfile();
+        if (index > -1) {
+          const firstPart = userInfo.posts.slice(0, index);
+          const lastPart = userInfo.posts.slice(
+            index + 1,
+            userInfo.posts.length
+          );
+
+          setUserInfo((prevState) => {
+            return {
+              ...prevState,
+              ["posts"]: [...firstPart, data.post, ...lastPart],
+            };
+          });
+        }
+
+        redirectToPostPage();
       } else {
         // if sth unforseen happens, console log it
         console.log("sth went wrong");
@@ -140,11 +141,16 @@ const CreatePost = () => {
     }
   };
 
+  let navigate = useNavigate();
+  const redirectToPostPage = () => {
+    navigate("/profile/post", { state: postId });
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/profile" />
-        <h2 className={styles.page_heading}>Opret opslag</h2>
+        <BackLink component="/profile/post" state={postId} />
+        <h2 className={styles.page_heading}>Rediger opslag</h2>
         <form
           className={styles.form}
           autoComplete="off"
@@ -265,7 +271,7 @@ const CreatePost = () => {
             type="text"
             text="Område"
             handleInput={handleInput}
-            value={postData.region}
+            value={postData.location}
             hasError={errors.location.haserror}
             errorMessage={errors.location.message}
             placeholderText="By, postnr. eller adresse"
@@ -301,7 +307,7 @@ const CreatePost = () => {
           {/* submit */}
           <div className={styles.submit_field}>
             <button type="submit" className={styles.submit_btn}>
-              Opret opslag
+              Rediger opslag
             </button>
           </div>
           {/* submit end */}
@@ -311,4 +317,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;

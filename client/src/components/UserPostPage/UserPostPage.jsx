@@ -1,9 +1,7 @@
 import styles from "./UserPostPage.module.css";
 import BackLink from "../BackLink/BackLink";
 import RepresentativeSvg from "../RepresentativeSvg/RepresentativeSvg";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import PinSvg from "../PinSvg/PinSvg";
 import { useGlobalContext } from "../../context/GlobalContext";
 
@@ -13,69 +11,7 @@ const UserPostPage = () => {
   const location = useLocation();
   const postId = location.state;
 
-  const initialPostState = {
-    title: "",
-    postId: postId,
-    type: "",
-    orchestraName: "",
-    creator: {
-      firstName: "",
-      lastName: "",
-      searching: "",
-    },
-    location: "",
-    createdAt: "",
-    instrument: "",
-    description: "",
-    website: "",
-  };
-
-  const [post, setPost] = useState(initialPostState);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      const url = `http://127.0.0.1:3007/post/${postId}`;
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      };
-      try {
-        let response = await fetch(url, options);
-        response = await response.json();
-        if (response.success) {
-          updatePostState(response);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchPost();
-  }, []);
-
-  const updatePostState = (data) => {
-    setPost((prevState) => {
-      return {
-        ...prevState,
-        title: data.post.title,
-        type: data.post.type,
-        orchestraName: data.post.orchestraName,
-        location: data.post.location,
-        instrument: data.post.instrument,
-        description: data.post.description,
-        website: data.post.website,
-        createdAt: data.post.createdAt,
-        creator: {
-          ...prevState.creator,
-          firstName: data.post.creator_id.firstName,
-          lastName: data.post.creator_id.lastName,
-          searching: data.post.creator_id.searching,
-        },
-      };
-    });
-  };
+  const post = userInfo.posts.find((item) => item._id === postId);
 
   const deletePost = async (event) => {
     const url = `http://127.0.0.1:3007/post/${postId}`;
@@ -91,9 +27,8 @@ const UserPostPage = () => {
       let response = await fetch(url, options);
       response = await response.json();
       if (response.success) {
-        const postToDelete = post.postId;
         const indexOfPostToDelete = userInfo.posts.findIndex(
-          (item) => item._id === postToDelete
+          (item) => item._id === postId
         );
         if (indexOfPostToDelete > -1) {
           const firstPart = userInfo.posts.slice(0, indexOfPostToDelete);
@@ -139,7 +74,7 @@ const UserPostPage = () => {
             {" "}
             {post.type === "looking" && post.orchestraName.length > 0
               ? post.orchestraName
-              : `${post.creator.firstName} ${post.creator.lastName}`}
+              : `${userInfo.firstName} ${userInfo.lastName}`}
           </span>
         </div>
         <div className={styles.location}>
@@ -148,7 +83,9 @@ const UserPostPage = () => {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.edit_btn}>Rediger opslag</button>
+          <Link to="edit" state={postId}>
+            <button className={styles.edit_btn}>Rediger opslag</button>
+          </Link>
           <button className={styles.delete_btn} onClick={deletePost}>
             Slet opslag
           </button>
@@ -162,14 +99,14 @@ const UserPostPage = () => {
           </p>
         </div>
 
-        {post.description.length > 0 && (
+        {post.description && post.description.length > 0 && (
           <div className={styles.description}>
             <span className={styles.label}>Beskrivelse</span>
             <p className={styles.description_text}>{post.description}</p>
           </div>
         )}
 
-        {post.website.length > 0 && (
+        {post.website && post.website.length > 0 && (
           <div className={styles.website}>
             <span className={styles.label}>Hjemmeside</span>
             <a href={post.website} target="_blank">

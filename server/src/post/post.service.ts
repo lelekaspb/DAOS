@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { PostDto } from './post.dto';
@@ -95,7 +100,7 @@ export class PostService {
   async getPostById(id: string) {
     const post = await this.postModel
       .findOne({ _id: id })
-      .populate('creator_id', ['firstName', 'lastName', 'searching'])
+      .populate('creator_id', ['firstName', 'lastName', 'searching', '_id'])
       .exec();
 
     return {
@@ -117,6 +122,32 @@ export class PostService {
         success: true,
         status: HttpStatus.OK,
       };
+    }
+  }
+
+  async updatePost(postId: string, postData: PostDto) {
+    try {
+      const response = await this.postModel
+        .updateOne({ _id: postId }, postData)
+        .exec();
+
+      if (response.acknowledged) {
+        const updatedPost = await this.getPostById(postId);
+
+        return {
+          success: true,
+          status: HttpStatus.OK,
+          post: updatedPost.post.toObject(),
+        };
+      } else {
+        return {
+          success: false,
+          status: HttpStatus.SERVICE_UNAVAILABLE,
+          ...response,
+        };
+      }
+    } catch (err) {
+      throw new ServiceUnavailableException();
     }
   }
 }
