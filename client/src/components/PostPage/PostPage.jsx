@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RepresentativeSvg from "../RepresentativeSvg/RepresentativeSvg";
 import PinSvg from "../PinSvg/PinSvg";
+import ContactModal from "../ContactModal/ContactModal";
 
 const PostPage = () => {
   const location = useLocation();
@@ -74,8 +75,14 @@ const PostPage = () => {
     fetchPost();
   }, []);
 
-  const showPopup = (event) => {
-    console.log(event.target);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClick = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -106,12 +113,14 @@ const PostPage = () => {
         </div>
 
         <div className={styles.buttons}>
-          {/* <Link to="edit" state={postId}>
-            <button className={styles.edit_btn}>Rediger opslag</button>
-          </Link> */}
-          <button className={styles.contact_btn} onClick={showPopup}>
+          <button className={styles.contact_btn} onClick={handleClick}>
             Kontakt
           </button>
+          <ContactModal
+            showModal={showModal}
+            closeModal={closeModal}
+            post={post}
+          />
         </div>
 
         <div className={styles.instrument}>
@@ -131,9 +140,14 @@ const PostPage = () => {
 
         {post.website && post.website.length > 0 && (
           <div className={styles.website}>
-            <span className={styles.label}>Hjemmeside</span>
-            <a href={post.website} target="_blank">
-              {post.website}
+            {/* <span className={styles.label}>Hjemmeside</span> */}
+            <a
+              href={post.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.website_link}
+            >
+              Besøg hjemmeside
             </a>
           </div>
         )}

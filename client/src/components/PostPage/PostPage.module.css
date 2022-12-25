@@ -87,15 +87,18 @@
   margin-top: 30px;
 }
 
-.website a {
-  display: block;
-  color: var(--bodytext-font-color);
-  font-size: calc(0.7rem + 0.3vw);
-  margin-top: 15px;
-  text-decoration: none;
+.website {
+  margin-top: 50px;
 }
 
-.website a:visited,
-.website a:active {
+.website_link {
+  composes: btn_outline from "./../../styleUtils.css";
+  display: block;
+  cursor: pointer;
+  padding: 7px 15px;
+  border-radius: 6px;
   color: var(--primary-font-color);
+  text-decoration: none;
+  width: 300px;
+  text-align: center;
 }
