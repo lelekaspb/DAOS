@@ -31,6 +31,7 @@ export class PostController {
 
   @Get(':id')
   getPostById(@Param('id') id: string) {
+    console.log('post id ' + id);
     return this.postService.getPostById(id);
   }
 

@@ -50,7 +50,7 @@ const AllPosts = () => {
       location={post.location}
       createdAt={post.createdAt}
       instrument={post.instrument}
-      linkTo="#"
+      linkTo="/posts/post"
     />
   ));
 

@@ -18,6 +18,7 @@ import PostContext from "./context/PostContext";
 import AllPosts from "./components/AllPosts/AllPosts";
 import UserPostPage from "./components/UserPostPage/UserPostPage";
 import EditPost from "./components/EditPost/EditPost";
+import PostPage from "./components/PostPage/PostPage";
 
 function App() {
   return (
@@ -30,7 +31,10 @@ function App() {
             <Route path="/orchestras" element={<UserOrchestras />} />
             <Route path="/login" element={<Login />} />
             <Route path="/create-profile" element={<CreateUserProfile />} />
-            <Route path="/posts" element={<AllPosts />} />
+            <Route path="/posts">
+              <Route index element={<AllPosts />} />
+              <Route path="post" element={<PostPage />} />
+            </Route>
             <Route path="/welcomeUser/:id" element={<WelcomeUser />} />
             <Route path="/profile">
               <Route index element={<UserProfile />} />

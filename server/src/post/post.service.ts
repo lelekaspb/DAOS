@@ -100,8 +100,10 @@ export class PostService {
   async getPostById(id: string) {
     const post = await this.postModel
       .findOne({ _id: id })
-      .populate('creator_id', ['firstName', 'lastName', 'searching', '_id'])
+      .populate('creator_id')
       .exec();
+
+    console.log(post);
 
     return {
       success: true,
