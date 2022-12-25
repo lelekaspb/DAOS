@@ -140,7 +140,6 @@ const PostPage = () => {
 
         {post.website && post.website.length > 0 && (
           <div className={styles.website}>
-            {/* <span className={styles.label}>Hjemmeside</span> */}
             <a
               href={post.website}
               target="_blank"
