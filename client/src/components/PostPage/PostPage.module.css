@@ -1,0 +1,89 @@
+.main {
+  flex-grow: 1;
+  background-color: var(--greyish-bg-color);
+}
+
+.content {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page_heading {
+  composes: heading from "./../../styleUtils.css";
+  color: var(--primary-font-color);
+  font-size: calc(2rem + 0.3vw);
+  font-weight: 500;
+}
+
+.created_at,
+.instrument_text,
+.description_text {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.7rem + 0.3vw);
+}
+
+.rep,
+.location {
+  color: var(--bodytext-font-color);
+  font-size: calc(0.8rem + 0.3vw);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.rep {
+  margin-top: 20px;
+}
+
+.location {
+  margin-top: 10px;
+}
+
+.rep_text,
+.location_text {
+  margin-bottom: 2px;
+}
+
+.buttons {
+  display: flex;
+  gap: 50px;
+  margin: 50px 0;
+}
+
+.contact_btn {
+  composes: btn_primary from "./../../styleUtils.css";
+  text-decoration: none;
+  cursor: pointer;
+  min-width: 300px;
+  font-size: 1.1rem;
+}
+
+.label {
+  color: var(--primary-font-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.description,
+.website {
+  margin-top: 30px;
+}
+
+.website {
+  margin-top: 50px;
+}
+
+.website_link {
+  composes: btn_outline from "./../../styleUtils.css";
+  display: block;
+  cursor: pointer;
+  padding: 7px 15px;
+  border-radius: 6px;
+  color: var(--primary-font-color);
+  text-decoration: none;
+  width: 300px;
+  text-align: center;
+}

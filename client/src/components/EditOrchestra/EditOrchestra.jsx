@@ -9,6 +9,7 @@ const EditOrchestra = () => {
   // but value of the inputs/selects will be based on state (fetched from backend)
   const location = useLocation();
   const orchestraId = location.state;
+  console.log(orchestraId);
   // TODO: fetch, initialize state with the fetched data, listen for changes in form and submit with put request
   return (
     <main className={styles.main}>

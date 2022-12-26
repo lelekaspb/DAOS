@@ -91,6 +91,7 @@ const UserProfile = () => {
       orchestraName={post.orchestraName}
       userName={`${userInfo.firstName} ${userInfo.lastName}`}
       createdAt={post.createdAt}
+      linkTo="post"
     />
   ));
 

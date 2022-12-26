@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Post = ({
   title,
-  linkTo = "#",
+  linkTo,
   postId,
   type,
   orchestraName,

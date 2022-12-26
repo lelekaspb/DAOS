@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Put,
@@ -26,5 +27,23 @@ export class PostController {
   @Post('/find')
   getPosts(@Body() filterObject: any) {
     return this.postService.getPosts(filterObject);
+  }
+
+  @Get(':id')
+  getPostById(@Param('id') id: string) {
+    console.log('post id ' + id);
+    return this.postService.getPostById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  deletePost(@Param('id') id: string) {
+    return this.postService.deletePost(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  updatePost(@Param('id') postId: string, @Body() postData: PostDto) {
+    return this.postService.updatePost(postId, postData);
   }
 }

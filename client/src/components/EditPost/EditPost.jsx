@@ -1,23 +1,20 @@
+import styles from "./EditPost.module.css";
 import BackLink from "../BackLink/BackLink";
 import PostForm from "../PostForm/PostForm";
-import styles from "./CreatePost.module.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
-const CreatePost = () => {
+const EditPost = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+  const location = useLocation();
+  const postId = location.state;
 
-  const [postData, setPostData] = useState({
-    title: "",
-    type: "looking",
-    instrument: "",
-    description: "",
-    location: "",
-    orchestraName: "",
-    website: "",
-    creator_id: userInfo.id,
-  });
+  const post = userInfo.posts.find((item) => item._id === postId);
+
+  const { createdAt, ...formData } = post;
+  formData.creator_id = userInfo.id;
+  const [postData, setPostData] = useState(formData);
 
   const initialErrorsState = {
     title: {
@@ -52,15 +49,10 @@ const CreatePost = () => {
 
   const [errors, setErrors] = useState(initialErrorsState);
 
-  let navigate = useNavigate();
-  const redirectToProfile = () => {
-    navigate("/profile");
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // TODO: add client-side validation
-    createPost();
+    editPost();
   };
 
   const displayErrorMessages = (data) => {
@@ -80,10 +72,26 @@ const CreatePost = () => {
     });
   };
 
-  const createPost = async () => {
-    const url = `http://127.0.0.1:3007/post`;
+  const updateUserInfoState = (data) => {
+    const index = userInfo.posts.findIndex((item) => item._id === postId);
+
+    if (index > -1) {
+      const firstPart = userInfo.posts.slice(0, index);
+      const lastPart = userInfo.posts.slice(index + 1, userInfo.posts.length);
+
+      setUserInfo((prevState) => {
+        return {
+          ...prevState,
+          ["posts"]: [...firstPart, data.post, ...lastPart],
+        };
+      });
+    }
+  };
+
+  const editPost = async () => {
+    const url = `http://127.0.0.1:3007/post/${postId}`;
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${userInfo.token}`,
@@ -103,16 +111,9 @@ const CreatePost = () => {
         // if 422 - update errors state
         displayErrorMessages(data);
       } else if (data.success) {
-        // if post created, update userInfo state
-        setUserInfo((prevState) => {
-          return {
-            ...prevState,
-            ["posts"]: [...prevState.posts, data.post],
-          };
-        });
-
-        // and redirect to profile page
-        redirectToProfile();
+        // if successfully updated, update state and redirect to post page
+        updateUserInfoState(data);
+        redirectToPostPage();
       } else {
         // if sth unforseen happens, console log it
         console.log("sth went wrong");
@@ -123,21 +124,26 @@ const CreatePost = () => {
     }
   };
 
+  let navigate = useNavigate();
+  const redirectToPostPage = () => {
+    navigate("/profile/post", { state: postId });
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/profile" />
-        <h2 className={styles.page_heading}>Opret opslag</h2>
+        <BackLink component="/profile/post" state={postId} />
+        <h2 className={styles.page_heading}>Rediger opslag</h2>
         <PostForm
           handleSubmit={handleSubmit}
           setPostData={setPostData}
           postData={postData}
           errors={errors}
-          action="Opret"
+          action="Rediger"
         />
       </section>
     </main>
   );
 };
 
-export default CreatePost;
+export default EditPost;
