@@ -19,7 +19,6 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @UseGuards(JwtAuthGuard)
-  //   @UseInterceptors(OnlySameUserByIdAllowed) - TODO: make another interceptor that would compare creator id from body and id from jwt
   @Post()
   createPost(@Body() postDto: PostDto) {
     return this.postService.createPost(postDto);
@@ -44,6 +43,7 @@ export class PostController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlyPostCreatorAllowed)
   @Put(':id')
   updatePost(@Param('id') postId: string, @Body() postData: PostDto) {
     return this.postService.updatePost(postId, postData);

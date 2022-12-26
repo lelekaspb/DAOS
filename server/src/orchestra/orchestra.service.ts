@@ -75,7 +75,13 @@ export class OrchestraService {
     await orchestra.save();
     return await orchestra.populate('members', ['firstName', 'lastName']);
   }
+
+  async getOrchestraCreatorId(orchestraId: string) {
+    const orchestra = await this.orchModel.findById(orchestraId).exec();
+    return orchestra.creator_id;
+  }
 }
+
 function addOrchestraToUser(creator_id: string, _id: any) {
   throw new Error('Function not implemented.');
 }

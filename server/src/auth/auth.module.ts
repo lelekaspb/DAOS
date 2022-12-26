@@ -9,11 +9,13 @@ import { JwtStrategy } from './jwt.strategy';
 import { OnlyPostCreatorAllowed } from './user.interceptor';
 import { PostService } from 'src/post/post.service';
 import { PostModule } from 'src/post/post.module';
+import { OrchestraModule } from 'src/orchestra/orchestra.module';
 
 @Module({
   imports: [
     UserModule,
     PostModule,
+    OrchestraModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
