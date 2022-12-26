@@ -6,10 +6,14 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
+import { OnlyPostCreatorAllowed } from './user.interceptor';
+import { PostService } from 'src/post/post.service';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   imports: [
     UserModule,
+    PostModule,
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,

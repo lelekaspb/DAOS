@@ -152,4 +152,9 @@ export class PostService {
       throw new ServiceUnavailableException();
     }
   }
+
+  async getPostCreatorId(postId: string) {
+    const post = await this.postModel.findById(postId).exec();
+    return post.creator_id;
+  }
 }

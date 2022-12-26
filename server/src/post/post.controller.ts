@@ -12,6 +12,7 @@ import {
 import { PostService } from './post.service';
 import { PostDto } from './post.dto';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
+import { OnlyPostCreatorAllowed } from './../auth/user.interceptor';
 
 @Controller('post')
 export class PostController {
@@ -36,6 +37,7 @@ export class PostController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlyPostCreatorAllowed)
   @Delete(':id')
   deletePost(@Param('id') id: string) {
     return this.postService.deletePost(id);
