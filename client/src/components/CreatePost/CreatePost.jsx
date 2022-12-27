@@ -2,11 +2,15 @@ import BackLink from "../BackLink/BackLink";
 import PostForm from "../PostForm/PostForm";
 import styles from "./CreatePost.module.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const CreatePost = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const [postData, setPostData] = useState({
     title: "",

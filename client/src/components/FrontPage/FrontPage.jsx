@@ -34,7 +34,7 @@ const FrontPage = () => {
             instrument1="Piano"
             instrument2="Guitar"
             instrument3="Drums"
-            instrument4="Violin"
+            // instrument4="Violin"
             instrument5="Flute"
             handleSelect={handleSelect}
             handleSubmit={handleSubmit}

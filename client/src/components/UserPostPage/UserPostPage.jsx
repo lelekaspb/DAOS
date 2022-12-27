@@ -1,12 +1,16 @@
 import styles from "./UserPostPage.module.css";
 import BackLink from "../BackLink/BackLink";
 import RepresentativeSvg from "../RepresentativeSvg/RepresentativeSvg";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link, Navigate } from "react-router-dom";
 import PinSvg from "../PinSvg/PinSvg";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserPostPage = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const location = useLocation();
   const postId = location.state;

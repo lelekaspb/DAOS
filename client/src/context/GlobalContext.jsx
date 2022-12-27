@@ -25,16 +25,16 @@ export default function GlobalContext({ children }) {
 
   const [userInfo, setUserInfo] = useState(initialUserInfoState);
 
-  let navigate = useNavigate();
-  const redirectoToLogin = () => {
-    navigate("/login");
-  };
+  // let navigate = useNavigate();
+  // const redirectoToLogin = () => {
+  //   navigate("/login");
+  // };
 
-  useEffect(() => {
-    if (!userInfo.token.length) {
-      redirectoToLogin();
-    }
-  }, [userInfo.token]);
+  // useEffect(() => {
+  //   if (!userInfo.token.length) {
+  //     redirectoToLogin();
+  //   }
+  // }, [userInfo.token]);
 
   const resetUserInfoState = () => {
     setUserInfo(initialUserInfoState);

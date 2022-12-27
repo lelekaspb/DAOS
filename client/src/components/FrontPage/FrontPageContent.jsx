@@ -4,7 +4,7 @@ const FrontPageContent = ({
   instrument1,
   instrument2,
   instrument3,
-  instrument4,
+  // instrument4,
   instrument5,
   handleSelect,
   handleSubmit,
@@ -31,9 +31,9 @@ const FrontPageContent = ({
             <option className={styles.name} value={instrument3}>
               {instrument3}
             </option>
-            <option className={styles.name} value={instrument4}>
+            {/* <option className={styles.name} value={instrument4}>
               {instrument4}
-            </option>
+            </option> */}
             <option className={styles.name} value={instrument5}>
               {instrument5}
             </option>

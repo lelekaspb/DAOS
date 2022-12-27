@@ -2,11 +2,15 @@ import styles from "./AddInstrument.module.css";
 import BackLink from "../BackLink/BackLink";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const AddInstrument = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const [instrumentData, setInstrumentData] = useState({
     title: "",

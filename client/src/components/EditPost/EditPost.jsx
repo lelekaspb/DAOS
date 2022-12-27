@@ -2,11 +2,16 @@ import styles from "./EditPost.module.css";
 import BackLink from "../BackLink/BackLink";
 import PostForm from "../PostForm/PostForm";
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const EditPost = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
+
   const location = useLocation();
   const postId = location.state;
 

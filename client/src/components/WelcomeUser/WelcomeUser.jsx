@@ -1,9 +1,12 @@
 import styles from "./WelcomeUser.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const WelcomeUser = () => {
   const { userInfo } = useGlobalContext();
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <main className={styles.main}>
       <section className={styles.content}>
