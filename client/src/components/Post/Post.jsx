@@ -13,7 +13,7 @@ const Post = ({
   instrument,
 }) => {
   return (
-    <Link className={styles.post_link} to={linkTo} state={postId}>
+    <Link className={styles.post_link} to={linkTo}>
       <article className={styles.post}>
         <div className={styles.post_body}>
           <h5 className={styles.post_title}>{title}</h5>

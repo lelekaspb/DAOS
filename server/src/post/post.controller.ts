@@ -12,13 +12,13 @@ import {
 import { PostService } from './post.service';
 import { PostDto } from './post.dto';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
+import { OnlyPostCreatorAllowed } from './../auth/user.interceptor';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @UseGuards(JwtAuthGuard)
-  //   @UseInterceptors(OnlySameUserByIdAllowed) - TODO: make another interceptor that would compare creator id from body and id from jwt
   @Post()
   createPost(@Body() postDto: PostDto) {
     return this.postService.createPost(postDto);
@@ -36,12 +36,14 @@ export class PostController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlyPostCreatorAllowed)
   @Delete(':id')
   deletePost(@Param('id') id: string) {
     return this.postService.deletePost(id);
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(OnlyPostCreatorAllowed)
   @Put(':id')
   updatePost(@Param('id') postId: string, @Body() postData: PostDto) {
     return this.postService.updatePost(postId, postData);

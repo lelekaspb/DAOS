@@ -1,15 +1,13 @@
 import styles from "./PostPage.module.css";
 import BackLink from "../BackLink/BackLink";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RepresentativeSvg from "../RepresentativeSvg/RepresentativeSvg";
 import PinSvg from "../PinSvg/PinSvg";
 import ContactModal from "../ContactModal/ContactModal";
 
 const PostPage = () => {
-  const location = useLocation();
-  const postId = location.state;
-
+  let { postId } = useParams();
   const initialPostState = {
     id: postId,
     title: "",

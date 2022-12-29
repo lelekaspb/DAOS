@@ -3,11 +3,15 @@ import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import InstrumentGenre from "../InstrumentGenre/InstrumentGenre";
 import styles from "./CreateOrchestra.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const CreateOrchestra = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const initialOrchestraState = {
     title: "",

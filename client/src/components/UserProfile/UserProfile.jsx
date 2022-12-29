@@ -1,13 +1,17 @@
 import EmptyUserProfileSection from "../EmptyUserProfileSection/EmptyUserProfileSection";
 import Instrument from "../Instrument/Instrument";
 import styles from "./UserProfile.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Orchestra from "../Orchestra/Orchestra";
 import Post from "../Post/Post";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserProfile = () => {
   const { userInfo, setUserInfo } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const deleteGenre = (event) => {
     const instrumentTitle = event.target.dataset.instrument;
