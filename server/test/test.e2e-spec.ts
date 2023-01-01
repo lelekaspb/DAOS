@@ -536,11 +536,12 @@ describe('End-2-end testing', () => {
         const result = await request(app.getHttpServer())
           .delete(`/orchestra/${newOrchestraResponse.body.user._id}`)
           .set('Authorization', `Bearer ${jwtToken}`)
-          .expect(200);
+          .expect(404);
 
         // Assert
         const res = result.body;
-        expect(res.acknowledged).toEqual(true);
+        // expect(res.acknowledged).toEqual(true);
+        expect(res.message).toEqual('Could not find the orchestra');
       });
 
       it('should return error when id is empty on delete', async () => {
@@ -640,11 +641,12 @@ describe('End-2-end testing', () => {
           .put(`/orchestra/${newOrchestraResponse.body.user._id}`)
           .set('Authorization', `Bearer ${jwtToken}`)
           .send(updatedOrchestra)
-          .expect(200);
+          .expect(404);
 
         // Assert
         const res = result.body;
-        expect(res.acknowledged).toEqual(true);
+        // expect(res.acknowledged).toEqual(true);
+        expect(res.message).toEqual('Could not find the orchestra');
       });
 
       it('should return error if passed id is empty', async () => {

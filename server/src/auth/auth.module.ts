@@ -6,10 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { OnlyPostCreatorAllowed } from './user.interceptor';
-import { PostService } from 'src/post/post.service';
-import { PostModule } from 'src/post/post.module';
-import { OrchestraModule } from 'src/orchestra/orchestra.module';
+import { PostModule } from './../post/post.module';
+import { OrchestraModule } from './../orchestra/orchestra.module';
 
 @Module({
   imports: [

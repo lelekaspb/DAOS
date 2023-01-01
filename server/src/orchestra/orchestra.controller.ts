@@ -32,7 +32,6 @@ export class OrchestraController {
 
   @Get(':id')
   getOrchestraById(@Param('id') id: string) {
-    console.log(id);
     return { id };
   }
 

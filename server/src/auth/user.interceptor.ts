@@ -57,9 +57,7 @@ export class OnlyPostCreatorAllowed implements NestInterceptor {
     const postCreatorId = await this.postService.getPostCreatorId(
       requestPostId,
     );
-    console.log('requestPostId ' + requestPostId);
-    console.log('loggedInUserId ' + loggedInUserId);
-    console.log('postCreatorId ' + postCreatorId);
+
     try {
       if (String(loggedInUserId) === String(postCreatorId)) {
         return next.handle();
@@ -100,9 +98,17 @@ export class OnlyOrchestraCreatorAllowed implements NestInterceptor {
     const loggedInUserId = req?.user.userId;
     const orchestraCreatorId =
       await this.orchestraService.getOrchestraCreatorId(requestOrchestraId);
-    console.log('requestOrchestraId ' + requestOrchestraId);
-    console.log('loggedInUserId ' + loggedInUserId);
-    console.log('orchestraCreatorId ' + orchestraCreatorId);
+
+    if (!orchestraCreatorId) {
+      throw new HttpException(
+        {
+          success: false,
+          status: HttpStatus.NOT_FOUND,
+          message: 'Could not find the orchestra',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
 
     try {
       if (String(loggedInUserId) === String(orchestraCreatorId)) {
@@ -141,8 +147,6 @@ export class CanOnlyAddThemselvesAsMember implements NestInterceptor {
     const req = context.switchToHttp().getRequest();
     const requestUserId = req.body.id || req.params.userId;
     const loggedInUserId = req?.user.userId;
-    console.log('requestUserId ' + requestUserId);
-    console.log('loggedInUserId ' + loggedInUserId);
 
     try {
       if (loggedInUserId === requestUserId) {
