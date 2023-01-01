@@ -1,8 +1,26 @@
 import styles from "./FrontPage.module.css";
 import FrontPageImage from "./FrontPageImage";
 import FrontPageContent from "./FrontPageContent";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FrontPage = () => {
+  const [instrument, setInstrument] = useState("all");
+
+  const handleSelect = (event) => {
+    setInstrument(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    redirectToPostsPage();
+  };
+
+  let navigate = useNavigate();
+  const redirectToPostsPage = () => {
+    navigate("/posts", { state: { posts: "all", instrument: instrument } });
+  };
+
   return (
     <main className={styles.mainWrapper}>
       <div className={styles.contentWrapper}>
@@ -16,8 +34,10 @@ const FrontPage = () => {
             instrument1="Piano"
             instrument2="Guitar"
             instrument3="Drums"
-            instrument4="Violin"
+            // instrument4="Violin"
             instrument5="Flute"
+            handleSelect={handleSelect}
+            handleSubmit={handleSubmit}
           />
         </div>
       </div>

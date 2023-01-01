@@ -2,11 +2,15 @@ import { useState } from "react";
 import BackLink from "../BackLink/BackLink";
 import FormField from "../FormField/FormField";
 import styles from "./UserSettings.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 
 const UserSettings = () => {
   const { userInfo, resetUserInfoState } = useGlobalContext();
+
+  if (!userInfo.token.length) {
+    return <Navigate to="/login" replace />;
+  }
 
   const [passwordData, setPasswordData] = useState({
     current: "",

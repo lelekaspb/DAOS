@@ -2,12 +2,13 @@ import styles from "./AllPosts.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import Post from "../Post/Post";
+import { useLocation } from "react-router-dom";
 
 const AllPosts = () => {
-  const [filter, setFilter] = useState({
-    posts: "all",
-    instrument: "all",
-  });
+  const location = useLocation();
+  const frontpageFilter = location.state;
+  const defaultFilter = { posts: "all", instrument: "all" };
+  const [filter, setFilter] = useState(frontpageFilter || defaultFilter);
 
   const [posts, setPosts] = useState([]);
 
@@ -50,7 +51,7 @@ const AllPosts = () => {
       location={post.location}
       createdAt={post.createdAt}
       instrument={post.instrument}
-      linkTo="/posts/post"
+      linkTo={`/posts/${post._id}`}
     />
   ));
 
@@ -94,6 +95,7 @@ const AllPosts = () => {
                 id="instrument_select"
                 data-filter="instrument"
                 onChange={updateFilter}
+                value={filter.instrument}
               >
                 <option value="all" defaultValue>
                   Alle

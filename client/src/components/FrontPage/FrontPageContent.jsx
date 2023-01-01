@@ -4,15 +4,22 @@ const FrontPageContent = ({
   instrument1,
   instrument2,
   instrument3,
-  instrument4,
+  // instrument4,
   instrument5,
+  handleSelect,
+  handleSubmit,
 }) => {
   return (
     <div className={styles.dropdown}>
       <div className={styles.musicInstruments}>
-        <form action="#">
-          <select id="instruments" name="instruments" className={styles.select}>
-            <option className={styles.name} value="vælg">
+        <form onSubmit={handleSubmit}>
+          <select
+            id="instruments"
+            name="instruments"
+            className={styles.select}
+            onChange={handleSelect}
+          >
+            <option className={styles.name} value="all">
               Vælg instrument
             </option>
             <option className={styles.name} value={instrument1}>
@@ -24,16 +31,16 @@ const FrontPageContent = ({
             <option className={styles.name} value={instrument3}>
               {instrument3}
             </option>
-            <option className={styles.name} value={instrument4}>
+            {/* <option className={styles.name} value={instrument4}>
               {instrument4}
-            </option>
+            </option> */}
             <option className={styles.name} value={instrument5}>
               {instrument5}
             </option>
           </select>
-          <a href="#" className={styles.seOpslag_btn}>
+          <button type="submit" className={styles.seOpslag_btn}>
             Se Opslag
-          </a>
+          </button>
         </form>
       </div>
     </div>
