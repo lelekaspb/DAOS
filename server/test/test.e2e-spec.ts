@@ -489,7 +489,7 @@ describe('End-2-end testing', () => {
     });
 
     describe('Delete Orchestra Controller', () => {
-      it('should delete orchestra by id', async () => {
+      it('should return NOT FOUND when user tries to delete orchestra that does not exist (with orchestra id)', async () => {
         // Arrange
         const userQuery = new CreateUserDto(
           'Vera',
@@ -581,7 +581,7 @@ describe('End-2-end testing', () => {
     });
 
     describe('Put Orchestra Controller', () => {
-      it('should update orchestra with given id and orchestra dto', async () => {
+      it('should return NOT FOUND when user tries to update orchestra that does not exist (with orchestra id and orchestra dto)', async () => {
         // Arrange
         const userQuery = new CreateUserDto(
           'Vera',
