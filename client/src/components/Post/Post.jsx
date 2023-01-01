@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const Post = ({
   title,
   linkTo,
-  postId,
   type,
   orchestraName,
   userName,

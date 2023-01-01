@@ -131,13 +131,13 @@ const EditPost = () => {
 
   let navigate = useNavigate();
   const redirectToPostPage = () => {
-    navigate("/profile/post", { state: postId });
+    navigate(`/profile/post/${postId}`);
   };
 
   return (
     <main className={styles.main}>
       <section className={styles.content}>
-        <BackLink component="/profile/post" state={postId} />
+        <BackLink component={`/profile/post/${postId}`} />
         <h2 className={styles.page_heading}>Rediger opslag</h2>
         <PostForm
           handleSubmit={handleSubmit}

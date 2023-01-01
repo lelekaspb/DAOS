@@ -41,7 +41,7 @@ function App() {
             <Route path="add-instrument" element={<AddInstrument />} />
             <Route path="create-orchestra" element={<CreateOrchestra />} />
             <Route path="create-post" element={<CreatePost />} />
-            <Route path="post">
+            <Route path="post/:postId">
               <Route index element={<UserPostPage />} />
               <Route path="edit" element={<EditPost />} />
             </Route>

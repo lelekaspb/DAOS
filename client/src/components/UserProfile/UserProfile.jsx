@@ -90,12 +90,11 @@ const UserProfile = () => {
       key={`${index}`}
       instrument={post.instrument}
       location={post.location}
-      postId={post._id}
       type={post.type}
       orchestraName={post.orchestraName}
       userName={`${userInfo.firstName} ${userInfo.lastName}`}
       createdAt={post.createdAt}
-      linkTo="post"
+      linkTo={`post/${post._id}`}
     />
   ));
 

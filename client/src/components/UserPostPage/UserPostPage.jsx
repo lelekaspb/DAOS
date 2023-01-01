@@ -1,7 +1,7 @@
 import styles from "./UserPostPage.module.css";
 import BackLink from "../BackLink/BackLink";
 import RepresentativeSvg from "../RepresentativeSvg/RepresentativeSvg";
-import { useLocation, useNavigate, Link, Navigate } from "react-router-dom";
+import { useNavigate, Link, Navigate, useParams } from "react-router-dom";
 import PinSvg from "../PinSvg/PinSvg";
 import { useGlobalContext } from "../../context/GlobalContext";
 
@@ -12,8 +12,7 @@ const UserPostPage = () => {
     return <Navigate to="/login" replace />;
   }
 
-  const location = useLocation();
-  const postId = location.state;
+  let { postId } = useParams();
 
   const post = userInfo.posts.find((item) => item._id === postId);
 
