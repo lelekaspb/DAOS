@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { OrchestraModule } from './orchestra/orchestra.module';
 import { ConfigModule } from '@nestjs/config';
 import { PostModule } from './post/post.module';
+import { GoogleModule} from './auth/google_auth/google.module'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PostModule } from './post/post.module';
     UserModule,
     AuthModule,
     PostModule,
+    GoogleModule,
     ConfigModule.forRoot({ isGlobal: true }),
   ],
 
