@@ -1,4 +1,5 @@
 import {
+  forwardRef,
   HttpException,
   HttpStatus,
   Injectable,
@@ -9,11 +10,13 @@ import mongoose, { Model } from 'mongoose';
 import { PostDto } from './post.dto';
 import { Post, PostDocument } from './post.schema';
 import { UserService } from './../user/user.service';
+import { Inject } from '@nestjs/common/decorators';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectModel(Post.name) private postModel: Model<PostDocument>,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
   ) {}
 
@@ -156,5 +159,10 @@ export class PostService {
   async getPostCreatorId(postId: string) {
     const post = await this.postModel.findById(postId).exec();
     return post.creator_id;
+  }
+
+  async deletePostsByCreatorId(creatorId: string) {
+    const query: any = { creator_id: new mongoose.Types.ObjectId(creatorId) };
+    return await this.postModel.deleteMany(query).exec();
   }
 }

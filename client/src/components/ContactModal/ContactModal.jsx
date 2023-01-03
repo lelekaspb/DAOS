@@ -23,7 +23,7 @@ const ContactModal = ({ showModal, closeModal, post }) => {
         </div>
       )}
 
-      {post.type === "play" && (
+      {(post.type === "play" || post.orchestraName.length == 0) && (
         <h3 className={styles.heading}>
           Kontakt <span>{post.creator.firstName}</span>{" "}
           <span>{post.creator.lastName}</span>

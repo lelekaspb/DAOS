@@ -1,5 +1,7 @@
 import {
+  forwardRef,
   HttpStatus,
+  Inject,
   Injectable,
   ServiceUnavailableException,
 } from '@nestjs/common';
@@ -13,6 +15,7 @@ import { UserService } from './../user/user.service';
 export class OrchestraService {
   constructor(
     @InjectModel(Orchestra.name) private orchModel: Model<OrchestraDocument>,
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
   ) {}
 
@@ -83,5 +86,18 @@ export class OrchestraService {
     } catch {
       return null;
     }
+  }
+
+  async deleteMemberFromAllWhereExists(memberId: string) {
+    const objectMemberId = new mongoose.Types.ObjectId(memberId);
+    return await this.orchModel.updateMany(
+      { members: { $in: [objectMemberId] } },
+      { $pull: { members: objectMemberId } },
+    );
+  }
+
+  async deleteOrchestrasByCreatorId(creatorId: string) {
+    const query: any = { creator_id: new mongoose.Types.ObjectId(creatorId) };
+    return await this.orchModel.deleteMany(query).exec();
   }
 }

@@ -71,7 +71,6 @@ const UserSettings = () => {
     try {
       const request = await fetch(url, options);
       const data = await request.json();
-      console.log(data);
       if (data.acknowledged) {
         // redirect to front page and clear userInfo state
         resetUserInfoState();

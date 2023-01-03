@@ -40,20 +40,22 @@ const AllPosts = () => {
     fetchPosts();
   }, [filter]);
 
-  const listOfPosts = posts.map((post, index) => (
-    <Post
-      key={index}
-      title={post.title}
-      postId={post._id}
-      type={post.type}
-      orchestraName={post.orchestraName}
-      userName={`${post.creator_id.firstName} ${post.creator_id.lastName}`}
-      location={post.location}
-      createdAt={post.createdAt}
-      instrument={post.instrument}
-      linkTo={`/posts/${post._id}`}
-    />
-  ));
+  const listOfPosts = posts.map((post, index) =>
+    post.creator_id ? (
+      <Post
+        key={index}
+        title={post.title}
+        postId={post._id}
+        type={post.type}
+        orchestraName={post.orchestraName}
+        userName={`${post.creator_id.firstName} ${post.creator_id.lastName}`}
+        location={post.location}
+        createdAt={post.createdAt}
+        instrument={post.instrument}
+        linkTo={`/posts/${post._id}`}
+      />
+    ) : null
+  );
 
   const updateFilter = (event) => {
     switch (event.target.tagName) {

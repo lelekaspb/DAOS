@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  forwardRef,
   HttpException,
   HttpStatus,
   Injectable,
@@ -12,10 +13,20 @@ import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { InstrumentDto } from './instrument.dto';
 import { CreateUserDto } from './create-user.dto';
+import { PostService } from './../post/post.service';
+import { Inject } from '@nestjs/common/decorators';
+import { OrchestraService } from './../orchestra/orchestra.service';
+import { runInThisContext } from 'vm';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @Inject(forwardRef(() => PostService))
+    private readonly PostService: PostService,
+    @Inject(forwardRef(() => OrchestraService))
+    private readonly OrchestraService: OrchestraService,
+  ) {}
 
   async signUserIn(email: string, password: string): Promise<User> {
     try {
@@ -92,6 +103,9 @@ export class UserService {
     const query: any = { _id: new mongoose.Types.ObjectId(id) };
     try {
       const result = await this.userModel.deleteOne(query).exec();
+      await this.PostService.deletePostsByCreatorId(id);
+      await this.OrchestraService.deleteOrchestrasByCreatorId(id);
+      await this.OrchestraService.deleteMemberFromAllWhereExists(id);
       return {
         success: true,
         status: HttpStatus.OK,

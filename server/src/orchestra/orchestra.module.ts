@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from '../user/user.module';
+import { UserModule } from './../user/user.module';
 import { OrchestraController } from './orchestra.controller';
 import { Orchestra, OrchestraSchema } from './orchestra.schema';
 import { OrchestraService } from './orchestra.service';
@@ -10,7 +10,7 @@ import { OrchestraService } from './orchestra.service';
     MongooseModule.forFeature([
       { name: Orchestra.name, schema: OrchestraSchema },
     ]),
-    UserModule,
+    forwardRef(() => UserModule),
   ],
   controllers: [OrchestraController],
   providers: [OrchestraService],
