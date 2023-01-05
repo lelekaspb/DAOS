@@ -3,8 +3,13 @@ import FormField from "../FormField/FormField";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import Google from "../Google/Google";
+
 
 const Login = () => {
+
+  
+
   const { userInfo, setUserInfo } = useGlobalContext();
 
   const [userData, setUserData] = useState({
@@ -119,9 +124,11 @@ const Login = () => {
           </div>
         </form>
         <a href="#" className={styles.forgotten_password}>
-          Glemt adgangskode?
+          Glemt adgangskode? {<br />} {<br />}
         </a>
+        <Google />
       </section>
+      
     </main>
   );
 };
